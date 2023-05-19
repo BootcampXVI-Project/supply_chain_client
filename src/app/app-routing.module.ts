@@ -14,6 +14,7 @@ import { TablesComponent } from './views/admin/tables/tables.component';
 // auth views
 import { LoginComponent } from './views/auth/login/login.component';
 import { RegisterComponent } from './views/auth/register/register.component';
+import { ProductsComponent } from './views/auth/products/products.component';
 
 // no layouts views
 import { IndexComponent } from './views/index/index.component';
@@ -43,6 +44,7 @@ const routes: Routes = [
     ],
   },
   // no layout views
+  { path: 'product', component: ProductsComponent },
   { path: 'profile', component: ProfileComponent },
   { path: '', component: IndexComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },

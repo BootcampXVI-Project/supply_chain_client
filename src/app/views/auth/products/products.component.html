@@ -1,0 +1,10 @@
+<div class="container mx-auto px-4 h-full">
+  <div class="flex content-center items-center justify-center h-full">
+    HELLO
+
+    <div *ngIf="responseData">
+      <h2>Data:</h2>
+      <pre>{{ logData(responseData) }}</pre>
+    </div>
+  </div>
+</div>
