@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-index',
@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndexComponent implements OnInit {
   constructor() {}
+  _openTab = 0;
 
+  set stateOpenTab($tabNumber: number) {
+    this._openTab = $tabNumber;
+  }
   ngOnInit(): void {}
 }

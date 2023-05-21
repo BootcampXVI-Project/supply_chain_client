@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 // layouts
 import { AdminComponent } from './layouts/admin/admin.component';
 import { AuthComponent } from './layouts/auth/auth.component';
+import { SupplierComponent } from './layouts/supplier/supplier.component';
 
 // admin views
 import { DashboardComponent } from './views/admin/dashboard/dashboard.component';
@@ -15,8 +16,6 @@ import { TablesComponent } from './views/admin/tables/tables.component';
 import { LoginComponent } from './views/auth/login/login.component';
 import { RegisterComponent } from './views/auth/register/register.component';
 import { ProductsComponent } from './views/auth/products/products.component';
-
-// no layouts views
 import { IndexComponent } from './views/index/index.component';
 import { ProfileComponent } from './views/profile/profile.component';
 
@@ -33,6 +32,12 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
+  // supplier views
+  {
+    path: 'supplier',
+    component: SupplierComponent,
+    children: [{ path: '', redirectTo: '', pathMatch: 'full' }],
+  },
   // auth views
   {
     path: 'auth',
@@ -46,6 +51,7 @@ const routes: Routes = [
   // no layout views
   { path: 'product', component: ProductsComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'landing', component: LandingComponent },
   { path: '', component: IndexComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
