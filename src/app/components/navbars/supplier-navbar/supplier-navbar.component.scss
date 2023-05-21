@@ -1,0 +1,39 @@
+nav.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 29;
+}
+nav.navbar {
+  padding-bottom: 0.5em;
+  background: linear-gradient(
+    to bottom,
+    #fff 0,
+    rgba(255, 255, 255, 0.75) 100%
+  );
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+.navbar {
+  min-height: 3.25rem;
+}
+.navbar,
+.navbar-end,
+.navbar-menu,
+.navbar-start {
+  align-items: stretch;
+  display: flex;
+}
+.navbar {
+  background-color: #fff;
+  min-height: 3.25rem;
+  position: relative;
+  z-index: 30;
+}
+*,
+::after,
+::before {
+  box-sizing: inherit;
+}
+nav {
+  display: block;
+}
