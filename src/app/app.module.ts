@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -45,12 +46,17 @@ import { IndexDropdownComponent } from './components/dropdowns/index-dropdown/in
 import { TableDropdownComponent } from './components/dropdowns/table-dropdown/table-dropdown.component';
 import { PagesDropdownComponent } from './components/dropdowns/pages-dropdown/pages-dropdown.component';
 import { NotificationDropdownComponent } from './components/dropdowns/notification-dropdown/notification-dropdown.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { UserDropdownComponent } from './components/dropdowns/user-dropdown/user-dropdown.component';
 import { SupplierComponent } from './layouts/supplier/supplier.component';
 import { SupplierNavbarComponent } from './components/navbars/supplier-navbar/supplier-navbar.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ManufacturerComponent } from './layouts/manufacturer/manufacturer.component';
+import { DistributorComponent } from './layouts/distributor/distributor.component';
+import { RetailerComponent } from './layouts/retailer/retailer.component';
+import { SupplierSidebarComponent } from './components/sidebar/supplier-sidebar/supplier-sidebar.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +68,6 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
     TableDropdownComponent,
     NotificationDropdownComponent,
     UserDropdownComponent,
-    SidebarComponent,
     FooterComponent,
     FooterSmallComponent,
     FooterAdminComponent,
@@ -91,8 +96,17 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
     SupplierNavbarComponent,
     ContactUsComponent,
     AboutUsComponent,
+    ManufacturerComponent,
+    DistributorComponent,
+    RetailerComponent,
+    SupplierSidebarComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
