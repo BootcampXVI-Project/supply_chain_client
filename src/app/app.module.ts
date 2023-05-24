@@ -23,7 +23,6 @@ import { IndexComponent } from './views/index/index.component';
 import { ProfileComponent } from './views/profile/profile.component';
 
 // components for views and layouts
-
 import { AdminNavbarComponent } from './components/navbars/admin-navbar/admin-navbar.component';
 import { AuthNavbarComponent } from './components/navbars/auth-navbar/auth-navbar.component';
 import { CardBarChartComponent } from './components/cards/card-bar-chart/card-bar-chart.component';
@@ -46,6 +45,10 @@ import { PagesDropdownComponent } from './components/dropdowns/pages-dropdown/pa
 import { NotificationDropdownComponent } from './components/dropdowns/notification-dropdown/notification-dropdown.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { UserDropdownComponent } from './components/dropdowns/user-dropdown/user-dropdown.component';
+import { SupplierComponent } from './layouts/supplier/supplier.component';
+import { SupplierNavbarComponent } from './components/navbars/supplier-navbar/supplier-navbar.component';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,6 +84,10 @@ import { UserDropdownComponent } from './components/dropdowns/user-dropdown/user
     RegisterComponent,
     IndexComponent,
     ProfileComponent,
+    SupplierComponent,
+    SupplierNavbarComponent,
+    ContactUsComponent,
+    AboutUsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],

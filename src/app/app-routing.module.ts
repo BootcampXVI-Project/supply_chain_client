@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 // layouts
 import { AdminComponent } from './layouts/admin/admin.component';
 import { AuthComponent } from './layouts/auth/auth.component';
+import { SupplierComponent } from './layouts/supplier/supplier.component';
 
 // admin views
 import { DashboardComponent } from './views/admin/dashboard/dashboard.component';
@@ -32,6 +33,12 @@ const routes: Routes = [
       { path: 'maps', component: MapsComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
+  },
+  // supplier views
+  {
+    path: 'supplier',
+    component: SupplierComponent,
+    children: [{ path: '', redirectTo: '', pathMatch: 'full' }],
   },
   // auth views
   {

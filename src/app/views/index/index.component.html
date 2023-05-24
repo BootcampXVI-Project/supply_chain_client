@@ -1,63 +1,217 @@
-<app-index-navbar></app-index-navbar>
-<section class="header relative pt-16 items-center flex h-screen max-h-860-px">
-  <div class="container mx-auto items-center flex flex-wrap">
-    <div class="w-full md:w-8/12 lg:w-6/12 xl:w-6/12 px-4">
-      <div class="pt-32 sm:pt-0">
-        <h2 class="font-semibold text-4xl text-blueGray-600">
-          SCM For OCOP Products
-        </h2>
-        <p class="mt-4 text-lg leading-relaxed text-blueGray-500">
-          A supply chain management system for OCOP goods and agricultural
-          products
-        </p>
-        <div class="mt-12">
-          <a
-            href="/auth/register"
-            class="get-started text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-red-600 active:bg-red-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
-          >
-            Get started
-          </a>
+<html class="mdl-js">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Red Sky</title>
+    <link
+      href="https://c.redsky.io/bundles/af376376f7f0/styles.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body data-new-gr-c-s-check-loaded="14.1110.0" data-gr-ext-installed="">
+    <div id="app" bis_skin_checked="1">
+      <div class="full-page page-marketing" bis_skin_checked="1">
+        <div class="is-most-sticky" bis_skin_checked="1">
+          <app-index-navbar
+            (newOpenTab)="this.stateOpenTab = $event"
+          ></app-index-navbar>
         </div>
+        <section>
+          <div [ngClass]="{ hidden: _openTab !== 0, block: _openTab === 0 }">
+            <div class="container" bis_skin_checked="1">
+              <div bis_skin_checked="1">
+                <div class="hero marketing" bis_skin_checked="1">
+                  <div class="hero-body" bis_skin_checked="1">
+                    <div class="image hero-animation" bis_skin_checked="1">
+                      <video
+                        autoplay=""
+                        loop=""
+                        id="video"
+                        playsinline=""
+                        width="1098"
+                        height="775"
+                        style="aspect-ratio: 2196 / 1550"
+                      >
+                        <source
+                          src="https://c.redsky.io/assets/img/5bd482bac8d2/hero.mp4"
+                          type="video/mp4"
+                        />
+                      </video>
+                      <div class="hero-blurb" bis_skin_checked="1">
+                        <h1>Import/export of agri-foods, made simple</h1>
+                        <p class="pb-2">
+                          Red Sky provides end-to-end logistics and trade
+                          finance solutions that have been specifically designed
+                          to support the global agri-food industry.
+                        </p>
+                        <div bis_skin_checked="1">
+                          <a
+                            class="is-gradient is-wide is-medium button"
+                            href="/contact-us"
+                            style="display: block"
+                            ><div class="hover-bold-fix" bis_skin_checked="1">
+                              <div bis_skin_checked="1">LEARN MORE</div>
+                              <div bis_skin_checked="1">LEARN MORE</div>
+                            </div></a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <section class="section">
+                  <div class="container" bis_skin_checked="1">
+                    <div class="has-text-centered" bis_skin_checked="1">
+                      <h2 style="position: relative">
+                        The Control Tower for Your Business
+                        <div
+                          id="logistics"
+                          bis_skin_checked="1"
+                          style="position: absolute; top: -8em"
+                        ></div>
+                      </h2>
+                      <p>
+                        Red Sky offers a full suite of services for
+                        importers/exporters of agri-food products. Build DDP
+                        logistics into your pricing and access immediate
+                        financing for your orders shipped through the platform.
+                      </p>
+                    </div>
+                  </div>
+                </section>
+                <div class="container marketing" bis_skin_checked="1">
+                  <div class="logistics-solutions" bis_skin_checked="1">
+                    <h2>Logistics solutions</h2>
+                    <p>
+                      Our experienced logistics team takes care of ocean
+                      freight, road haulage, customs clearance, cold storage and
+                      distribution.
+                    </p>
+                    <p>
+                      All information, communication and documentation is
+                      centralised in our platform, giving you unparalleled
+                      visibility across your supply chain.
+                    </p>
+                    <br /><br /><a
+                      class="is-gradient is-wide is-medium button"
+                      href="/logistics"
+                      style="display: block"
+                      ><div class="hover-bold-fix" bis_skin_checked="1">
+                        <div bis_skin_checked="1">LEARN MORE</div>
+                        <div bis_skin_checked="1">LEARN MORE</div>
+                      </div></a
+                    >
+                  </div>
+                </div>
+                <section class="section">
+                  <div class="container" bis_skin_checked="1">
+                    <div bis_skin_checked="1">
+                      <div class="finance-platform-grid" bis_skin_checked="1">
+                        <div
+                          class="mr-5"
+                          bis_skin_checked="1"
+                          style="
+                            grid-area: finance-text / finance-text /
+                              finance-text / finance-text;
+                          "
+                        >
+                          <h2 style="position: relative">
+                            Finance managerment
+                            <div
+                              id="finance"
+                              bis_skin_checked="1"
+                              style="position: absolute; top: -8em"
+                            ></div>
+                          </h2>
+                          Unlock immediate payment of your invoices, up to 120
+                          days ahead of your scheduled payment date.
+                        </div>
+                        <div
+                          class="block"
+                          bis_skin_checked="1"
+                          style="
+                            grid-area: finance-img / finance-img / finance-img /
+                              finance-img;
+                          "
+                        >
+                          <img
+                            src="https://c.redsky.io/assets/img/b6c0a779d2c5/finance.svg"
+                            style="width: 75%; margin-left: 12.5%"
+                          />
+                        </div>
+                        <div
+                          bis_skin_checked="1"
+                          style="
+                            grid-area: platform-text / platform-text /
+                              platform-text / platform-text;
+                          "
+                        >
+                          <h2>The Platform</h2>
+                          All technical and shipping documentation centralised
+                          in a single dashboard.
+                        </div>
+                        <div
+                          class="block"
+                          style="
+                            grid-area: platform-img / platform-img /
+                              platform-img / platform-img;
+                          "
+                          bis_skin_checked="1"
+                        >
+                          <img
+                            src="https://c.redsky.io/assets/img/c59c4c8e29cb/platform-abstract.svg"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <div class="footer-hills" bis_skin_checked="1">
+                  <h2 class="has-text-white">
+                    Take Control of Your Supply Chain
+                  </h2>
+                  <img
+                    src="https://c.redsky.io/assets/img/0434a4c25934/hills-sun.svg"
+                  /><a
+                    class="is-black is-wide is-medium button"
+                    href="/contact-us"
+                    ><div class="hover-bold-fix" bis_skin_checked="1">
+                      <div bis_skin_checked="1">CONTACT US</div>
+                      <div bis_skin_checked="1">CONTACT US</div>
+                    </div></a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div [ngClass]="{ hidden: _openTab !== 1, block: _openTab === 1 }">
+            <app-about-us></app-about-us>
+          </div>
+          <div [ngClass]="{ hidden: _openTab !== 2, block: _openTab === 2 }">
+            <app-contact-us></app-contact-us>
+          </div>
+        </section>
+        <footer class="footer is-size-7 full-page is-screen-only">
+          <div class="container level is-mobile py-4" bis_skin_checked="1">
+            <div class="level-left" bis_skin_checked="1"></div>
+            <div class="level-right" bis_skin_checked="1">
+              <div class="level-item" bis_skin_checked="1">
+                <a href="/imprint" bis_skin_checked="1">Imprint</a>
+              </div>
+              <div class="level-item" bis_skin_checked="1">
+                <a href="/terms" bis_skin_checked="1"
+                  >Terms<span class="is-hidden-mobile"> of service</span></a
+                >
+              </div>
+              <div class="level-item" bis_skin_checked="1">
+                <a href="/privacy" bis_skin_checked="1"
+                  >Privacy<span class="is-hidden-mobile"> policy</span></a
+                >
+              </div>
+              <p class="level-item">©2023 SCM OPOP Goods Ltd</p>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
-  </div>
-
-  <video
-    autoplay=""
-    loop=""
-    id="video"
-    playsinline=""
-    width="800"
-    height="600"
-    style="aspect-ratio: 2196 / 1550"
-  >
-    <source
-      src="https://c.redsky.io/assets/img/5bd482bac8d2/hero.mp4"
-      type="video/mp4"
-    />
-  </video>
-</section>
-
-<section class="mt-48 md:mt-40 pb-40 relative bg-blueGray-100">
-  <div
-    class="-mt-20 top-0 bottom-auto left-0 right-0 w-full absolute h-20"
-    style="transform: translateZ(0)"
-  >
-    <svg
-      class="absolute bottom-0 overflow-hidden"
-      xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="none"
-      version="1.1"
-      viewBox="0 0 2560 100"
-      x="0"
-      y="0"
-    >
-      <polygon
-        class="text-blueGray-100 fill-current"
-        points="2560 0 2560 100 0 100"
-      ></polygon>
-    </svg>
-  </div>
-</section>
-
-<app-footer></app-footer>
+  </body>
+</html>
