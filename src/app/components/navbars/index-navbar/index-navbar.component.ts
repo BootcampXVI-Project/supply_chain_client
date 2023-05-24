@@ -1,3 +1,4 @@
+import { HttpRequest } from '@angular/common/http';
 import {
   Component,
   OnInit,
@@ -7,6 +8,10 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AlertService } from 'src/app/_services/alert.service';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-index-navbar',
@@ -14,6 +19,20 @@ import {
   styleUrls: ['./index-navbar.component.scss'],
 })
 export class IndexNavbarComponent implements OnInit {
+  rememberMe: boolean = false;
+  req: HttpRequest<any> | undefined;
+  phoneNumber: any;
+  password: any;
+  loginForm!: FormGroup;
+  submitted = false;
+  show = false;
+  user: any;
+  loggedIn: any;
+  loading: boolean = false;
+  get f() {
+    return this.loginForm.controls;
+  }
+
   @ViewChild('dialog') myDialog: ElementRef | undefined;
 
   @Output() newOpenTab = new EventEmitter<number>();
@@ -33,7 +52,71 @@ export class IndexNavbarComponent implements OnInit {
     this.openDialogLogin = true;
     this.myDialog?.nativeElement.close();
   }
-  constructor() {}
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private route: Router
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.password = 'password';
+
+    this.loginForm = this.fb.group({
+      phoneNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(15),
+          Validators.pattern(/^\+?\d+$/), // Chỉ chấp nhận các chữ số và ký tự '+'
+        ],
+      ],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(30),
+        ],
+      ],
+    });
+  }
+
+  login() {
+    this.loading = true;
+    const phoneNumber = this.loginForm?.get('phoneNumber')?.value;
+    const password = this.loginForm?.get('password')?.value;
+    // console.log(phoneNumber, password);
+
+    this.auth.login(phoneNumber, password).subscribe(
+      (response: any) => {
+        // console.log(response);
+        // let routeGo = response?.userType
+        // console.log(JSON.parse(response).data.userType);
+
+        this.loading = false;
+        AlertService.setAlertModel('success', 'Login successfully');
+        this.route.navigate([JSON.parse(response).data.userType]);
+        // this.toast.success({detail: "Welcome you !", summary:response.message, duration: 5000})
+      },
+      (err) => {
+        console.log(err);
+
+        this.loading = false;
+
+        // AlertService.setAlertModel('error',err.error.message)
+      }
+    );
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+      console.log('error');
+      return;
+    }
+
+    this.login();
+  }
 }
