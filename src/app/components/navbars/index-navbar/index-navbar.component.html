@@ -54,31 +54,114 @@
     class="flex-col bg-blueGray-200 rounded-lg w-1/4"
     #dialog
   >
-    <div class="form">
+    <form
+      action=""
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      class="form"
+    >
       <div class="header bg-gradient-to-r from-[#ec556c] to-[#ea723e]">
         Sign In
       </div>
       <div class="inputs">
-        <input placeholder="Phone Number" class="input" type="phonenumber" />
-        <input placeholder="Password" class="input" type="password" />
+        <input
+          placeholder="Phone Number"
+          class="input"
+          type="phoneNumber"
+          id="phoneNumber"
+          formControlName="phoneNumber"
+        />
+        <div
+          class="invalid"
+          *ngIf="
+            loginForm.get('phoneNumber')?.invalid &&
+            (loginForm.get('phoneNumber')?.dirty ||
+              loginForm.get('phoneNumber')?.touched)
+          "
+        >
+          <div
+            *ngIf="loginForm.get('phoneNumber')?.errors?.['required']"
+            class="text-red-500"
+          >
+            Phone number is required.
+          </div>
+          <div
+            *ngIf="loginForm.get('phoneNumber')?.errors?.['minlength']"
+            class="text-red-500"
+          >
+            Phone number should have at least 10 characters.
+          </div>
+          <div
+            *ngIf="loginForm.get('phoneNumber')?.errors?.['maxlength']"
+            class="text-red-500"
+          >
+            Phone number should have at under 15 characters.
+          </div>
+          <div
+            *ngIf="loginForm.get('phoneNumber')?.errors?.['pattern']"
+            class="text-red-500"
+          >
+            Phone number wrong format.
+          </div>
+        </div>
+        <input
+          placeholder="Password"
+          class="input"
+          type="password"
+          formControlName="password"
+          id="password"
+          [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+          required=""
+        />
+        <div
+          class="invalid"
+          *ngIf="
+            loginForm.get('password')?.invalid &&
+            (loginForm.get('password')?.dirty ||
+              loginForm.get('password')?.touched)
+          "
+        >
+          <div
+            *ngIf="loginForm.get('password')?.errors?.['required']"
+            class="text-red-500"
+          >
+            Password is required.
+          </div>
+          <div
+            *ngIf="loginForm.get('password')?.errors?.['minlength']"
+            class="text-red-500"
+          >
+            Password should have at least 3 characters.
+          </div>
+          <div
+            *ngIf="loginForm.get('password')?.errors?.['maxlength']"
+            class="text-red-500"
+          >
+            Password should have at under 30 characters.
+          </div>
+        </div>
         <div class="checkbox-container">
           <label class="checkbox">
             <input type="checkbox" class="focus:ring-[#f8f8f8]" id="checkbox" />
           </label>
           <label for="checkbox" class="checkbox-text">Remember me</label>
         </div>
-        <button class="sigin-btn bg-gradient-to-r from-[#ec556c] to-[#ea723e]">
+        <button
+          class="sigin-btn bg-gradient-to-r from-[#ec556c] to-[#ea723e]"
+          type="submit"
+        >
           Submit
         </button>
         <a class="forget" href="#">Forget password ?</a>
         <button
           class="border-[#ec556c] border rounded-[0.5rem] cancel-btn"
           (click)="close()"
+          [disabled]="loginForm.invalid"
         >
           Cancel
         </button>
       </div>
-    </div>
+    </form>
     <!-- <ngx-loading [config]="{fullScreenBackdrop: true}" [show]="ischangingProfile"></ngx-loading> -->
   </dialog>
 </nav>
