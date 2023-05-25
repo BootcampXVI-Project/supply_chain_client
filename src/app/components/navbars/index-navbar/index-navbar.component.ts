@@ -12,6 +12,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/_services/alert.service';
 import { AuthService } from 'src/app/_services/auth.service';
+import {UserService} from "../../../_services/user.service";
 
 @Component({
   selector: 'app-index-navbar',
@@ -55,7 +56,8 @@ export class IndexNavbarComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private route: Router
+    private route: Router,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -84,7 +86,10 @@ export class IndexNavbarComponent implements OnInit {
 
   login() {
     this.loading = true;
-    const phoneNumber = this.loginForm?.get('phoneNumber')?.value;
+    let phoneNumber = this.loginForm?.get('phoneNumber')?.value;
+    if (phoneNumber.startsWith("0")) {
+      phoneNumber = "+84" + phoneNumber.substring(1)
+    }
     const password = this.loginForm?.get('password')?.value;
     // console.log(phoneNumber, password);
 
@@ -93,10 +98,18 @@ export class IndexNavbarComponent implements OnInit {
         // console.log(response);
         // let routeGo = response?.userType
         // console.log(JSON.parse(response).data.userType);
-
         this.loading = false;
+        console.log("login",this.userService.getUser())
+        const user = this.userService.getUser()
         AlertService.setAlertModel('success', 'Login successfully');
-        this.route.navigate([JSON.parse(response).data.userType]);
+        if (user.role.toLowerCase() === "supplier"){
+          this.route.navigate(['/supplier']);
+
+        } else {
+          this.route.navigate([JSON.parse(response).data.userType]);
+
+        }
+
         // this.toast.success({detail: "Welcome you !", summary:response.message, duration: 5000})
       },
       (err) => {

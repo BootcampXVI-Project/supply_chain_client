@@ -54,7 +54,14 @@ import { ManufacturerComponent } from './layouts/manufacturer/manufacturer.compo
 import { DistributorComponent } from './layouts/distributor/distributor.component';
 import { RetailerComponent } from './layouts/retailer/retailer.component';
 import { SupplierSidebarComponent } from './components/sidebar/supplier-sidebar/supplier-sidebar.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { ViewProductComponent } from './supplier/components/view-product/view-product.component';
+import {ToastrModule} from "ngx-toastr";
+import { DetailProductComponent } from './supplier/components/view-product/detail-product/detail-product.component';
+import {AngularFireModule} from "@angular/fire/compat";
+import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
+import {AngularFireStorageModule} from "@angular/fire/compat/storage";
+import {environment} from "./environments/environment";
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,12 +104,25 @@ import { ReactiveFormsModule } from '@angular/forms';
     DistributorComponent,
     RetailerComponent,
     SupplierSidebarComponent,
+    ViewProductComponent,
+    DetailProductComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot(
+      {
+        timeOut: 1800,
+        preventDuplicates: true,
+        easeTime: 300,
+      }
+    ),
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireStorageModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

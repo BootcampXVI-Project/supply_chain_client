@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL } from 'src/assets/API_URL';
 import { catchError, map, of, tap } from 'rxjs';
 import { AlertService } from './alert.service';
+import { UserService } from './user.service';
 
 HttpClient;
 
@@ -10,7 +11,7 @@ HttpClient;
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
   login(phoneNumber: any, password: any) {
     const body = {
       phoneNumber: phoneNumber,
@@ -27,6 +28,7 @@ export class AuthService {
         tap((response) => {
           // this.storage.setToken(response);
           // this.setUserProfileByToken(response);
+          this.userService.setUser(JSON.parse(response).data)
           console.log('ok');
 
           return true;

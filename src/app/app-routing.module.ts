@@ -20,6 +20,8 @@ import { ProductsComponent } from './views/auth/products/products.component';
 // no layouts views
 import { IndexComponent } from './views/index/index.component';
 import { ProfileComponent } from './views/profile/profile.component';
+import {ViewProductComponent} from "./supplier/components/view-product/view-product.component";
+import {DetailProductComponent} from "./supplier/components/view-product/detail-product/detail-product.component";
 
 const routes: Routes = [
   // admin views
@@ -35,10 +37,14 @@ const routes: Routes = [
     ],
   },
   // supplier views
+
   {
-    path: 'supplier',
-    component: SupplierComponent,
-    children: [{ path: '', redirectTo: '', pathMatch: 'full' }],
+    path: "supplier",
+    component: ViewProductComponent,
+    children: [
+      { path: "detail", component: DetailProductComponent },
+      { path: "", redirectTo: "supplier", pathMatch: "full" },
+    ],
   },
   // auth views
   {
@@ -50,6 +56,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
     ],
   },
+
   // no layout views
   { path: 'product', component: ProductsComponent },
   { path: 'profile', component: ProfileComponent },
