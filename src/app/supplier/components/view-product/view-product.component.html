@@ -1,0 +1,212 @@
+<div class="flex flex-wrap mt-4 justify-center">
+  <div class="w-full mb-4 px-4">
+    <div class="block w-full overflow-x-auto">
+      <table class="items-center w-full bg-transparent border-collapse">
+        <thead>
+        <tr>
+          <th
+            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+            Index
+          </th>
+          <th
+            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+            Image
+          </th>
+          <th
+            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+            Product Name
+          </th>
+          <th
+            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+            Cultivated Date
+          </th>
+          <th
+            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+            Harvested Date
+          </th>
+          <th
+            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+            Price
+          </th>
+          <th
+            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+            Status
+          </th>
+          <th
+            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+            Description
+          </th>
+          <th
+            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+            Certificate
+          </th>
+          <th
+            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+            Action
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr class="bg-white border-b" *ngFor="let item of products;let i=index;">
+          <td
+            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
+            <p class="text-sm font-semibold text-center text-blueGray-600" >
+<!--              <a [routerLink]="detail">  href="/supplier/detail" -->
+              <a >
+                {{i+1}}
+              </a>
+            </p>
+            <p class="text-sm font-semibold text-blueGray-600" hidden>
+              {{item.productId}}
+            </p>
+          </td>
+          <td
+            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600" >
+            <p class="text-sm font-semibold text-center text-blueGray-600" >
+              <a href="{{item.image[0]}}">
+                <img src="{{item.image[0]}}" />
+              </a>
+            </p>
+          </td>
+          <td
+            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
+            <p class="text-sm font-semibold text-center text-blueGray-600">
+              {{item.productName}}
+            </p>
+          </td>
+
+          <td
+            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
+            <p class="text-sm font-semibold text-center text-blueGray-600">
+              {{item.dates.cultivated | date: 'dd - MMM - yyyy HH:mm:ss'}}
+            </p>
+          </td>
+
+          <td
+            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
+            <p class="text-sm font-semibold text-center text-blueGray-600">
+              {{item.dates.harvested | date: 'dd - MMM - yyyy HH:mm:ss'}}
+            </p>
+          </td>
+          <td
+            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
+            <p class="text-sm font-semibold text-center text-blueGray-600">
+              {{item.price}}
+            </p>
+          </td>
+          <td
+            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
+            <p class="text-sm font-semibold text-center text-blueGray-600">
+              {{item.status}}
+            </p>
+          </td>
+          <td
+            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
+            <p class="text-sm font-semibold text-center text-blueGray-600">
+              {{item.description}}
+            </p>
+          </td>
+          <td
+            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
+            <p class="text-sm font-semibold text-center text-blueGray-600">
+              {{item.CertificateUrl}}
+            </p>
+          </td>
+
+          <!--    <td class="text-blueGray-600 font-semibold px-6 text-sm p-4 text-center w-1/4">-->
+          <!--      <button class="text-center focus:outline-none" (click)="showFullText = !showFullText"-->
+          <!--              *ngIf="!showFullText">{{item.Categories-->
+          <!--        | slice:0:2}}...</button>-->
+          <!--      <button class="text-center focus:outline-none" (click)="showFullText = !showFullText"-->
+          <!--              *ngIf="showFullText">{{item.Categories}}</button>-->
+          <!--    </td>-->
+
+          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-center">
+            <!--      (click)="onEditExercise(item.Id)"-->
+            <!--                    (click)="open();dialog.showModal();" ></button>-->
+
+            <button type="button"
+                    class="mr-3 fa-solid focus:outline-none fa-pen-to-square text-base text-blue-500 hover:text-blue-600 transition-colors duration-300 ease-in-out transform"
+                    (click)="open(item.productId);dialog.showModal();" ></button>
+            <button type="button"
+                    class="fa-solid focus:outline-none fa-trash-can text-base text-red-500 hover:text-red-600 transition-colors duration-300 ease-in-out transform"
+            ></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <dialog [ngClass]="openDialog ? 'flex':'hidden'" class="flex-col bg-blueGray-200 rounded-lg w-1/3" #dialog>
+    <p class="text-xl font-medium">Edit your information</p>
+    <app-detail-product [productId]="productId"></app-detail-product>
+    <!--(click)="save()"-->
+    <div class="w-full flex items-center text-center justify-around">
+      <button class="w-3/12 border border-solid border-black bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" >Save</button>
+      <button class="w-3/12 border border-solid border-black bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" (click)="close()">Cancel</button>
+    </div>
+  </dialog>
+
+</div>
+
+<!--Edit modal-->
+<div class="fixed z-10 inset-0 overflow-y-auto" [ngClass]="{'hidden': !showEditModal}">
+  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+      <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+    </div>
+
+    <div
+      class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full">
+      <!-- Modal content -->
+      <form #form="ngForm">
+
+        <div class="bg-white sm:p-6 sm:pb-4">
+          <!-- component -->
+          <h6 class="text-yellow-400 text-xl pb-1 font-bold">Update Product</h6>
+          <div class="relative flex flex-col min-w-0 break-words w-full mb-3 rounded-lg bg-blueGray-100 border-0">
+            <div class="flex-auto px-4 lg:px-5 py-6">
+
+<!--              <div class="w-full flex flex-row items-center mb-6">-->
+<!--                <div class="w-full flex flex-col items-center">-->
+<!--                  <label class="flex justify-center" for="imageUpload">-->
+<!--                    <img alt="Please try again"-->
+<!--                         [src]="product.image || 'https://media.discordapp.net/attachments/1098086780114317423/1108244188392325161/giphy.gif'"-->
+<!--                         class="object-cover rounded h-3/4 w-3/4 cursor-pointer" id="imagePreview" />-->
+<!--                  </label>-->
+<!--                  <input #imageInput type='file' (change)="processImageFile(imageInput)" id="imageUpload"-->
+<!--                         accept=".png, .jpg, .jpeg" name="imageLink" hidden />-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--              <div class="relative w-full mb-3">-->
+<!--                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">-->
+<!--                  Product Name-->
+<!--                </label>-->
+<!--                <input type="text" name="Name"-->
+<!--                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"-->
+<!--                       [value]="product.productName" name="Name" [(ngModel)]="product.productName" />-->
+<!--              </div>-->
+
+            </div>
+          </div>
+
+          <div class="sm:flex sm:flex-row-reverse">
+            <button
+              class="w-full focus:outline-none inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-600 sm:ml-3 sm:w-auto sm:text-sm transition-colors duration-300 ease-in-out transform"
+              (click)="showEditModal = false">
+              Close
+            </button>
+            <button
+              class="w-full focus:outline-none inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-600 sm:ml-3 sm:w-auto sm:text-sm transition-colors duration-300 ease-in-out transform"
+              type="submit">
+              Save
+            </button>
+          </div>
+        </div>
+<!--        <ngx-loading [show]="loadingModal"></ngx-loading>-->
+      </form>
+    </div>
+  </div>
+</div>

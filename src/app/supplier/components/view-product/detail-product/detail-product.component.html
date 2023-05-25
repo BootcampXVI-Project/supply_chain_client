@@ -1,0 +1,81 @@
+<p>detail-product works!</p>
+<button (click)="getProduct()">
+    get
+</button>
+<!--<div class="fixed z-10 inset-0 overflow-y-auto" [ngClass]="{'hidden': !showEditModal}">-->
+<!--  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">-->
+<!--    <div class="fixed inset-0 transition-opacity" aria-hidden="true">-->
+<!--      <div class="absolute inset-0 bg-gray-500 opacity-75"></div>-->
+<!--    </div>-->
+
+<!--    <div-->
+<!--      class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full">-->
+<!--      &lt;!&ndash; Modal content &ndash;&gt;-->
+<!--      <form #form="ngForm" (ngSubmit)="updateExerciseAdmin()">-->
+
+<!--        <div class="bg-white sm:p-6 sm:pb-4">-->
+<!--          &lt;!&ndash; component &ndash;&gt;-->
+<!--          <h6 class="text-yellow-400 text-xl pb-1 font-bold">Update Exercise</h6>-->
+<!--          <div class="relative flex flex-col min-w-0 break-words w-full mb-3 rounded-lg bg-blueGray-100 border-0">-->
+<!--            <div class="flex-auto px-4 lg:px-5 py-6">-->
+
+<!--              <div class="w-full flex flex-row items-center mb-6">-->
+<!--                <div class="w-full flex flex-col items-center">-->
+<!--                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="Image">-->
+<!--                    Image-->
+<!--                  </label>-->
+<!--                  <label class="flex justify-center" for="imageUpload">-->
+<!--                    <img alt="Please try again"-->
+<!--                         [src]="updateExercise.Image || 'https://media.discordapp.net/attachments/1098086780114317423/1108244188392325161/giphy.gif'"-->
+<!--                         class="object-cover rounded h-3/4 w-3/4 cursor-pointer" id="imagePreview" />-->
+<!--                  </label>-->
+<!--                  <input #imageInput type='file' (change)="processImageFile(imageInput)" id="imageUpload"-->
+<!--                         accept=".png, .jpg, .jpeg" name="imageLink" hidden />-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--              <div class="relative w-full mb-3">-->
+<!--                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">-->
+<!--                  Exercise Name-->
+<!--                </label>-->
+<!--                <input type="text" name="Name"-->
+<!--                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"-->
+<!--                       [value]="updateExercise.Name" name="Name" [(ngModel)]="updateExercise.Name" />-->
+<!--              </div>-->
+<!--              <div class="relative w-full mb-3">-->
+<!--                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">-->
+<!--                  Calories-->
+<!--                </label>-->
+<!--                <input type="number" name="Calories"-->
+<!--                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"-->
+<!--                       [value]="updateExercise.Calories" name="Calories" [(ngModel)]="updateExercise.Calories" />-->
+<!--              </div>-->
+<!--              <div class="relative w-full mb-3">-->
+<!--                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">-->
+<!--                  Category-->
+<!--                </label>-->
+<!--                <input type="text" name="Categories"-->
+<!--                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"-->
+<!--                       [value]="updateExercise.Categories" name="Categories" [(ngModel)]="updateExercise.Categories" />-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="sm:flex sm:flex-row-reverse">-->
+<!--            <button-->
+<!--              class="w-full focus:outline-none inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-600 sm:ml-3 sm:w-auto sm:text-sm transition-colors duration-300 ease-in-out transform"-->
+<!--              (click)="showEditModal = false">-->
+<!--              Close-->
+<!--            </button>-->
+<!--            <button-->
+<!--              class="w-full focus:outline-none inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-600 sm:ml-3 sm:w-auto sm:text-sm transition-colors duration-300 ease-in-out transform"-->
+<!--              type="submit">-->
+<!--              Save-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <ngx-loading [show]="loadingModal"></ngx-loading>-->
+<!--      </form>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
