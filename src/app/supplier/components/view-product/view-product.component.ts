@@ -20,11 +20,12 @@ export class ViewProductComponent implements OnInit{
   data: any
   showEditModal: boolean = false
   selectedImageFile?: ImageSnippet
+  reloadDetailProduct = false;
 
   openDialog: boolean = false
 
-  open(productId: string) {
-    this.productId = productId
+  open(product: any) {
+    this.product = product
     this.openDialog = true
   }
   close() {
