@@ -1,7 +1,77 @@
-<p>detail-product works!</p>
-<button (click)="getProduct()">
-    get
-</button>
+<!--<p>detail-product works!</p>-->
+<!--<button (click)="getProduct()">-->
+<!--    get-->
+<!--</button>-->
+
+<!--<form>-->
+<!--  <div>-->
+<!--    <label for="name">Name:</label>-->
+<!--    <input type="text" id="name" name="name" [value]="item.productName" readonly>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label for="email">Email:</label>-->
+<!--    <input type="email" id="email" name="email" [value]="item.price" readonly>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label for="phone">Phone:</label>-->
+<!--    <input type="text" id="phone" name="phone" [value]="item.amount" readonly>-->
+<!--  </div>-->
+<!--  &lt;!&ndash; Thêm các trường dữ liệu khác tương tự &ndash;&gt;-->
+<!--</form>-->
+<form>
+  <div>
+    <label for="image">Image:</label>
+    <div class="flex justify-around">
+      <div *ngFor="let imgUrl of item.image" id="image">
+        <img [src]="imgUrl" alt="Product Image" width="100">
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-between">
+    <div>
+      <label for="productName">Product Name:</label> <br>
+      <input type="text" id="productName" name="productName" [value]="item.productName" readonly>
+    </div>
+    <div>
+      <label for="status">Status:</label> <br>
+      <input type="text" id="status" name="status" [value]="item.status" readonly>
+    </div>
+  </div>
+  <div class="flex justify-between">
+    <div>
+      <label for="amount">Amount:</label> <br>
+      <input type="text" id="amount" name="amount" [value]="item.amount" readonly>
+    </div>
+    <div>
+      <label for="price">Price:</label> <br>
+      <input type="text" id="price" name="price" [value]="item.price" readonly>
+    </div>
+  </div>
+  <div class="flex justify-between">
+    <div>
+      <label for="cultivatedDate">Cultivated Date:</label> <br>
+      <input type="text" id="cultivatedDate" name="cultivatedDate" [value]="item.dates.cultivated" readonly>
+    </div>
+    <div>
+      <label for="cultivatedDate">Cultivated Date:</label> <br>
+      <input type="text" id="cultivatedDate" name="cultivatedDate" [value]="item.dates.cultivated" readonly>
+    </div>
+  </div>
+
+  <br>
+  <div class="w-full">
+    <label for="description">Description:</label> <br>
+    <textarea class="w-full" id="description" name="description" readonly>{{ item.description }}</textarea>
+  </div>
+  <br>
+  <div>
+    <label for="certificate">Certificate URL:</label>
+    <a [href]="item.certificateUrl" target="_blank" id="certificate">{{ item.certificateUrl }} </a>
+  </div>
+  <br>
+
+</form>
+
 <!--<div class="fixed z-10 inset-0 overflow-y-auto" [ngClass]="{'hidden': !showEditModal}">-->
 <!--  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">-->
 <!--    <div class="fixed inset-0 transition-opacity" aria-hidden="true">-->
