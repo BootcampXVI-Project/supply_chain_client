@@ -17,12 +17,24 @@ export class ViewProductComponent implements OnInit{
   products: any
   product: any
   productId: string = ""
+  showFullText = false;
   data: any
   showEditModal: boolean = false
   selectedImageFile?: ImageSnippet
   reloadDetailProduct = false;
 
   openDialog: boolean = false
+
+  onBackdropClick(event: MouseEvent) {
+    console.log("click");
+
+    const backdrop = event.target as HTMLElement;
+    const dialogContent = this.myDialog?.nativeElement.querySelector('.backdrop');
+
+    if (backdrop === dialogContent) {
+      this.close();
+    }
+  }
 
   open(product: any) {
     this.product = product

@@ -18,134 +18,180 @@
 <!--  </div>-->
 <!--  &lt;!&ndash; Thêm các trường dữ liệu khác tương tự &ndash;&gt;-->
 <!--</form>-->
-<form>
-  <div>
+<form (ngSubmit)="onSubmit()">
+  <div style="height: 40vh; width: 100%;" class="mb-2">
+    <carousel [imageList]="item.image" *ngIf="!isCreateForm">
+      <!-- <ng-container *ngFor="let item of items">
+        <ng-container *carouselItem>
+          <div class="item">{{ item.title }}</div>
+        </ng-container>
+      </ng-container> -->
+      <!-- <div class="flex justify-around">
+        <div *ngFor="let imgUrl of item.image" id="image" class="image-container">
+          <img [src]="imgUrl" alt="Product Image" class="image">
+        </div>
+      </div> -->
+
+    </carousel>
+    <app-post-image *ngIf="isCreateForm">
+
+    </app-post-image>
+  </div>
+  <!-- <div>
     <label for="image">Image:</label>
     <div class="flex justify-around">
       <div *ngFor="let imgUrl of item.image" id="image">
         <img [src]="imgUrl" alt="Product Image" width="100">
       </div>
     </div>
-  </div>
-  <div class="flex justify-between">
-    <div>
-      <label for="productName">Product Name:</label> <br>
-      <input type="text" id="productName" name="productName" [value]="item.productName" readonly>
+  </div> -->
+  <div class="flex justify-around mb-2">
+    <div *ngIf="!isCreateForm">
+      <label for="productNameEd" class="font-bold text-gray-500">Product Name:</label> <br>
+      <input type="text" id="productNameEd" name="productName" [value]="item.productName">
     </div>
-    <div>
-      <label for="status">Status:</label> <br>
-      <input type="text" id="status" name="status" [value]="item.status" readonly>
+    <div class="w-85" *ngIf="isCreateForm">
+      <label for="productNameCr" class="font-bold text-gray-500">Product Name:</label> <br>
+      <input class=" w-full" type="text" id="productNameCr" name="productName" [value]="item.productName">
     </div>
-  </div>
-  <div class="flex justify-between">
-    <div>
-      <label for="amount">Amount:</label> <br>
-      <input type="text" id="amount" name="amount" [value]="item.amount" readonly>
-    </div>
-    <div>
-      <label for="price">Price:</label> <br>
-      <input type="text" id="price" name="price" [value]="item.price" readonly>
+    <div *ngIf="!isCreateForm">
+      <label for="status" class="font-bold text-gray-500 left-0" >Status:</label> <br>
+      <input type="text" id="status" name="status" [value]="item.status" >
     </div>
   </div>
-  <div class="flex justify-between">
+  <div class="flex justify-around mb-2">
+    <div *ngIf="!isCreateForm">
+      <label for="amountEd" class="font-bold text-gray-500">Amount:</label> <br>
+      <input type="text" id="amountEd" name="amount" [value]="item.amount">
+    </div>
+    <div class=" w-85" *ngIf="isCreateForm">
+      <label for="amountCr" class="font-bold text-gray-500">Amount:</label> <br>
+      <input class=" w-full" type="text" id="amountCr" name="amount" [value]="item.amount">
+    </div>
+    <div *ngIf="!isCreateForm">
+      <label for="priceEd" class="font-bold text-gray-500">Price:</label> <br>
+      <input type="text" id="priceEd" name="price" [value]="item.price">
+    </div>
+  </div>
+  <div class="flex justify-around mb-2" *ngIf="isCreateForm">
+    <div class=" w-85">
+      <label for="priceCr" class="font-bold text-gray-500">Price:</label> <br>
+      <input class=" w-full" type="text" id="priceCr" name="price" [value]="item.price">
+    </div>
+  </div>
+  <div class="flex justify-around mb-2" *ngIf="!isCreateForm">
     <div>
-      <label for="cultivatedDate">Cultivated Date:</label> <br>
-      <input type="text" id="cultivatedDate" name="cultivatedDate" [value]="item.dates.cultivated" readonly>
+      <label for="cultivatedDate" class="font-bold text-gray-500">Cultivated Date:</label> <br>
+      <input type="text" id="cultivatedDate" name="cultivatedDate" [value]="item.dates.cultivated | date: 'dd - MMM - yyyy HH:mm:ss'" readonly>
     </div>
     <div>
-      <label for="cultivatedDate">Cultivated Date:</label> <br>
-      <input type="text" id="cultivatedDate" name="cultivatedDate" [value]="item.dates.cultivated" readonly>
+      <label for="cultivatedDate" class="font-bold text-gray-500">Harvested Date:</label> <br>
+      <input type="text" id="harvestedDate" name="harvestedDate" [value]="item.dates.harvested | date: 'dd - MMM - yyyy HH:mm:ss'" readonly>
     </div>
   </div>
 
-  <br>
   <div class="w-full">
-    <label for="description">Description:</label> <br>
-    <textarea class="w-full" id="description" name="description" readonly>{{ item.description }}</textarea>
+    <label class="w-full paddinglep flex justify-between flex-wrap font-bold text-gray-500"
+      for="description">Description:</label>
+    <div class="w-full flex justify-center flex-wrap">
+      <!-- <label for="description">Description:</label> -->
+      <textarea class="w-85 flex justify-center " id="description" name="description"
+        readonly>{{ item.description }}</textarea>
+    </div>
   </div>
-  <br>
-  <div>
-    <label for="certificate">Certificate URL:</label>
-    <a [href]="item.certificateUrl" target="_blank" id="certificate">{{ item.certificateUrl }} </a>
-  </div>
-  <br>
 
+  <br>
+  <div class="flex justify-around mb-2">
+    <button
+      class="w-3/12 border bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">Save</button>
+
+    <button
+      class="w-3/12 border bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+      (click)="close()">Cancel
+    </button>
+  </div>
+
+  <!-- <button type="button"
+    class="mr-3 fa-solid focus:outline-none fa-eye-to-square text-base text-blue-500 hover:text-blue-600 transition-colors duration-300 ease-in-out transform"
+    ></button> -->
+  <br>
+  <!-- (click)="open(item);dialog.showModal();" -->
 </form>
 
-<!--<div class="fixed z-10 inset-0 overflow-y-auto" [ngClass]="{'hidden': !showEditModal}">-->
-<!--  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">-->
-<!--    <div class="fixed inset-0 transition-opacity" aria-hidden="true">-->
-<!--      <div class="absolute inset-0 bg-gray-500 opacity-75"></div>-->
-<!--    </div>-->
+<!--&lt;!&ndash;<div class="fixed z-10 inset-0 overflow-y-auto" [ngClass]="{'hidden': !showEditModal}">&ndash;&gt;-->
+<!--&lt;!&ndash;  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">&#45;&#45;-->
+<!--&lt;!&ndash;    <div class="fixed inset-0 transition-opacity" aria-hidden="true">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="absolute inset-0 bg-gray-500 opacity-75"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
 
-<!--    <div-->
-<!--      class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full">-->
-<!--      &lt;!&ndash; Modal content &ndash;&gt;-->
-<!--      <form #form="ngForm" (ngSubmit)="updateExerciseAdmin()">-->
+<!--&lt;!&ndash;    <div&ndash;&gt;-->
+<!--&lt;!&ndash;      class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full">&ndash;&gt;-->
+<!--&lt;!&ndash;      &lt;!&ndash; Modal content &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;      <form #form="ngForm" (ngSubmit)="updateExerciseAdmin()">&ndash;&gt;-->
 
-<!--        <div class="bg-white sm:p-6 sm:pb-4">-->
-<!--          &lt;!&ndash; component &ndash;&gt;-->
-<!--          <h6 class="text-yellow-400 text-xl pb-1 font-bold">Update Exercise</h6>-->
-<!--          <div class="relative flex flex-col min-w-0 break-words w-full mb-3 rounded-lg bg-blueGray-100 border-0">-->
-<!--            <div class="flex-auto px-4 lg:px-5 py-6">-->
+<!--&lt;!&ndash;        <div class="bg-white sm:p-6 sm:pb-4">&ndash;&gt;-->
+<!--&lt;!&ndash;          &lt;!&ndash; component &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          <h6 class="text-yellow-400 text-xl pb-1 font-bold">Update Exercise</h6>&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="relative flex flex-col min-w-0 break-words w-full mb-3 rounded-lg bg-blueGray-100 border-0">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="flex-auto px-4 lg:px-5 py-6">&ndash;&gt;-->
 
-<!--              <div class="w-full flex flex-row items-center mb-6">-->
-<!--                <div class="w-full flex flex-col items-center">-->
-<!--                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="Image">-->
-<!--                    Image-->
-<!--                  </label>-->
-<!--                  <label class="flex justify-center" for="imageUpload">-->
-<!--                    <img alt="Please try again"-->
-<!--                         [src]="updateExercise.Image || 'https://media.discordapp.net/attachments/1098086780114317423/1108244188392325161/giphy.gif'"-->
-<!--                         class="object-cover rounded h-3/4 w-3/4 cursor-pointer" id="imagePreview" />-->
-<!--                  </label>-->
-<!--                  <input #imageInput type='file' (change)="processImageFile(imageInput)" id="imageUpload"-->
-<!--                         accept=".png, .jpg, .jpeg" name="imageLink" hidden />-->
-<!--                </div>-->
-<!--              </div>-->
+<!--&lt;!&ndash;              <div class="w-full flex flex-row items-center mb-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="w-full flex flex-col items-center">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="Image">&ndash;&gt;-->
+<!--&lt;!&ndash;                    Image&ndash;&gt;-->
+<!--&lt;!&ndash;                  </label>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <label class="flex justify-center" for="imageUpload">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <img alt="Please try again"&ndash;&gt;-->
+<!--&lt;!&ndash;                         [src]="updateExercise.Image || 'https://media.discordapp.net/attachments/1098086780114317423/1108244188392325161/giphy.gif'"&ndash;&gt;-->
+<!--&lt;!&ndash;                         class="object-cover rounded h-3/4 w-3/4 cursor-pointer" id="imagePreview" />&ndash;&gt;-->
+<!--&lt;!&ndash;                  </label>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <input #imageInput type='file' (change)="processImageFile(imageInput)" id="imageUpload"&ndash;&gt;-->
+<!--&lt;!&ndash;                         accept=".png, .jpg, .jpeg" name="imageLink" hidden />&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
 
-<!--              <div class="relative w-full mb-3">-->
-<!--                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">-->
-<!--                  Exercise Name-->
-<!--                </label>-->
-<!--                <input type="text" name="Name"-->
-<!--                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"-->
-<!--                       [value]="updateExercise.Name" name="Name" [(ngModel)]="updateExercise.Name" />-->
-<!--              </div>-->
-<!--              <div class="relative w-full mb-3">-->
-<!--                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">-->
-<!--                  Calories-->
-<!--                </label>-->
-<!--                <input type="number" name="Calories"-->
-<!--                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"-->
-<!--                       [value]="updateExercise.Calories" name="Calories" [(ngModel)]="updateExercise.Calories" />-->
-<!--              </div>-->
-<!--              <div class="relative w-full mb-3">-->
-<!--                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">-->
-<!--                  Category-->
-<!--                </label>-->
-<!--                <input type="text" name="Categories"-->
-<!--                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"-->
-<!--                       [value]="updateExercise.Categories" name="Categories" [(ngModel)]="updateExercise.Categories" />-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
+<!--&lt;!&ndash;              <div class="relative w-full mb-3">&ndash;&gt;-->
+<!--&lt;!&ndash;                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">&ndash;&gt;-->
+<!--&lt;!&ndash;                  Exercise Name&ndash;&gt;-->
+<!--&lt;!&ndash;                </label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <input type="text" name="Name"&ndash;&gt;-->
+<!--&lt;!&ndash;                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"&ndash;&gt;-->
+<!--&lt;!&ndash;                       [value]="updateExercise.Name" name="Name" [(ngModel)]="updateExercise.Name" />&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              <div class="relative w-full mb-3">&ndash;&gt;-->
+<!--&lt;!&ndash;                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">&ndash;&gt;-->
+<!--&lt;!&ndash;                  Calories&ndash;&gt;-->
+<!--&lt;!&ndash;                </label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <input type="number" name="Calories"&ndash;&gt;-->
+<!--&lt;!&ndash;                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"&ndash;&gt;-->
+<!--&lt;!&ndash;                       [value]="updateExercise.Calories" name="Calories" [(ngModel)]="updateExercise.Calories" />&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              <div class="relative w-full mb-3">&ndash;&gt;-->
+<!--&lt;!&ndash;                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">&ndash;&gt;-->
+<!--&lt;!&ndash;                  Category&ndash;&gt;-->
+<!--&lt;!&ndash;                </label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <input type="text" name="Categories"&ndash;&gt;-->
+<!--&lt;!&ndash;                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"&ndash;&gt;-->
+<!--&lt;!&ndash;                       [value]="updateExercise.Categories" name="Categories" [(ngModel)]="updateExercise.Categories" />&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
 
-<!--          <div class="sm:flex sm:flex-row-reverse">-->
-<!--            <button-->
-<!--              class="w-full focus:outline-none inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-600 sm:ml-3 sm:w-auto sm:text-sm transition-colors duration-300 ease-in-out transform"-->
-<!--              (click)="showEditModal = false">-->
-<!--              Close-->
-<!--            </button>-->
-<!--            <button-->
-<!--              class="w-full focus:outline-none inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-600 sm:ml-3 sm:w-auto sm:text-sm transition-colors duration-300 ease-in-out transform"-->
-<!--              type="submit">-->
-<!--              Save-->
-<!--            </button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <ngx-loading [show]="loadingModal"></ngx-loading>-->
-<!--      </form>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+<!--&lt;!&ndash;          <div class="sm:flex sm:flex-row-reverse">&ndash;&gt;-->
+<!--&lt;!&ndash;            <button&ndash;&gt;-->
+<!--&lt;!&ndash;              class="w-full focus:outline-none inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-600 sm:ml-3 sm:w-auto sm:text-sm transition-colors duration-300 ease-in-out transform"&ndash;&gt;-->
+<!--&lt;!&ndash;              (click)="showEditModal = false">&ndash;&gt;-->
+<!--&lt;!&ndash;              Close&ndash;&gt;-->
+<!--&lt;!&ndash;            </button>&ndash;&gt;-->
+<!--&lt;!&ndash;            <button&ndash;&gt;-->
+<!--&lt;!&ndash;              class="w-full focus:outline-none inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-600 sm:ml-3 sm:w-auto sm:text-sm transition-colors duration-300 ease-in-out transform"&ndash;&gt;-->
+<!--&lt;!&ndash;              type="submit">&ndash;&gt;-->
+<!--&lt;!&ndash;              Save&ndash;&gt;-->
+<!--&lt;!&ndash;            </button>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <ngx-loading [show]="loadingModal"></ngx-loading>&ndash;&gt;-->
+<!--&lt;!&ndash;      </form>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->

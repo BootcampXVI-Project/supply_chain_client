@@ -36,4 +36,26 @@ export class ViewProductService {
       })
     );
   }
+
+  updateProduct(producObj: any) {
+    const user = this.userService.getUser()
+    return this.http.put(API_PRODUCT.UPDATEPRODUCT(user.userId),producObj)
+      .pipe(
+        catchError((error) => {
+          this.notification.showError("An error has occurred on the server, please try again later.", "Error");
+          return throwError(error.message);
+        })
+      )
+  }
+
+  createProduct(productObj: any) {
+    const user = this.userService.getUser()
+    return this.http.post(API_PRODUCT.CREATEPRODUCT(),productObj)
+      .pipe(
+        catchError((error) => {
+          this.notification.showError("An error has occurred on the server, please try again later.", "Error");
+          return throwError(error.message);
+        })
+      )
+  }
 }

@@ -62,6 +62,10 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
 import {environment} from "./environments/environment";
+import { CarouselComponent } from './components/carousel/carousel.component';
+import { CarouselItemDirective } from './components/carousel/carousel-item.directive';
+import { CarouselItemElementDirective } from './components/carousel/carousel-item-element.directive';
+import { PostImageComponent } from './components/post-image/post-image.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -106,6 +110,10 @@ import {environment} from "./environments/environment";
     SupplierSidebarComponent,
     ViewProductComponent,
     DetailProductComponent,
+    CarouselComponent,
+    CarouselItemDirective,
+    CarouselItemElementDirective,
+    PostImageComponent,
   ],
   imports: [
     BrowserModule,

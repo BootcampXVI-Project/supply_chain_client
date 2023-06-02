@@ -2,19 +2,18 @@
   <div
     class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
   >
-    <app-supplier-sidebar></app-supplier-sidebar>
+<!--    <app-supplier-sidebar class="block"></app-supplier-sidebar>-->
     <a href="https://flowbite.com/" class="flex items-center">
       <img
-        src="https://flowbite.com/docs/images/logo.svg"
-        class="h-8 mr-3"
+        src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/logo%2Flogo.png?alt=media&token=82860508-bacc-4e73-8afa-675134faa8fa&_gl=1*1gkan4e*_ga*ODc2NDc0NDM1LjE2ODQyMzA5NDQ.*_ga_CW55HF8NVT*MTY4NTU5ODg5MS4xMy4xLjE2ODU1OTg4OTcuMC4wLjA."
+        class="h-16 mr-16"
         alt="Flowbite Logo"
       />
-      <span
-        class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-        >SCM</span
-      >
     </a>
     <div class="flex md:order-2">
+      <button (click)="open();dialog.showModal();">
+        Add
+      </button>
       <button
         type="button"
         data-collapse-toggle="navbar-search"
@@ -130,68 +129,36 @@
           <a
             href="#"
             class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-            >About</a
-          >
-        </li>
-        <li>
-          <a
-            href="#"
-            class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-            >Services</a
+            >Product</a
           >
         </li>
       </ul>
     </div>
   </div>
-  <<<<<<< HEAD
 </nav>
--->
-<nav
-  role="navigation"
-  aria-label="main navigation"
-  class="navbar is-screen-only"
->
-  <div class="container" bis_skin_checked="1">
-    <div class="navbar-brand" bis_skin_checked="1">
-      <a
-        href="/"
-        class="navbar-item is-justify-content-flex-start"
-        style="padding-top: 0px"
-        ><img src="https://c.redsky.io/assets/62c67661b494/redsky.svg" /></a
-      ><a
-        role="button"
-        data-target="nav-menu"
-        aria-label="menu"
-        aria-expanded="false"
-        class="navbar-burger burger"
-        ><span aria-hidden="true"></span><span aria-hidden="true"></span
-        ><span aria-hidden="true"></span
-      ></a>
-    </div>
-    <div
-      class="navbar-menu is-flex-shrinkable"
-      id="nav-menu"
-      bis_skin_checked="1"
-    >
-      <div class="navbar-start" bis_skin_checked="1">
-        <a href="/logistics" class="navbar-item is-active" bis_skin_checked="1"
-          >Logistics</a
-        ><a href="/finance" class="navbar-item" bis_skin_checked="1">Finance</a
-        ><a href="/contact-us" class="navbar-item" bis_skin_checked="1"
-          >Contact Us</a
-        >
-      </div>
-      <div class="navbar-end is-flex-shrinkable" bis_skin_checked="1">
-        <div class="navbar-item" bis_skin_checked="1">
-          <button class="button is-gradient" type="button">
-            <div class="hover-bold-fix" bis_skin_checked="1">
-              <div bis_skin_checked="1">Log in</div>
-              <div bis_skin_checked="1">Log in</div>
-            </div>
-          </button>
-        </div>
-      </div>
-    </div>
+
+<dialog [ngClass]="openDialog ? 'flex':'hidden'" class=" relative flex-col bg-blueGray-100 rounded-lg w-1/3" #dialog>
+  <div class="backdrop"></div>
+  <p class="text-xl font-medium">Update product</p>
+
+  <button type="button" class="absolute top-2 right-6 focus:outline-none text-xl font-bold text-red-600"
+          (click)="close()">X</button>
+
+  <app-detail-product [product]=undefined [reload]="reloadDetailProduct"></app-detail-product>
+  <!--(click)="save()"-->
+  <div class="w-full flex items-center text-center justify-around">
+    <button
+      class="w-3/12 border bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">Save</button>
+
+    <button
+      class="w-3/12 border bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+      (click)="close()">Cancel</button>
+    <!-- <button class="sigin-btn bg-gradient-to-r from-[#ec556c] to-[#ea723e]" type="submit">
+      Submit
+    </button>
+    <button class="border-[#ec556c] border rounded-[0.5rem] cancel-btn focus:outline-none" type="reset"
+      (click)="close()">
+      Cancel
+    </button> -->
   </div>
-  ======= >>>>>>> main
-</nav>
+</dialog>

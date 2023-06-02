@@ -6,6 +6,8 @@ export const API_URL = {
 
 export const API_PRODUCT = {
   GETALLPRODUCTS: () => `${DOMAIN}/product/all`,
-  GETPRODUCT: (productId: string) => `${DOMAIN}/product/detail?productId=`+productId
+  GETPRODUCT: (productId: string) => `${DOMAIN}/product/detail?productId=`+productId,
+  UPDATEPRODUCT: (userId:string) => `${DOMAIN}/product/update?userId=`+userId,
+  CREATEPRODUCT: () => `${DOMAIN}/product/create`,
 }
 
