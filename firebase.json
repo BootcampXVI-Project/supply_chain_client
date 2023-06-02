@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/supply_chain_client",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
