@@ -46,7 +46,6 @@ import { PagesDropdownComponent } from './components/dropdowns/pages-dropdown/pa
 import { NotificationDropdownComponent } from './components/dropdowns/notification-dropdown/notification-dropdown.component';
 // import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { UserDropdownComponent } from './components/dropdowns/user-dropdown/user-dropdown.component';
-import { SupplierComponent } from './layouts/supplier/supplier.component';
 import { SupplierNavbarComponent } from './components/navbars/supplier-navbar/supplier-navbar.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
@@ -66,6 +65,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 import { CarouselItemDirective } from './components/carousel/carousel-item.directive';
 import { CarouselItemElementDirective } from './components/carousel/carousel-item-element.directive';
 import { PostImageComponent } from './components/post-image/post-image.component';
+import { SupplierComponent } from './supplier/components/supplier.component'
 @NgModule({
   declarations: [
     AppComponent,

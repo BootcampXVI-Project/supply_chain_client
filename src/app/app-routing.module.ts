@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 // layouts
 import { AdminComponent } from './layouts/admin/admin.component';
 import { AuthComponent } from './layouts/auth/auth.component';
-import { SupplierComponent } from './layouts/supplier/supplier.component';
 
 // admin views
 import { DashboardComponent } from './views/admin/dashboard/dashboard.component';
@@ -22,6 +21,7 @@ import { IndexComponent } from './views/index/index.component';
 import { ProfileComponent } from './views/profile/profile.component';
 import {ViewProductComponent} from "./supplier/components/view-product/view-product.component";
 import {DetailProductComponent} from "./supplier/components/view-product/detail-product/detail-product.component";
+import {SupplierComponent} from "./supplier/components/supplier.component";
 
 const routes: Routes = [
   // admin views
@@ -40,9 +40,9 @@ const routes: Routes = [
 
   {
     path: "supplier",
-    component: ViewProductComponent,
+    component: SupplierComponent,
     children: [
-      { path: "detail", component: DetailProductComponent },
+      { path: "all", component: ViewProductComponent },
       { path: "", redirectTo: "supplier", pathMatch: "full" },
     ],
   },

@@ -58,4 +58,14 @@ export class ViewProductService {
         })
       )
   }
+  harvestProduct(productId: any) {
+    const user = this.userService.getUser()
+    return this.http.post(API_PRODUCT.HARVESTPRODUCT(),{userId: user.userId, productId: productId})
+      .pipe(
+        catchError((error) => {
+          this.notification.showError("An error has occurred on the server, please try again later.", "Error");
+          return throwError(error.message);
+        })
+      )
+  }
 }

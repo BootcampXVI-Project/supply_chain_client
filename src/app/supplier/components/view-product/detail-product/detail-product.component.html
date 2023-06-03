@@ -55,8 +55,8 @@
       <input class=" w-full" type="text" id="productNameCr" name="productName" [value]="item.productName">
     </div>
     <div *ngIf="!isCreateForm">
-      <label for="status" class="font-bold text-gray-500 left-0" >Status:</label> <br>
-      <input type="text" id="status" name="status" [value]="item.status" >
+      <label for="status" class="font-bold text-gray-500 left-0">Status:</label> <br>
+      <input style="background-color: #e4e4e7" type="text" id="status" name="status" [value]="item.status" disabled>
     </div>
   </div>
   <div class="flex justify-around mb-2">
@@ -82,28 +82,32 @@
   <div class="flex justify-around mb-2" *ngIf="!isCreateForm">
     <div>
       <label for="cultivatedDate" class="font-bold text-gray-500">Cultivated Date:</label> <br>
-      <input type="text" id="cultivatedDate" name="cultivatedDate" [value]="item.dates.cultivated | date: 'dd - MMM - yyyy HH:mm:ss'" readonly>
+      <input style="background-color: #e4e4e7" type="text" id="cultivatedDate" name="cultivatedDate"
+             [value]="item.dates.cultivated | date: 'dd - MMM - yyyy HH:mm:ss'" disabled>
     </div>
     <div>
       <label for="cultivatedDate" class="font-bold text-gray-500">Harvested Date:</label> <br>
-      <input type="text" id="harvestedDate" name="harvestedDate" [value]="item.dates.harvested | date: 'dd - MMM - yyyy HH:mm:ss'" readonly>
+      <input style="background-color: #e4e4e7" type="text" id="harvestedDate" name="harvestedDate"
+             [value]="item.dates.harvested | date: 'dd - MMM - yyyy HH:mm:ss'" disabled>
     </div>
   </div>
 
   <div class="w-full">
     <label class="w-full paddinglep flex justify-between flex-wrap font-bold text-gray-500"
-      for="description">Description:</label>
+           for="description">Description:</label>
     <div class="w-full flex justify-center flex-wrap">
       <!-- <label for="description">Description:</label> -->
       <textarea class="w-85 flex justify-center " id="description" name="description"
-        readonly>{{ item.description }}</textarea>
+                readonly>{{ item.description }}</textarea>
     </div>
   </div>
 
   <br>
   <div class="flex justify-around mb-2">
     <button
-      class="w-3/12 border bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">Save</button>
+      class="w-3/12 border bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+      Save
+    </button>
 
     <button
       class="w-3/12 border bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

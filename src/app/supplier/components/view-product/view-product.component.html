@@ -1,12 +1,11 @@
-<div class="block" >
-  <app-supplier-navbar></app-supplier-navbar>
+<div class="block">
 
 
-<div class="flex flex-wrap mt-4 justify-center">
-  <div class="w-full mb-4 px-4">
-    <div class="block w-full overflow-x-auto">
-      <table class="items-center w-full bg-transparent border-collapse">
-        <thead>
+  <div class="flex flex-wrap mt-4 justify-center">
+    <div class="w-full mb-4 px-4">
+      <div class="block w-full overflow-x-auto">
+        <table class="items-center w-full bg-transparent border-collapse">
+          <thead>
           <tr>
             <th
               class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
@@ -36,10 +35,9 @@
               class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
               Status
             </th>
-            <th
-              class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+            <!-- <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
               Description
-            </th>
+          </th> -->
             <th
               class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
               Certificate
@@ -48,76 +46,81 @@
               class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
               Action
             </th>
+            <th
+              class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+              Harvest
+            </th>
           </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
 
           <tr class="bg-white border-b" *ngFor="let item of products;let i=index;">
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
-              <p class="text-sm font-semi-bold text-center text-blueGray-600">
+              <p class="text-sm font-normal text-center text-blueGray-600">
                 <!--              <a [routerLink]="detail">  href="/supplier/detail" -->
                 <a>
-                  {{i+1}}
+                  {{i + 1}}
                 </a>
               </p>
-              <p class="text-sm font-semibold text-blueGray-600" hidden>
+              <p class="text-sm font-normal text-blueGray-600" hidden>
                 {{item.productId}}
               </p>
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
-              <p class="text-sm font-semibold text-center text-blueGray-600">
+              <p class="text-sm font-normal text-center text-blueGray-600">
                 <a href="{{item.image[0]}}" class="flex justify-center" target="_blank">
-                  <img src="{{item.image[0]}}" class="w-1/2 h-1/2 object-cover text-center" />
+                  <img src="{{item.image[0]}}" class="w-12 h-12 object-cover text-center"/>
                 </a>
               </p>
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
-              <p class="text-sm font-semibold text-center text-blueGray-600">
+              <p class="text-sm font-bold text-center text-blueGray-600">
                 {{item.productName}}
               </p>
             </td>
 
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
-              <p class="text-sm font-semibold text-center text-blueGray-600">
-                {{item.dates.cultivated | date: 'dd - MMM - yyyy HH:mm:ss'}}
+              <p class="text-sm font-normal text-center text-blueGray-600">
+                {{item.dates.cultivated | date: 'dd - MMM - yyyy'}}
               </p>
             </td>
 
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
-              <p class="text-sm font-semibold text-center text-blueGray-600">
-                {{item.dates.harvested | date: 'dd - MMM - yyyy HH:mm:ss'}}
+              <p class="text-sm font-normal text-center text-blueGray-600">
+                {{item.dates.harvested | date: 'dd - MMM - yyyy '}}
               </p>
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
-              <p class="text-sm font-semibold text-center text-blueGray-600">
-                {{item.price}}
+              <p class="text-sm font-normal text-center text-blueGray-600">
+                {{item.price | currency :'VND'}}
               </p>
             </td>
             <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
-              <p class="text-sm font-semibold text-center text-blueGray-600">
+              class="border-t-0 px-6 align-middle text-left border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
+              <i class="fa-solid fa-circle" style="color: #ffd148;" *ngIf="item.status=='CULTIVATING'"></i>
+              <i class="fa-solid fa-circle" style="color: #92ff74;" *ngIf="item.status=='HAVERTED'"></i>
+              <p class="text-sm font-normal text-center text-blueGray-600">
+
                 {{item.status}}
               </p>
             </td>
-            <td class="text-blueGray-600 font-semibold px-6 text-sm p-4 text-center w-1/4">
-              <button class="text-center focus:outline-none" (click)="showFullText = !showFullText"
-                      *ngIf="!showFullText">{{item.description
-                | slice:0:15}}...</button>
-              <button class="text-center focus:outline-none" (click)="showFullText = !showFullText"
-                      *ngIf="showFullText">{{item.description}}</button>
-            </td>
-<!--            <td-->
-<!--              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">-->
-<!--              <p class="text-sm font-semibold text-center text-blueGray-600">-->
-<!--                {{item.description}}-->
-<!--              </p>-->
-<!--            </td>-->
+            <!-- <td class="text-blueGray-600 font-semi-bold px-6 text-sm p-4 text-center w-1/4">
+              <button class="text-center focus:outline-none" (click)="showFullText = !showFullText" *ngIf="!showFullText">{{item.description
+| slice:0:15}}...</button>
+              <button class="text-center focus:outline-none" (click)="showFullText = !showFullText" *ngIf="showFullText">{{item.description}}</button>
+          </td> -->
+            <!--            <td-->
+            <!--              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">-->
+            <!--              <p class="text-sm font-semibold text-center text-blueGray-600">-->
+            <!--                {{item.description}}-->
+            <!--              </p>-->
+            <!--            </td>-->
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-600">
               <p class="text-sm font-semibold text-center text-blueGray-600">
@@ -142,44 +145,64 @@
               <!--                    (click)="open();dialog.showModal();" ></button>-->
 
               <button type="button"
-                class="mr-3 fa-solid focus:outline-none fa-pen-to-square text-base text-blue-500 hover:text-blue-600 transition-colors duration-300 ease-in-out transform"
-                (click)="open(item);dialog.showModal();"></button>
+                      class="mr-3 fa-solid focus:outline-none fa-pen-to-square text-base text-blue-500 hover:text-blue-600 transition-colors duration-300 ease-in-out transform"
+                      (click)="open(item);dialog.showModal();"></button>
               <button type="button"
-                class="fa-solid focus:outline-none fa-trash-can text-base text-red-500 hover:text-red-600 transition-colors duration-300 ease-in-out transform"></button>
+                      class="fa-solid focus:outline-none fa-trash-can text-base text-red-500 hover:text-red-600 transition-colors duration-300 ease-in-out transform"></button>
+            </td>
+            <td class="w-[181px] border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-center">
+<!--              <input type="checkbox" checked="checked" id="favorite" name="favorite-checkbox" value="favorite-button">-->
+<!--              <label for="favorite" class="container">-->
+
+<!--                <div class="action">-->
+<!--                  <span class="option-1">Harvest this product!</span>-->
+<!--                  <span class="option-2">Product is harvested!</span>-->
+<!--                </div>-->
+<!--              </label>-->
+              <button type="button" class="justify-center border bg-yellow-400 active:bg-yellow-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      (click)="harvestProduct(item.productId)"
+              *ngIf="item.status.toLowerCase() == 'cultivating'" >
+                Harvest this product!
+              </button>
+              <button type="button" *ngIf="item.status.toLowerCase()  == 'haverted'"
+                      class="w-[181px] justify-center bg-gray-200 font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" disabled>
+                Harvested Product
+              </button>
             </td>
           </tr>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
+    <dialog [ngClass]="openDialog ? 'flex':'hidden'" class=" relative flex-col bg-blueGray-100 rounded-lg w-1/3"
+            #dialog>
+      <div class="backdrop" (mousedown)="onBackdropClick($event)"></div>
+      <p class="text-xl font-medium">Update product</p>
+
+      <button type="button" class="absolute top-2 right-6 focus:outline-none text-xl font-bold text-red-600"
+              (click)="close()">X
+      </button>
+
+      <app-detail-product [product]="product" [reload]="reloadDetailProduct"></app-detail-product>
+      <!--(click)="save()"-->
+      <!--    <div class="w-full flex items-center text-center justify-around">-->
+      <!--      <button-->
+      <!--        class="w-3/12 border bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">Save</button>-->
+
+      <!--      <button-->
+      <!--        class="w-3/12 border bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"-->
+      <!--        (click)="close()">Cancel-->
+      <!--      </button>-->
+      <!--      &lt;!&ndash; <button class="sigin-btn bg-gradient-to-r from-[#ec556c] to-[#ea723e]" type="submit">-->
+      <!--        Submit-->
+      <!--      </button>-->
+      <!--      <button class="border-[#ec556c] border rounded-[0.5rem] cancel-btn focus:outline-none" type="reset"-->
+      <!--        (click)="close()">-->
+      <!--        Cancel-->
+      <!--      </button> &ndash;&gt;-->
+      <!--    </div>-->
+    </dialog>
+
+
   </div>
-  <dialog [ngClass]="openDialog ? 'flex':'hidden'" class=" relative flex-col bg-blueGray-100 rounded-lg w-1/3" #dialog>
-    <div class="backdrop" (mousedown)="onBackdropClick($event)"></div>
-    <p class="text-xl font-medium">Update product</p>
-
-    <button type="button" class="absolute top-2 right-6 focus:outline-none text-xl font-bold text-red-600"
-      (click)="close()">X</button>
-
-    <app-detail-product [product]="product" [reload]="reloadDetailProduct"></app-detail-product>
-    <!--(click)="save()"-->
-<!--    <div class="w-full flex items-center text-center justify-around">-->
-<!--      <button-->
-<!--        class="w-3/12 border bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">Save</button>-->
-
-<!--      <button-->
-<!--        class="w-3/12 border bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"-->
-<!--        (click)="close()">Cancel-->
-<!--      </button>-->
-<!--      &lt;!&ndash; <button class="sigin-btn bg-gradient-to-r from-[#ec556c] to-[#ea723e]" type="submit">-->
-<!--        Submit-->
-<!--      </button>-->
-<!--      <button class="border-[#ec556c] border rounded-[0.5rem] cancel-btn focus:outline-none" type="reset"-->
-<!--        (click)="close()">-->
-<!--        Cancel-->
-<!--      </button> &ndash;&gt;-->
-<!--    </div>-->
-  </dialog>
-
-
 </div>
-</div>
-

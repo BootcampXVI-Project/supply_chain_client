@@ -1,4 +1,6 @@
 import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
+import {UserService} from "../../../../_services/user.service";
+import {common} from "../../../../../../common";
 
 @Component({
   selector: 'app-detail-product',
@@ -6,11 +8,14 @@ import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
   styleUrls: ['./detail-product.component.scss']
 })
 export class DetailProductComponent implements OnInit{
+  status = common.status
+  statusSelected = 0
+
   @Input() product: string | undefined;
   @Input() reload = false;
 
   isCreateForm: boolean = false;
-
+  user: any = this.userService.getUser()
   item: any = {
     productName: "",
     image:"",
@@ -48,6 +53,7 @@ export class DetailProductComponent implements OnInit{
     }
   }
   ngOnInit(): void {
+
   }
 
   onSubmit() {
@@ -62,7 +68,7 @@ export class DetailProductComponent implements OnInit{
   getProduct(){
     // console.log(this.productId)
   }
-  constructor() {
+  constructor(private userService: UserService) {
     console.log("Detail")
   }
 

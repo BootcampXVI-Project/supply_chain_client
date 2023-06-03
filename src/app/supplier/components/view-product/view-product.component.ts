@@ -87,8 +87,6 @@ export class ViewProductComponent implements OnInit{
     }
     });
 
-
-
     // this.exerciseService.getExercise(productId).subscribe({
     //   next: (response) => {
     //     this.updateExercise = response
@@ -97,5 +95,17 @@ export class ViewProductComponent implements OnInit{
     //     console.error(err)
     //   },
     // })
+  }
+
+  harvestProduct(productId: any) {
+    // console.log(productId)
+    this.viewProductService.harvestProduct(productId)
+      .subscribe({
+        next: (response) => {
+          this.data.data.map(response);
+          this.product = this.data.data;
+        }
+      })
+
   }
 }
