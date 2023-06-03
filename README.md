@@ -1,4 +1,4 @@
-# Sully Chain Client
+# Supply Chain Management System - Web Application
 
 ## Change directory to folder supply_chain_client
 
