@@ -22,6 +22,7 @@ import { ProfileComponent } from './views/profile/profile.component';
 import {ViewProductComponent} from "./supplier/components/view-product/view-product.component";
 import {DetailProductComponent} from "./supplier/components/view-product/detail-product/detail-product.component";
 import {SupplierComponent} from "./supplier/components/supplier.component";
+import {AuthGuard} from "./_guards/auth.guard";
 
 const routes: Routes = [
   // admin views
@@ -41,6 +42,7 @@ const routes: Routes = [
   {
     path: "supplier",
     component: SupplierComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: "all", component: ViewProductComponent },
       { path: "", redirectTo: "supplier", pathMatch: "full" },

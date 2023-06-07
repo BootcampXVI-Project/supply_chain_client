@@ -22,9 +22,9 @@ export class SupplierNavbarComponent implements OnInit{
   open() {
     this.openDialog = true
   }
-  close() {
-
-    this.openDialog = false
+  close(data: any) {
+    console.log("du lieu truyen ve", data)
+    this.openDialog = data
     this.myDialog?.nativeElement.close();
   }
 }

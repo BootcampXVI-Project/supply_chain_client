@@ -19,7 +19,7 @@ import { TablesComponent } from './views/admin/tables/tables.component';
 import { LoginComponent } from './views/auth/login/login.component';
 import { RegisterComponent } from './views/auth/register/register.component';
 
-// no layouts views
+// no layouts view
 import { IndexComponent } from './views/index/index.component';
 import { ProfileComponent } from './views/profile/profile.component';
 
@@ -65,7 +65,11 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 import { CarouselItemDirective } from './components/carousel/carousel-item.directive';
 import { CarouselItemElementDirective } from './components/carousel/carousel-item-element.directive';
 import { PostImageComponent } from './components/post-image/post-image.component';
-import { SupplierComponent } from './supplier/components/supplier.component'
+import { SupplierComponent } from './supplier/components/supplier.component';
+import { CertificateComponent } from './components/certificate/certificate.component';
+import { ViewCertificateComponent } from './components/certificate/view-certificate/view-certificate.component';
+import { AddCertificateComponent } from './components/certificate/add-certificate/add-certificate.component';
+import { LoadingComponent } from './components/loading/loading.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -114,6 +118,10 @@ import { SupplierComponent } from './supplier/components/supplier.component'
     CarouselItemDirective,
     CarouselItemElementDirective,
     PostImageComponent,
+    CertificateComponent,
+    ViewCertificateComponent,
+    AddCertificateComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,

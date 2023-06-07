@@ -20,6 +20,14 @@ export class ShareDataService {
     this.imageSlides.next(value);
   }
 
+  deleteImageByPos(pos: number){
+    const currentImages = this.getImageSlideValue();
+    console.log(currentImages)
+    currentImages.splice(pos,1);
+    this.setImageSlideValue(currentImages);
+  }
+
+
   addImageToSlide(value: string){
     const currentImages = this.getImageSlideValue();
     currentImages.unshift(value);

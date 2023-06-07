@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ShareDataService} from "../../_services/share-data.service";
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import {finalize} from "rxjs";
@@ -11,7 +11,8 @@ import {FileUpLoadService} from "../../_services/file-up-load.service";
   styleUrls: ['./post-image.component.scss']
 })
 export class PostImageComponent implements  OnInit {
-  @Output()
+  @Output() dataEvent = new EventEmitter<any>();
+
   @Input() isPost: boolean = true;
   isImageLoading: boolean = false;
   currentImagePos: number = 0;
@@ -59,9 +60,17 @@ export class PostImageComponent implements  OnInit {
       )
   }
 
+  ngOnChange() {
+
+  }
+
   addImage(e: any) {
+    this.isImageLoading = true;
     this.uploadFile.convertFileToUrl(e.target.files[0]).subscribe((url: string) => {
       this.imageList.push(url);
+
+      this.dataEvent.emit(url);
+      this.isImageLoading = false
       console.log(this.imageList)
 
     });
@@ -78,7 +87,7 @@ export class PostImageComponent implements  OnInit {
   previousImage(){
     this.setLimitDrag();
     if(this.currentImagePos - 1 < 0){
-      this.currentImagePos = this.shareInfor.getImageSlideValue().length - 1;
+      this.currentImagePos = this.imageList.length - 1;
       this.distanNumber = -(this.limitDrag+110)
       this.distanceString = (this.distanNumber).toString() + 'px';
     }
@@ -98,16 +107,17 @@ export class PostImageComponent implements  OnInit {
   }
 
   deleteImage(i: number){
-    // this.currentImagePos = 0;
-    // this.shareInfor.deleteImageByPos(i);
-    // this.distanNumber = 0;
-    // this.distanceString = (this.distanNumber).toString() + 'px';
-    // this.setLimitDrag();
+    console.log(this.imageList[i])
+    this.currentImagePos = 0;
+    this.imageList.splice(i, 1);
+    this.distanNumber = 0;
+    this.distanceString = (this.distanNumber).toString() + 'px';
+    this.setLimitDrag();
   }
 
   afterImage(){
     this.setLimitDrag();
-    if(this.currentImagePos+1 > this.shareInfor.getImageSlideValue().length-1){
+    if(this.currentImagePos+1 > this.imageList.length-1){
       this.currentImagePos = 0;
       this.distanNumber = 0
       this.distanceString = (this.distanNumber).toString() + 'px';

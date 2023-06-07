@@ -93,14 +93,21 @@ export class IndexNavbarComponent implements OnInit {
     const password = this.loginForm?.get('password')?.value;
     // console.log(phoneNumber, password);
 
-    this.auth.login(phoneNumber, password).subscribe(
+    this.auth.login({phoneNumber, password}).subscribe(
       (response: any) => {
         // console.log(response);
         // let routeGo = response?.userType
         // console.log(JSON.parse(response).data.userType);
         this.loading = false;
-        console.log("login",this.userService.getUser())
-        const user = this.userService.getUser()
+        console.log("login",response)
+        const user = response
+        this.auth.getTokenInformation()
+        console.log("LOGIN",{
+          id: this.auth.getTokenId(),
+          name: this.auth.getTokenName(),
+          phone: this.auth.getTokenPhoneNumber(),
+          role: this.auth.getTokenRole(),
+        })
         AlertService.setAlertModel('success', 'Login successfully');
         if (user.role.toLowerCase() === "supplier"){
           this.route.navigate(['/supplier']);

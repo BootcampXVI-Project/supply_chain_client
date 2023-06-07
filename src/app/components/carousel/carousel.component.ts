@@ -10,17 +10,18 @@ import {
   Component,
   ContentChildren,
   Directive,
-  ElementRef,
+  ElementRef, EventEmitter,
   HostListener,
-  Input,
+  Input, Output,
   QueryList,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
 
-import { CarouselItemDirective } from './carousel-item.directive';
-import { CarouselItemElementDirective } from './carousel-item-element.directive';
-import { ShareDataService } from 'src/app/_services/share-data.service';
+import {CarouselItemDirective} from './carousel-item.directive';
+import {CarouselItemElementDirective} from './carousel-item-element.directive';
+import {ShareDataService} from 'src/app/_services/share-data.service';
+import {FileUpLoadService} from "../../_services/file-up-load.service";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -31,8 +32,9 @@ import { ShareDataService } from 'src/app/_services/share-data.service';
 })
 
 export class CarouselComponent implements AfterViewInit {
- 
-  @Input() imageList: any[] = [];
+  @Output() dataEvent = new EventEmitter<any>();
+
+  @Input() imageList: string[] | undefined;
   @Input() isPost: boolean = false;
   isImageLoading: boolean = false;
   currentImagePos: number = 0;
@@ -45,7 +47,13 @@ export class CarouselComponent implements AfterViewInit {
   widthListImage: number = 0;
   widthContain: number = 0;
 
-  constructor(public shareInfor: ShareDataService ,private _elementRef : ElementRef) {}
+  constructor(
+    public shareInfor: ShareDataService,
+    private _elementRef: ElementRef,
+    private uploadFile: FileUpLoadService
+  ) {
+    console.log("carousel", this.currentImagePos)
+  }
 
   ngOnInit(): void {
     this.shareInfor.setImageSlideValue([]);
@@ -57,95 +65,114 @@ export class CarouselComponent implements AfterViewInit {
 
   }
 
-  setLimitDrag(){
+  setLimitDrag() {
     this.shareInfor.getImageSlideValueAsTracking()
-    .subscribe(
-      respone =>{
-        this.widthContain =  this._elementRef.nativeElement.querySelector('#imageThumnailContain').offsetWidth;
-        this.widthListImage =  respone.length*120 +10;
-        if(this.widthListImage > this.widthContain){
-          this.limitDrag = this.widthListImage - this.widthContain ;
-          return;
+      .subscribe(
+        respone => {
+          this.widthContain = this._elementRef.nativeElement.querySelector('#imageThumnailContain').offsetWidth;
+          this.widthListImage = respone.length * 120 + 10;
+          if (this.widthListImage > this.widthContain) {
+            this.limitDrag = this.widthListImage - this.widthContain;
+            return;
+          }
+          this.limitDrag = 0;
         }
-        this.limitDrag = 0;
-      }
-    )
+      )
   }
 
-  addImage(e: any){
+  addImage(e: any) {
+    this.isImageLoading = true;
+    this.uploadFile.convertFileToUrl(e.target.files[0]).subscribe((url: string) => {
+      this.imageList?.push(url);
 
+      // this.dataEvent.emit(url);
+      this.isImageLoading = false
+      console.log(this.imageList)
+
+    });
   }
 
-  previousImage(){
+  changeImage(e: any) {
+    this.isImageLoading = true;
+    console.log("POS",this.currentImagePos)
+    // this.uploadFile.convertFileToUrl(e.target.files[0]).subscribe((url: string) => {
+    //   this.dataEvent.emit(url);
+    //   this.isImageLoading = false
+    //   console.log(this.imageList)
+
+    // });
+  }
+
+  previousImage() {
     this.setLimitDrag();
-    if(this.currentImagePos - 1 < 0){
-      this.currentImagePos = this.imageList.length - 1;
-      this.distanNumber = -(this.limitDrag+110)
+    if (this.currentImagePos - 1 < 0) {
+      this.currentImagePos = this.imageList!.length - 1;
+      this.distanNumber = -(this.limitDrag + 110)
       this.distanceString = (this.distanNumber).toString() + 'px';
-    }
-    else{
+    } else {
       this.currentImagePos -= 1;
     }
-    const widthOfCurrentImagePos = (this.currentImagePos+1) * 120;
-    if(widthOfCurrentImagePos + this.distanNumber  < this.widthContain ){
-      if(this.distanNumber + 110 >= 0){
+    const widthOfCurrentImagePos = (this.currentImagePos + 1) * 120;
+    if (widthOfCurrentImagePos + this.distanNumber < this.widthContain) {
+      if (this.distanNumber + 110 >= 0) {
         this.distanNumber = 0
         this.distanceString = (this.distanNumber).toString() + 'px';
         return
       }
-      this.distanceString = (this.distanNumber +110).toString() + 'px';
+      this.distanceString = (this.distanNumber + 110).toString() + 'px';
       this.distanNumber += 110;
     }
   }
 
-  deleteImage(i: number){
+  deleteImage(i: number) {
 
   }
 
-  forwardImage(){
+  forwardImage() {
     this.setLimitDrag();
-    if(this.currentImagePos+1 > this.imageList.length-1){
+    if (this.currentImagePos + 1 > this.imageList!.length - 1) {
       this.currentImagePos = 0;
       this.distanNumber = 0
       this.distanceString = (this.distanNumber).toString() + 'px';
       return;
-    }
-    else {
+    } else {
       this.currentImagePos += 1;
     }
 
-    const widthOfCurrentImagePos = (this.currentImagePos+1) * 120;
-    if(widthOfCurrentImagePos + this.distanNumber  > this.widthContain ){
-      if(this.distanNumber - 110 <= -this.limitDrag){
+    const widthOfCurrentImagePos = (this.currentImagePos + 1) * 120;
+    if (widthOfCurrentImagePos + this.distanNumber > this.widthContain) {
+      if (this.distanNumber - 110 <= -this.limitDrag) {
         this.distanNumber = -this.limitDrag
         this.distanceString = (this.distanNumber).toString() + 'px';
         return
       }
-      this.distanceString = (this.distanNumber -110).toString() + 'px';
+      this.distanceString = (this.distanNumber - 110).toString() + 'px';
       this.distanNumber -= 110;
     }
   }
 
 
-  moveImages(e: any){
+  moveImages(e: any) {
 
     const movedDistance = this.startDragPos - Number(e.clientX);
-    const leftPos =  this.distanNumber - movedDistance;
-    if(leftPos <= -this.limitDrag ||  leftPos > 0){
-        return;
+    const leftPos = this.distanNumber - movedDistance;
+    if (leftPos <= -this.limitDrag || leftPos > 0) {
+      return;
     }
     this.distanceString = leftPos.toString() + 'px';
   }
 
-  endDrag(e:any){
-    this.distanNumber =Number(this.distanceString.replace('px',''));
+  endDrag(e: any) {
+    this.distanNumber = Number(this.distanceString.replace('px', ''));
 
   }
-  getFirstPos(e:any){
+
+  getFirstPos(e: any) {
     this.startDragPos = Number(e.clientX);
 
-}
-  chooseImage(pos: number){
+  }
+
+  chooseImage(pos: number) {
 
     this.currentImagePos = pos;
 
