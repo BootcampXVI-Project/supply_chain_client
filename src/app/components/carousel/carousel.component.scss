@@ -1,0 +1,88 @@
+// .container {
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%;
+//   width: 100%;
+
+//   .content {
+//     flex: 5;
+//     position: relative;
+//     background-size: cover;
+//     padding: 0 15px;
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     height: 100%;
+//     width: 100%;
+//     background-repeat: no-repeat;
+
+//     .image {
+//         position: relative;
+//         background-size: cover;
+//         padding: 0 15px;
+//         display: flex;
+//         justify-content: space-between;
+//         align-items: center;
+//         height: 100%;
+//         width: 100%;
+//         background-repeat: no-repeat;
+//     }
+
+//     .edit-icon {
+//         position: absolute;
+//         right: 7px;
+//         top: 7px;
+//     }
+
+//     .previous-icon,
+//     .after-icon {
+//         border-radius: 5px;
+//         background-color: aliceblue;
+//         height: 35px;
+//         width: 35px;
+//     }
+//   }
+
+//   .thumbnail-container {
+//     position: relative;
+//     flex: 1;
+//     align-items: center;
+//     justify-content: center;
+//     overflow: hidden;
+
+//     #imageThumnails {
+//       position: absolute;
+//       height: 100%;
+//       display: flex;
+//       align-items: center;
+//       padding: 0 5px;
+    
+//       .thumbnail {
+//         background-repeat: no-repeat;
+//         object-fit: cover;
+//         display: inline;
+//         float: left;
+//         height: 80%;
+//         width: 110px;
+//         background-color: red;
+//         border-radius: 10px;
+//         margin: 0px 5px;
+    
+//         .delete-icon {
+//           float: right;
+//           height: 20px;
+//           width: 20px;
+//           background-color: rgb(255, 255, 255);
+//           opacity: 0.9;
+//           display: flex;
+//           justify-content: center;
+//           align-items: center;
+//           border-radius: 100px;
+//           margin-top: 2px;
+//           margin-right: 2px;
+//         }
+//       }
+//     }
+    
+//   }
+// }

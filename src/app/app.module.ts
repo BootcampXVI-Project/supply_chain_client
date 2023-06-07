@@ -19,7 +19,7 @@ import { TablesComponent } from './views/admin/tables/tables.component';
 import { LoginComponent } from './views/auth/login/login.component';
 import { RegisterComponent } from './views/auth/register/register.component';
 
-// no layouts views
+// no layouts view
 import { IndexComponent } from './views/index/index.component';
 import { ProfileComponent } from './views/profile/profile.component';
 
@@ -46,7 +46,6 @@ import { PagesDropdownComponent } from './components/dropdowns/pages-dropdown/pa
 import { NotificationDropdownComponent } from './components/dropdowns/notification-dropdown/notification-dropdown.component';
 // import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { UserDropdownComponent } from './components/dropdowns/user-dropdown/user-dropdown.component';
-import { SupplierComponent } from './layouts/supplier/supplier.component';
 import { SupplierNavbarComponent } from './components/navbars/supplier-navbar/supplier-navbar.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
@@ -54,7 +53,23 @@ import { ManufacturerComponent } from './layouts/manufacturer/manufacturer.compo
 import { DistributorComponent } from './layouts/distributor/distributor.component';
 import { RetailerComponent } from './layouts/retailer/retailer.component';
 import { SupplierSidebarComponent } from './components/sidebar/supplier-sidebar/supplier-sidebar.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { ViewProductComponent } from './supplier/components/view-product/view-product.component';
+import {ToastrModule} from "ngx-toastr";
+import { DetailProductComponent } from './supplier/components/view-product/detail-product/detail-product.component';
+import {AngularFireModule} from "@angular/fire/compat";
+import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
+import {AngularFireStorageModule} from "@angular/fire/compat/storage";
+import {environment} from "./environments/environment";
+import { CarouselComponent } from './components/carousel/carousel.component';
+import { CarouselItemDirective } from './components/carousel/carousel-item.directive';
+import { CarouselItemElementDirective } from './components/carousel/carousel-item-element.directive';
+import { PostImageComponent } from './components/post-image/post-image.component';
+import { SupplierComponent } from './supplier/components/supplier.component';
+import { CertificateComponent } from './components/certificate/certificate.component';
+import { ViewCertificateComponent } from './components/certificate/view-certificate/view-certificate.component';
+import { AddCertificateComponent } from './components/certificate/add-certificate/add-certificate.component';
+import { LoadingComponent } from './components/loading/loading.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,12 +112,33 @@ import { ReactiveFormsModule } from '@angular/forms';
     DistributorComponent,
     RetailerComponent,
     SupplierSidebarComponent,
+    ViewProductComponent,
+    DetailProductComponent,
+    CarouselComponent,
+    CarouselItemDirective,
+    CarouselItemElementDirective,
+    PostImageComponent,
+    CertificateComponent,
+    ViewCertificateComponent,
+    AddCertificateComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot(
+      {
+        timeOut: 1800,
+        preventDuplicates: true,
+        easeTime: 300,
+      }
+    ),
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireStorageModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

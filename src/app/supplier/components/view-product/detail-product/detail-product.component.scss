@@ -1,0 +1,27 @@
+input{
+    border-radius: 6px;
+}
+
+ 
+  .justify-around {
+    justify-content: space-around;
+  }
+  
+  .image-container {
+    width: 100%;
+  }
+  
+  .image {
+    width: 100%;
+  }
+  .textarea-container {
+    width: 80%; /* Adjust the width as needed */
+    display: flex;
+    justify-content: center;
+  }
+  .w-85{
+    width: 85%;
+  }
+  .paddinglep{
+    padding-left: 7.5%
+}

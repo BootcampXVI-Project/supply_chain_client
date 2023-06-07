@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 // layouts
 import { AdminComponent } from './layouts/admin/admin.component';
 import { AuthComponent } from './layouts/auth/auth.component';
-import { SupplierComponent } from './layouts/supplier/supplier.component';
 
 // admin views
 import { DashboardComponent } from './views/admin/dashboard/dashboard.component';
@@ -20,6 +19,10 @@ import { ProductsComponent } from './views/auth/products/products.component';
 // no layouts views
 import { IndexComponent } from './views/index/index.component';
 import { ProfileComponent } from './views/profile/profile.component';
+import {ViewProductComponent} from "./supplier/components/view-product/view-product.component";
+import {DetailProductComponent} from "./supplier/components/view-product/detail-product/detail-product.component";
+import {SupplierComponent} from "./supplier/components/supplier.component";
+import {AuthGuard} from "./_guards/auth.guard";
 
 const routes: Routes = [
   // admin views
@@ -35,10 +38,15 @@ const routes: Routes = [
     ],
   },
   // supplier views
+
   {
-    path: 'supplier',
+    path: "supplier",
     component: SupplierComponent,
-    children: [{ path: '', redirectTo: '', pathMatch: 'full' }],
+    canActivate: [AuthGuard],
+    children: [
+      { path: "all", component: ViewProductComponent },
+      { path: "", redirectTo: "supplier", pathMatch: "full" },
+    ],
   },
   // auth views
   {
@@ -50,6 +58,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
     ],
   },
+
   // no layout views
   { path: 'product', component: ProductsComponent },
   { path: 'profile', component: ProfileComponent },
