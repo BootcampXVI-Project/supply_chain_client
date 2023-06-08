@@ -1,0 +1,57 @@
+<table mat-table [dataSource]="dataSourceProduct" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let i = index"> {{i+1}} </td>
+    </ng-container>
+
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="productName">
+        <th mat-header-cell *matHeaderCellDef> Product name </th>
+        <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="cultivatedDate">
+        <th mat-header-cell *matHeaderCellDef> Cultivated date</th>
+        <td mat-cell *matCellDef="let element"> {{element.dates.cultivated | date: 'dd - MMM - yyyy'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="harvestedDate">
+        <th mat-header-cell *matHeaderCellDef> Harvested date</th>
+        <td mat-cell *matCellDef="let element"> {{element.dates.harvested | date: 'dd - MMM - yyyy'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price</th>
+        <td mat-cell *matCellDef="let element"> {{element.price | currency : 'VND'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status</th>
+        <td mat-cell *matCellDef="let element">
+            <i class="fa-solid fa-circle" style="color: #ffd148;" *ngIf="element.status=='CULTIVATING'"></i>
+            <i class="fa-solid fa-circle" style="color: #92ff74;" *ngIf="element.status=='HARVESTED'"></i> {{element.status}} </td>
+    </ng-container>
+    <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action</th>
+        <td mat-cell *matCellDef="let element">
+            <button type="button" class="mr-3 fa-solid focus:outline-none fa-pen-to-square text-base text-blue-500 hover:text-blue-600 transition-colors duration-300 ease-in-out transform" (click)="open(element);dialog.showModal();"></button>
+            <button type="button" class="fa-solid focus:outline-none fa-trash-can text-base text-red-500 hover:text-red-600 transition-colors duration-300 ease-in-out transform"></button>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayProductColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayProductColumns;"></tr>
+</table>
+<mat-paginator #productPaginator [pageSizeOptions]="[3,5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+<dialog [ngClass]="openDialog ? 'flex':'hidden'" class=" relative flex-col bg-blueGray-100 rounded-lg w-5/6" #dialog>
+    <div class="backdrop" (mousedown)="onBackdropClick($event)"></div>
+    <p class="text-xl font-medium">Update product</p>
+
+    <button type="button" class="absolute top-2 right-6 focus:outline-none text-xl font-bold text-red-600" (click)="close({isClose:true, isReload:false})">X
+</button>
+
+    <app-detail-product [product]="product" [reload]="reloadDetailProduct" (dataEvent)="close($event)"></app-detail-product>
+</dialog>
