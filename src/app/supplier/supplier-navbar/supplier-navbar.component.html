@@ -1,0 +1,52 @@
+<nav class="bg-white border-gray-200 ">
+  <div
+    class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+  >
+    <!--    <app-supplier-sidebar class="block"></app-supplier-sidebar>-->
+    <a href="https://flowbite.com/" class="flex items-center">
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/logo%2Flogo.png?alt=media&token=82860508-bacc-4e73-8afa-675134faa8fa&_gl=1*1gkan4e*_ga*ODc2NDc0NDM1LjE2ODQyMzA5NDQ.*_ga_CW55HF8NVT*MTY4NTU5ODg5MS4xMy4xLjE2ODU1OTg4OTcuMC4wLjA."
+        class="h-16 mr-16"
+        alt="Flowbite Logo"
+      />
+    </a>
+    <div  class="lg:flex lg:flex-grow items-center">
+      <ul class="flex flex-col lg:flex-row list-none ml-auto">
+        <li class="nav-item">
+          <button (click)="open();dialog.showModal();">
+            Add
+          </button>
+        </li>
+        <li class="nav-item">
+          <app-account></app-account>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<dialog [ngClass]="openDialog ? 'flex':'hidden'" class=" relative flex-col bg-blueGray-100 rounded-lg w-1/3" #dialog>
+  <div class="backdrop"></div>
+  <p class="text-xl font-medium">Update product</p>
+
+  <button type="button" class="absolute top-2 right-6 focus:outline-none text-xl font-bold text-red-600"
+          (click)="close(false)">X</button>
+
+  <app-detail-product [product]=undefined [reload]="reloadDetailProduct" (dataEvent)="close($event)"></app-detail-product>
+  <!--(click)="save()"-->
+  <!--  <div class="w-full flex items-center text-center justify-around">-->
+  <!--    <button-->
+  <!--      class="w-3/12 border bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">Save</button>-->
+
+  <!--    <button-->
+  <!--      class="w-3/12 border bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"-->
+  <!--      (click)="close()">Cancel</button>-->
+  <!-- <button class="sigin-btn bg-gradient-to-r from-[#ec556c] to-[#ea723e]" type="submit">
+    Submit
+  </button>
+  <button class="border-[#ec556c] border rounded-[0.5rem] cancel-btn focus:outline-none" type="reset"
+    (click)="close()">
+    Cancel
+  </button> -->
+  <!--  </div>-->
+</dialog>
