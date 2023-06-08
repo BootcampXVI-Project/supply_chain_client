@@ -4,6 +4,7 @@ import {common} from "../../../../../../common";
 import {ViewProductService} from "../view-product.service";
 import { Unit } from "../../../../../assets/ENUM";
 import { Product } from "../../../../models/product-model";
+import {ProductService} from "../../../../_services/product.service";
 
 @Component({
   selector: 'app-detail-product',
@@ -22,6 +23,7 @@ export class DetailProductComponent implements OnInit{
 
   openDialog: boolean = false
   openCertification: boolean = false
+  hasCertificate: boolean = false
 
   status = common.status
   statusSelected = 0
@@ -30,18 +32,6 @@ export class DetailProductComponent implements OnInit{
   user: any = '';
   reloadDetailProduct = false;
   data: any
-
-  // item: any = {
-  //   productName: "",
-  //   image: [],
-  //   price: "",
-  //   amount: "",
-  //   unit: "",
-  //   dates: "",
-  //   status:"",
-  //   description:"",
-  //   certificateUrl:"",
-  // };
 
   item: Product = {
     userId: '',
@@ -79,12 +69,15 @@ export class DetailProductComponent implements OnInit{
 
   openCertificate(product: any) {
     this.product = product
+    console.log("OPEN", product)
+    this.hasCertificate = !!product.productObj.certificateUrl;
     this.openCertification = true
   }
 
-  closeCertificate() {
-    this.openCertification = false
-    this.openDialog = false
+  closeCertificate(data: any) {
+    console.log("du lieu truyen ve", data)
+    this.openCertification = data
+    // this.openDialog = data
     this.certDialog?.nativeElement.close();
   }
 
@@ -93,13 +86,14 @@ export class DetailProductComponent implements OnInit{
     this.openDialog = true
   }
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.product)
-    console.log(this.user)
+    console.log("DETAIL",this.product)
+    console.log("DETAIL",this.user)
     this.item.productObj.supplierId = this.item.userId = this.user.userId
     if(this.product) {
       this.isCreateForm = false;
-      this.data = this.product
-      this.item.productObj = this.data
+      this.productService.setProduct(this.product)
+      this.data = this.productService.getProduct()
+      this.item = this.data
     } else {
       console.log("false", this.product)
       this.isCreateForm = true;
@@ -117,24 +111,27 @@ export class DetailProductComponent implements OnInit{
 
   }
 
+
   onSubmit() {
     console.log("this is submit");
     console.log("item", this.product)
-    if (this.product) {
-      console.log("update")
+    if (this.product?.productObj.productId) {
+      console.log("update",this.product.productObj.productId)
       this.item.productObj.productId = JSON.parse(JSON.stringify(this.product)).productId
-      this.productService.updateProduct(this.item).subscribe({
+      this.closeCertificate(false)
+      this.viewProductService.updateProduct(this.item).subscribe({
         next: (response) => {
           console.log(response);
-          close()
+          this.close()
         }
       });
     } else {
       console.log("create")
-      this.productService.createProduct(this.item).subscribe({
+      this.closeCertificate(false)
+      this.viewProductService.createProduct(this.item).subscribe({
         next: (response) => {
           console.log(response);
-          close()
+          this.close()
         }
       });
     }
@@ -147,8 +144,12 @@ export class DetailProductComponent implements OnInit{
   }
 
   handleDataEvent(data: any) {
-    this.addImage(data);
-    this.changeImage(data);
+    if (data.event == "close") {
+      this.closeCertificate(data.data)
+    }
+    if (data.event == 'addcert') {
+      this.addCertificate(data.data);
+    }
   }
 
   addImage(data: any) {
@@ -164,16 +165,42 @@ export class DetailProductComponent implements OnInit{
     console.log("change")
   }
 
+  addCertificate(data: any) {
+    if (this.product) {
+      this.product.productObj.certificateUrl = data;
+    }
+  }
+
 
   getProduct(){
     // console.log(this.productId)
   }
-  constructor(private userService: UserService, private productService: ViewProductService) {
+  constructor(
+    private userService: UserService,
+    private viewProductService: ViewProductService,
+    private productService: ProductService
+  ) {
     this.user = this.userService.getUser()
     console.log("Detail")
   }
 
   loadData() {
     console.log(JSON.parse(JSON.stringify(this.product)))
+  }
+
+  harvestProduct(productId: any) {
+    console.log("HARVEST",productId)
+    this.data = this.productService.getProduct()
+    this.viewProductService.harvestProduct(productId)
+      .subscribe({
+        next: (response) => {
+          console.log(this.data.data)
+          if (this.data?.data) {
+            this.data.data.map(response);
+            this.product = this.data.data;
+          }
+          this.close()
+        }
+      })
   }
 }

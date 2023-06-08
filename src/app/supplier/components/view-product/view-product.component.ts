@@ -21,12 +21,8 @@ export class ViewProductComponent implements OnInit {
   @ViewChild('dialog') myDialog: ElementRef | undefined;
   @ViewChild('dialogCert') certDialog: ElementRef | undefined;
   products: any[] = []
-  // product: any
   productId: string = ""
-  showFullText = false;
   data: any
-  showEditModal: boolean = false
-  selectedImageFile?: ImageSnippet
   reloadDetailProduct = false;
   currentUser?: UserToken;
 
@@ -34,7 +30,7 @@ export class ViewProductComponent implements OnInit {
   openCertification: boolean = false
   hasCertificate: boolean = false
 
-  user: any = this.userService.getUser()
+  user: any = this.userService.getUser();
   product: Product = {
     userId: '',
     productObj: {
@@ -89,6 +85,7 @@ export class ViewProductComponent implements OnInit {
     console.log("du lieu truyen ve", data)
     this.openDialog = data
     this.myDialog?.nativeElement.close();
+    location.reload()
   }
 
   constructor(
@@ -105,12 +102,6 @@ export class ViewProductComponent implements OnInit {
         this.product.productObj.supplierId = this.currentUser.userId
       }
     });
-    // this.isLoading = true;
-    // this.contentService.checkContentIsExistByPersonId()
-    //   .subscribe(respone =>{
-    //     this.isLoading = false;
-    //     this.isExistContent = respone;
-    //   })
   }
 
   ngOnInit(): void {
@@ -121,9 +112,8 @@ export class ViewProductComponent implements OnInit {
     this.viewProductService.getAllProduct().subscribe({
       next: (response) => {
         this.data = response;
-        this.products = this.data.data;
-        for (let i of this.products) {
-          console.log(i)
+        for (let i of this.data.data) {
+          this.products.push(this.viewProductService.mapProductobjToproduct(i))
         }
       },
       error: (err) => {
@@ -132,62 +122,29 @@ export class ViewProductComponent implements OnInit {
     })
   }
 
-  //
-  // processImageFile(avatar: any) {
-  //   const file: File = avatar.files[0]
-  //   const reader = new FileReader()
-  //   reader.addEventListener('load', (evt: any) => {
-  //     this.selectedImageFile = new ImageSnippet(evt.target.result, file)
-  //     this.product.productObj.image = this.selectedImageFile.src
-  //
-  //     console.log(this.product.image)
-  //   })
-  //   reader.readAsDataURL(file)
-  //   // this.imageChange = true
-  // }
-
-  // onEditExercise(productId: any) {
-  //   console.log("Edit", productId)
-  //   // if (!this.accessToken) return;
-  //   this.showEditModal = true;
-  //   this.viewProductService.getProduct(productId).subscribe({
-  //     next: (response) => {
-  //       this.data = response;
-  //       this.product = this.data.data;
-  //     }
-  //   });
-  //
-  //   // this.exerciseService.getExercise(productId).subscribe({
-  //   //   next: (response) => {
-  //   //     this.updateExercise = response
-  //   //   },
-  //   //   error: (err) => {
-  //   //     console.error(err)
-  //   //   },
-  //   // })
-  // }
-
   harvestProduct(productId: any) {
-    // console.log(productId)
+    console.log("HARVEST",productId)
     this.viewProductService.harvestProduct(productId)
       .subscribe({
         next: (response) => {
           this.data.data.map(response);
           this.product = this.data.data;
+          location.reload();
         }
       })
-
   }
 
-  openCertificate(product: any) {
-    this.product = product
-    this.hasCertificate = !!product.certificateUrl;
-    this.openCertification = true
-  }
+  // openCertificate(product: any) {
+  //   this.product = product
+  //   console.log("OPEN", product)
+  //   this.hasCertificate = !!product.productObj.certificateUrl;
+  //   this.openCertification = true
+  // }
 
-  closeCertificate() {
-    this.openCertification = false
-    this.openDialog = false
-    this.certDialog?.nativeElement.close();
-  }
+  // closeCertificate(data: any) {
+  //   console.log("du lieu truyen ve", data)
+  //   this.openCertification = data
+  //   this.openDialog = data
+  //   this.certDialog?.nativeElement.close();
+  // }
 }

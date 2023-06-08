@@ -28,7 +28,6 @@ export class PostImageComponent implements  OnInit {
 
 
   constructor(
-    public shareInfor: ShareDataService ,
     private _elementRef : ElementRef,
     private storage: AngularFireStorage,
     private uploadImageService: UploadImageService,
@@ -36,7 +35,6 @@ export class PostImageComponent implements  OnInit {
     /*private fileService: FileUploadService*/) {}
 
   ngOnInit(): void {
-    this.shareInfor.setImageSlideValue([]);
 
   }
 
@@ -46,18 +44,7 @@ export class PostImageComponent implements  OnInit {
   }
 
   setLimitDrag(){
-    this.shareInfor.getImageSlideValueAsTracking()
-      .subscribe(
-        respone =>{
-          this.widthContain =  this._elementRef.nativeElement.querySelector('#imageThumnailContain').offsetWidth;
-          this.widthListImage =  respone.length*120 +10;
-          if(this.widthListImage > this.widthContain){
-            this.limitDrag = this.widthListImage - this.widthContain ;
-            return;
-          }
-          this.limitDrag = 0;
-        }
-      )
+
   }
 
   ngOnChange() {
@@ -65,6 +52,7 @@ export class PostImageComponent implements  OnInit {
   }
 
   addImage(e: any) {
+    console.log("POS-P", this.currentImagePos)
     this.isImageLoading = true;
     this.uploadFile.convertFileToUrl(e.target.files[0]).subscribe((url: string) => {
       this.imageList.push(url);

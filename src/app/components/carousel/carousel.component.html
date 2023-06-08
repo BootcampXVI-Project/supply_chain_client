@@ -4,14 +4,16 @@
       style="position: relative; background-size: contain; background-position: center; padding: 0 15px; display: flex; justify-content: space-between; align-items: center; height: 100%; background-repeat: no-repeat;"
       [ngStyle]="{'background-image': 'url('+ imageList![currentImagePos] +' )'}">
       <div style="position: absolute; right: 7px; top: 7px;">
-        <label for="file-input">
+        <label for="file-input-edit">
           <i *ngIf="!isImageLoading" class="fas fa-add" style="color: #0c367e; font-size: 30px;"></i>
           <app-loading [isLoading]="isImageLoading"></app-loading>
 
         </label>
-        <input *ngIf="!isImageLoading" id="file-input" type="file" style="height: 1px; width: 1px; opacity: 0;"
-               (change)="addImage($event)"/>
-        <label for="file-input">
+
+
+        <input *ngIf="!isImageLoading" id="file-input-edit" type="file" style="height: 1px; width: 1px; opacity: 0;"
+               (change)="addImage1($event)"/>
+        <label for="file-edit">
           <i *ngIf="!isImageLoading" class="fas fa-edit" style="color: #0c367e; font-size: 30px;"></i>
           <app-loading [isLoading]="isImageLoading"></app-loading>
 

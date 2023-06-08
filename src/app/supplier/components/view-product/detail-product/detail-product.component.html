@@ -2,11 +2,13 @@
   <div style="height: 40vh; width: 100%;" class="mb-2">
     <carousel
       [imageList]="item.productObj.image"
-      *ngIf="!isCreateForm && item.productObj.image"
-      (dataEvent)="handleDataEvent($event)"
+      *ngIf="!isCreateForm && item.productObj.image">
+<!--      (dataEvent)="handleDataEvent($event)"-->
     >
     </carousel>
-    <app-post-image *ngIf="isCreateForm" (dataEvent)="addImage($event)">
+    <app-post-image
+      *ngIf="isCreateForm"
+      (dataEvent)="addImage($event)">
 
     </app-post-image>
   </div>
@@ -24,7 +26,26 @@
     </div>
     <div *ngIf="!isCreateForm">
       <label for="status" class="font-bold text-gray-500 left-0">Status:</label> <br>
-      <input style="background-color: #e4e4e7" type="text" id="status" name="status" [(ngModel)]="item.productObj.status" disabled>
+<!--      <input -->
+<!--        style="background-color: #e4e4e7" -->
+<!--        type="text" -->
+<!--        id="status" -->
+<!--        name="status" -->
+<!--        [(ngModel)]="item.productObj.status"-->
+<!--        disabled-->
+<!--      >-->
+
+      <button type="button"
+              class="justify-center border bg-yellow-400 active:bg-yellow-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              (click)="harvestProduct(item.productObj.productId)"
+              *ngIf="item.productObj.status.toLowerCase() == 'cultivating'">
+        Harvest this product!
+      </button>
+      <button type="button" *ngIf="item.productObj.status.toLowerCase()  == 'harvested'"
+              class="w-[181px] justify-center bg-gray-200 font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              disabled>
+        Harvested Product
+      </button>
     </div>
   </div>
   <div class="flex justify-around mb-2">
@@ -55,18 +76,37 @@
   <div class="flex justify-around mb-2" *ngIf="!isCreateForm">
     <div>
       <label for="cultivatedDate" class="font-bold text-gray-500">Cultivated Date:</label> <br>
-      <input style="background-color: #e4e4e7" type="text" id="cultivatedDate" name="cultivatedDate"
+      <input
+        style="background-color: #e4e4e7"
+        type="text" id="cultivatedDate"
+        name="cultivatedDate"
+        class="border-0"
              [value]="item.productObj.dates?.cultivated | date: 'dd - MMM - yyyy HH:mm:ss'" disabled>
     </div>
     <div>
       <label for="harvestedDate" class="font-bold text-gray-500">Harvested Date:</label> <br>
-      <input style="background-color: #e4e4e7" type="text" id="harvestedDate" name="harvestedDate"
-             [value]="item.productObj.dates?.harvested | date: 'dd - MMM - yyyy HH:mm:ss'" *ngIf="item.productObj.dates?.harvested" disabled>
-      <input style="background-color: #e4e4e7" type="text" id="harvestedDate" name="harvestedDate"
+      <input
+        style="background-color: #e4e4e7"
+        type="text" id="harvestedDate"
+        name="harvestedDate"
+        class="border-0"
+        [value]="item.productObj.dates?.harvested | date: 'dd - MMM - yyyy HH:mm:ss'" *ngIf="item.productObj.dates?.harvested"
+        disabled
+      >
+      <input style="background-color: #e4e4e7" type="text" name="harvestedDate"
              [value]="'dd - MMM - yyyy'" *ngIf="!item.productObj.dates?.harvested" disabled>
     </div>
   </div>
-
+  <div class="w-full flex">
+    <label class="paddinglep flex justify-between flex-wrap font-bold text-gray-500"
+           for="description">Certification:</label>
+      <button type="button"
+              class="fa-solid fa-eye text-green-500 hover:text-green-600 focus:outline-none  mx-3 text-base transition-colors duration-300 ease-in-out transform" (click)="openCertificate(item);dialogCert.showModal()" *ngIf="item.productObj.certificateUrl != ''"></button>
+      <button type="button"
+              class="w-1/12  h-1/12 object-cover" *ngIf="item.productObj.certificateUrl == ''"><svg fill="none" stroke="Orange" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" (click)="openCertificate(item);dialogCert.showModal()">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m6.75 12l-3-3m0 0l-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"></path>
+      </svg></button>
+  </div>
   <div class="w-full">
     <label class="w-full paddinglep flex justify-between flex-wrap font-bold text-gray-500"
            for="description">Description:</label>
@@ -80,12 +120,11 @@
   <br>
   <div class="flex justify-around mb-2">
     <button type="submit"
-            class="w-3/12 border bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+            class="w-3/12 border text-white font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            [disabled]="!item.productObj.productName || !item.productObj.amount || item.productObj.image == null || item.productObj.image.length == 0"
+            [ngClass]="!item.productObj.productName || !item.productObj.amount || item.productObj.image == null || item.productObj.image.length == 0 ? 'bg-slate-400' : 'bg-green-500 hover:bg-green-600'"
+    >
       Submit
-    </button>
-    <button type="button"
-            class="w-3/12 border bg-yellow-500 text-white active:bg-yellow-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" (click)="openCertificate(item);dialogCert.showModal();" *ngIf="isCreateForm">
-      Add Certificate
     </button>
     <button type="button"
             class="w-3/12 border bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -94,14 +133,24 @@
   </div>
   <br>
 </form>
+
+
+
 <dialog [ngClass]="openCertification ? 'flex':'hidden'" class="relative flex-col bg-blueGray-100 rounded-lg w-1/3" #dialogCert>
-  <p class="text-xl font-medium">Add Certificate</p>
+  <p class="text-xl font-medium" *ngIf="hasCertificate">Certificate</p>
+  <p class="text-xl font-medium" *ngIf="!hasCertificate">Add Certificate</p>
   <button type="button" class="absolute top-2 right-6 focus:outline-none text-xl font-bold text-red-600"
-          (click)="closeCertificate()">X
+          (click)="closeCertificate(false)">X
   </button>
 
-  <app-add-certificate [product]="product" [reload]="reloadDetailProduct">
+  <app-certificate [product]="product" (dataEvent)="handleDataEvent($event)"></app-certificate>
+<!--  <app-view-certificate [product]="product" *ngIf="hasCertificate">-->
 
-  </app-add-certificate>
+<!--  </app-view-certificate>-->
+
+<!--  <app-add-certificate  [product]="product"  *ngIf="!hasCertificate" (dataEvent)="handleDataEvent($event)">-->
+
+<!--  </app-add-certificate>-->
 
 </dialog>
+

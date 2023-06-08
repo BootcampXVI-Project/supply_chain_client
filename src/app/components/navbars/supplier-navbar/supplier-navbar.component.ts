@@ -1,4 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AuthService} from "../../../_services/auth.service";
 
 @Component({
   selector: 'app-supplier-navbar',
@@ -11,12 +12,19 @@ export class SupplierNavbarComponent implements OnInit{
   openDialog: boolean = false
   reloadDetailProduct = false;
 
-  constructor() {}
+  constructor(
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {}
 
   setNavbarOpen() {
     this.navbarOpen = !this.navbarOpen;
+  }
+
+  logout() {
+    console.log("LOGOUT")
+    this.authService.logout()
   }
 
   open() {
@@ -26,5 +34,6 @@ export class SupplierNavbarComponent implements OnInit{
     console.log("du lieu truyen ve", data)
     this.openDialog = data
     this.myDialog?.nativeElement.close();
+    location.reload()
   }
 }
