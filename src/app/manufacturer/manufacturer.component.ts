@@ -37,125 +37,125 @@ export class ManufacturerComponent implements OnInit{
   //   {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
   //   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
   // ];
-
-  dataSource = new MatTableDataSource();
-
-  @ViewChild('dialog') myDialog: ElementRef | undefined;
-  @ViewChild('dialogCert') certDialog: ElementRef | undefined;
-  @ViewChild('manufacturerPaginator', {static: true}) manufacturerPaginator!: MatPaginator
-
-  products: any[] = []
-  productId: string = ""
-  data: any
-  reloadDetailProduct = false;
-  currentUser?: UserToken;
-
-  openDialog: boolean = false
-  openCertification: boolean = false
-  hasCertificate: boolean = false
-
-  // dataSource = new MatTableDataSource<any>()
-  user: any = this.userService.getUser();
-  product: Product = {
-    userId: '',
-    productObj: {
-      productId: '',
-      productName: '',
-      dates: {
-        cultivated: '',
-        harvested: '',
-        imported: '',
-        manufacturered: '',
-        exported: '',
-        distributed: '',
-        selling: '',
-        sold: ''
-      },
-      actors: {
-        supplierId: '',
-        manufacturerId: '',
-        distributorId: '',
-        retailerId: ''
-      },
-      expireTime: '',
-      price: '',
-      amount: '',
-      unit: Unit.Kilogram,
-      status: '',
-      description: '',
-      certificateUrl: '',
-      supplierId: '',
-      qrCode: '',
-      image: []
-    }
-  };
-
-  onBackdropClick(event: MouseEvent) {
-    console.log("click");
-
-    const backdrop = event.target as HTMLElement;
-    const dialogContent = this.myDialog?.nativeElement.querySelector('.backdrop');
-
-    if (backdrop === dialogContent) {
-      this.close(false);
-    }
-  }
-
-  open(product: any) {
-    this.product = product
-    this.openDialog = true
-  }
-
-  close(data: any) {
-    console.log("du lieu truyen ve", data)
-    this.openDialog = data
-    this.myDialog?.nativeElement.close();
-    location.reload()
-  }
-
-  constructor(
-    private storage: AngularFireStorage,
-    private viewProductService: ViewProductService,
-    private userService: UserService,
-    private authService: AuthService
-  ) {
-    this.authService.currentUser?.subscribe(x => {
-      this.currentUser = x
-      this.currentUser.username = authService.getTokenName()
-      if (this.currentUser.userId != null) {
-        this.product.userId = this.currentUser.userId
-        this.product.productObj.supplierId = this.currentUser.userId
-      }
-    });
-  }
+  //
+  // dataSource = new MatTableDataSource();
+  //
+  // @ViewChild('dialog') myDialog: ElementRef | undefined;
+  // @ViewChild('dialogCert') certDialog: ElementRef | undefined;
+  // @ViewChild('manufacturerPaginator', {static: true}) manufacturerPaginator!: MatPaginator
+  //
+  // products: any[] = []
+  // productId: string = ""
+  // data: any
+  // reloadDetailProduct = false;
+  // currentUser?: UserToken;
+  //
+  // openDialog: boolean = false
+  // openCertification: boolean = false
+  // hasCertificate: boolean = false
+  //
+  // // dataSource = new MatTableDataSource<any>()
+  // user: any = this.userService.getUser();
+  // product: Product = {
+  //   userId: '',
+  //   productObj: {
+  //     productId: '',
+  //     productName: '',
+  //     dates: {
+  //       cultivated: '',
+  //       harvested: '',
+  //       imported: '',
+  //       manufacturered: '',
+  //       exported: '',
+  //       distributed: '',
+  //       selling: '',
+  //       sold: ''
+  //     },
+  //     actors: {
+  //       supplierId: '',
+  //       manufacturerId: '',
+  //       distributorId: '',
+  //       retailerId: ''
+  //     },
+  //     expireTime: '',
+  //     price: '',
+  //     amount: '',
+  //     unit: Unit.Kilogram,
+  //     status: '',
+  //     description: '',
+  //     certificateUrl: '',
+  //     supplierId: '',
+  //     qrCode: '',
+  //     image: []
+  //   }
+  // };
+  //
+  // onBackdropClick(event: MouseEvent) {
+  //   console.log("click");
+  //
+  //   const backdrop = event.target as HTMLElement;
+  //   const dialogContent = this.myDialog?.nativeElement.querySelector('.backdrop');
+  //
+  //   if (backdrop === dialogContent) {
+  //     this.close(false);
+  //   }
+  // }
+  //
+  // open(product: any) {
+  //   this.product = product
+  //   this.openDialog = true
+  // }
+  //
+  // close(data: any) {
+  //   console.log("du lieu truyen ve", data)
+  //   this.openDialog = data
+  //   this.myDialog?.nativeElement.close();
+  //   location.reload()
+  // }
+  //
+  // constructor(
+  //   private storage: AngularFireStorage,
+  //   private viewProductService: ViewProductService,
+  //   private userService: UserService,
+  //   private authService: AuthService
+  // ) {
+  //   this.authService.currentUser?.subscribe(x => {
+  //     this.currentUser = x
+  //     this.currentUser.username = authService.getTokenName()
+  //     if (this.currentUser.userId != null) {
+  //       this.product.userId = this.currentUser.userId
+  //       this.product.productObj.supplierId = this.currentUser.userId
+  //     }
+  //   });
+  // }
 
   ngOnInit(): void {
-    this.loadData()
+    // this.loadData()
   }
-
-  loadData() {
-    this.viewProductService.getAllProduct().subscribe({
-      next: (response) => {
-        this.data = response;
-        this.products = this.data.data
-        this.dataSource = new MatTableDataSource(this.products)
-        this.dataSource.paginator = this.manufacturerPaginator;
-      },
-      error: (err) => {
-        console.error(err)
-      }
-    })
-  }
-
-  harvestProduct(productId: any) {
-    console.log("HARVEST",productId)
-    this.viewProductService.harvestProduct(productId)
-      .subscribe({
-        next: (response) => {
-          this.data.data.map(response);
-          this.product = this.data.data;
-          location.reload();
-        }
-      })
-  }
+  //
+  // loadData() {
+  //   this.viewProductService.getAllProduct().subscribe({
+  //     next: (response) => {
+  //       this.data = response;
+  //       this.products = this.data.data
+  //       this.dataSource = new MatTableDataSource(this.products)
+  //       this.dataSource.paginator = this.manufacturerPaginator;
+  //     },
+  //     error: (err) => {
+  //       console.error(err)
+  //     }
+  //   })
+  // }
+  //
+  // harvestProduct(productId: any) {
+  //   console.log("HARVEST",productId)
+  //   this.viewProductService.harvestProduct(productId)
+  //     .subscribe({
+  //       next: (response) => {
+  //         this.data.data.map(response);
+  //         this.product = this.data.data;
+  //         location.reload();
+  //       }
+  //     })
+  // }
 }

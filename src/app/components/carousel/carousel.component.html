@@ -1,69 +1,52 @@
 <div style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-  <div style="flex: 5">
-    <div
-      style="position: relative; background-size: contain; background-position: center; padding: 0 15px; display: flex; justify-content: space-between; align-items: center; height: 100%; background-repeat: no-repeat;"
-      [ngStyle]="{'background-image': 'url('+ imageList![currentImagePos] +' )'}">
-      <div style="position: absolute; right: 7px; top: 7px;">
-        <label for="file-input-edit">
+    <div style="flex: 5">
+        <div style="position: relative; background-size: contain; background-position: center; padding: 0 15px; display: flex; justify-content: space-between; align-items: center; height: 100%; background-repeat: no-repeat;" [ngStyle]="{'background-image': 'url('+ imageList![currentImagePos] +' )'}">
+            <div style="position: absolute; right: 7px; top: 7px;">
+                <label for="file-input-edit">
           <i *ngIf="!isImageLoading" class="fas fa-add" style="color: #0c367e; font-size: 30px;"></i>
           <app-loading [isLoading]="isImageLoading"></app-loading>
 
         </label>
 
 
-        <input *ngIf="!isImageLoading" id="file-input-edit" type="file" style="height: 1px; width: 1px; opacity: 0;"
-               (change)="addImage1($event)"/>
-        <label for="file-edit">
+                <input *ngIf="!isImageLoading" id="file-input-edit" type="file" style="height: 1px; width: 1px; opacity: 0;" (change)="addImage1($event)" />
+                <label for="file-edit">
           <i *ngIf="!isImageLoading" class="fas fa-edit" style="color: #0c367e; font-size: 30px;"></i>
           <app-loading [isLoading]="isImageLoading"></app-loading>
 
         </label>
-        <input *ngIf="!isImageLoading" id="file-edit" type="file" style="height: 1px; width: 1px; opacity: 0;"
-               (change)="changeImage($event)"/>
-      </div>
-      <div style="border-radius: 5px; background-color: aliceblue; height: 35px; width: 35px"
-           (click)="previousImage()">
-        <svg class="h-8 w-8 text-black" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-             stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <input *ngIf="!isImageLoading" id="file-edit" type="file" style="height: 1px; width: 1px; opacity: 0;" (change)="changeImage($event)" />
+            </div>
+            <div style="border-radius: 5px; background-color: aliceblue; height: 35px; width: 35px" (click)="previousImage()">
+                <svg class="h-8 w-8 text-black" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z"/>
           <line x1="5" y1="12" x2="19" y2="12"/>
           <line x1="5" y1="12" x2="11" y2="18"/>
           <line x1="5" y1="12" x2="11" y2="6"/>
         </svg>
-      </div>
-      <div style="border-radius: 5px; background-color: aliceblue; height: 35px; width: 35px"
-           (click)="forwardImage()">
-        <svg class="h-8 w-8 text-black" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-             stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            </div>
+            <div style="border-radius: 5px; background-color: aliceblue; height: 35px; width: 35px" (click)="forwardImage()">
+                <svg class="h-8 w-8 text-black" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z"/>
           <line x1="5" y1="12" x2="19" y2="12"/>
           <line x1="13" y1="18" x2="19" y2="12"/>
           <line x1="13" y1="6" x2="19" y2="12"/>
         </svg>
-      </div>
-    </div>
-  </div>
-
-  <div (drag)="moveImages($event)" (dragend)="endDrag($event)" id="imageThumnailContain" class="mt-2"
-       style="position: relative;flex: 1; align-items: center; justify-content: center; overflow: hidden;">
-    <div id="imageThumnails"
-         style="position: absolute;height: 100%; display: flex; align-items: center; padding: 0 5px;"
-         [style.left]="distanceString" (dragstart)="getFirstPos($event)">
-      <div *ngFor="let image of imageList; let i = index"
-           [ngStyle]="{ 'border': i === currentImagePos ? '2px solid' : '', 'background-image': 'url(' + image + ')' }"
-           style="background-repeat: no-repeat; object-fit: cover; background-position: center; display: inline; float: left; height: 100%; width: 110px;
-            border-radius: 10px; background-size: contain; margin: 0 5px;"
-           (click)="chooseImage(i)">
-
-        <div *ngIf="isPost" style="float: right; height: 20px; width: 20px; background-color: rgb(255, 255, 255);
-       opacity: 0.9;
-       display: flex; justify-content: center; align-items: center; border-radius: 100px; margin-top: 2px; margin-right: 2px;"
-             (click)="deleteImage(i)"
-             stopPropagation
-        >
-          <i class="fa fa-times" aria-hidden="true" style="float: right;"></i>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+
+    <div (drag)="moveImages($event)" (dragend)="endDrag($event)" id="imageThumnailContain" class="mt-2" style="position: relative;flex: 1; align-items: center; justify-content: center; overflow: hidden;">
+        <div id="imageThumnails" style="position: absolute;height: 100%; display: flex; align-items: center; padding: 0 5px;" [style.left]="distanceString" (dragstart)="getFirstPos($event)">
+            <div *ngFor="let image of imageList; let i = index" [ngStyle]="{ 'border': i === currentImagePos ? '2px solid' : '', 'background-image': 'url(' + image + ')' }" style="background-repeat: no-repeat; object-fit: cover; background-position: center; display: inline; float: left; height: 100%; width: 110px;
+            border-radius: 10px; background-size: contain; margin: 0 5px;" (click)="chooseImage(i)">
+
+                <div *ngIf="isPost" style="float: right; height: 20px; width: 20px; background-color: rgb(255, 255, 255);
+       opacity: 0.9;
+       display: flex; justify-content: center; align-items: center; border-radius: 100px; margin-top: 2px; margin-right: 2px;" (click)="deleteImage(i)" stopPropagation>
+                    <i class="fa fa-times" aria-hidden="true" style="float: right;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

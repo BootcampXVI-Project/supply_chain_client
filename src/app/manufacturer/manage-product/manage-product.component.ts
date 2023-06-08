@@ -2,7 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {UserToken} from "../../models/user-model";
-import {Product} from "../../models/product-model";
+import {Product, ProductObj} from "../../models/product-model";
 import {Unit} from "../../../assets/ENUM";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
 import {ViewProductService} from "../../supplier/components/view-product/view-product.service";
@@ -15,24 +15,9 @@ import {AuthService} from "../../_services/auth.service";
   styleUrls: ['./manage-product.component.scss']
 })
 export class ManageProductComponent {
-  displayedColumns: string[] = ['Index', 'ProductName', 'CultivatedDate', 'HarvestedDate', 'Price', 'Status', 'Action'];
-  // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  // ELEMENT_DATA: any[] = [
-  //   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  //   {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  //   {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  //   {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  //   {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  //   {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  //   {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  //   {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  //   {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  //   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  // ];
-
   dataSource = new MatTableDataSource();
 
-  @ViewChild('dialog') myDialog: ElementRef | undefined;
+  @ViewChild('manufacturerDetailDialog') manufacturerDetailDialog: ElementRef | undefined;
   @ViewChild('dialogCert') certDialog: ElementRef | undefined;
   @ViewChild('manufacturerPaginator', {static: true}) manufacturerPaginator!: MatPaginator
 
@@ -48,7 +33,7 @@ export class ManageProductComponent {
 
   // dataSource = new MatTableDataSource<any>()
   user: any = this.userService.getUser();
-  product: Product = {
+  item: Product = {
     userId: '',
     productObj: {
       productId: '',
@@ -81,15 +66,34 @@ export class ManageProductComponent {
       image: []
     }
   };
+  product: ProductObj = this.item.productObj
+  productModel : ProductObj []=[]
+  dataSourceProduct = new MatTableDataSource<any>;
+  displayedColumns: string[] = ['Index','ProductName','CultivatedDate','HarvestedDate','Price','Status','Action']
+
+  ngOnInit(): void {
+    this.getAllProduct();
+  }
+
+  getAllProduct(){
+    this.viewProductService.getAllProduct().subscribe(
+      response =>{
+        let data:any = response
+        this.productModel = data.data
+        this.dataSourceProduct = new MatTableDataSource(this.productModel)
+        this.dataSourceProduct.paginator = this.manufacturerPaginator
+      }
+    )
+  }
 
   onBackdropClick(event: MouseEvent) {
     console.log("click");
 
     const backdrop = event.target as HTMLElement;
-    const dialogContent = this.myDialog?.nativeElement.querySelector('.backdrop');
+    const dialogContent = this.manufacturerDetailDialog?.nativeElement.querySelector('.backdrop');
 
     if (backdrop === dialogContent) {
-      this.close(false);
+      this.close({isClose:true, isReload:true});
     }
   }
 
@@ -100,9 +104,11 @@ export class ManageProductComponent {
 
   close(data: any) {
     console.log("du lieu truyen ve", data)
-    this.openDialog = data
-    this.myDialog?.nativeElement.close();
-    location.reload()
+    this.openDialog = !data.isClose
+    this.manufacturerDetailDialog?.nativeElement.close();
+    if (data.isReload) {
+      location.reload()
+    }
   }
 
   constructor(
@@ -115,14 +121,10 @@ export class ManageProductComponent {
       this.currentUser = x
       this.currentUser.username = authService.getTokenName()
       if (this.currentUser.userId != null) {
-        this.product.userId = this.currentUser.userId
-        this.product.productObj.supplierId = this.currentUser.userId
+        this.item.userId = this.currentUser.userId
+        this.item.productObj.supplierId = this.currentUser.userId
       }
     });
-  }
-
-  ngOnInit(): void {
-    this.loadData()
   }
 
   loadData() {
@@ -149,5 +151,58 @@ export class ManageProductComponent {
           location.reload();
         }
       })
+  }
+
+
+  //-------------------- detail ----------------------------//
+  loading: boolean = false
+  units = Object.values(Unit);
+  isCreateForm: boolean = false;
+
+  onSubmit() {
+    this.loading = true
+    console.log("this is submit");
+    console.log("item", this.product)
+    if (this.product?.productId) {
+      console.log("update",this.product.productId)
+      this.item.productObj.productId = JSON.parse(JSON.stringify(this.product)).productId
+      this.closeCertificate(false)
+      this.viewProductService.updateProduct(this.item).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.loading = false
+          this.close({isClose:true, isReload:true})
+        }
+      });
+    } else {
+      console.log("create")
+      this.closeCertificate(false)
+      this.viewProductService.createProduct(this.item).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.loading = false
+          this.close({isClose:true, isReload:true})
+        }
+      });
+    }
+
+    // this.productService.createProduct(item)
+  }
+
+
+  closeCertificate(data: any) {
+    console.log("du lieu truyen ve", data)
+    this.openCertification = data
+    // this.openDialog = data
+    this.certDialog?.nativeElement.close();
+  }
+
+  addImage(data: any) {
+    console.log("add")
+    if (this.item.productObj?.image) {
+      this.item.productObj.image.push(data);
+    } else {
+      this.item.productObj.image = [data];
+    }
   }
 }

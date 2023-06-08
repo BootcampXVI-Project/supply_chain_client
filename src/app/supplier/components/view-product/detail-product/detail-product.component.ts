@@ -3,7 +3,7 @@ import {UserService} from "../../../../_services/user.service";
 import {common} from "../../../../../../common";
 import {ViewProductService} from "../view-product.service";
 import { Unit } from "../../../../../assets/ENUM";
-import { Product } from "../../../../models/product-model";
+import { Product, ProductObj } from "../../../../models/product-model";
 import {ProductService} from "../../../../_services/product.service";
 import {reload} from "@angular/fire/auth";
 
@@ -19,7 +19,7 @@ export class DetailProductComponent implements OnInit{
   @ViewChild('dialogCert') certDialog: ElementRef | undefined;
 
 
-  @Input() product: Product | undefined;
+  @Input() product: ProductObj | undefined;
   @Input() reload = false;
 
   openDialog: boolean = false
@@ -95,7 +95,7 @@ export class DetailProductComponent implements OnInit{
       this.isCreateForm = false;
       this.productService.setProduct(this.product)
       this.data = this.productService.getProduct()
-      this.item = this.data
+      this.item.productObj = this.data
     } else {
       console.log("false", this.product)
       this.isCreateForm = true;
@@ -119,8 +119,8 @@ export class DetailProductComponent implements OnInit{
     this.loading = true
     console.log("this is submit");
     console.log("item", this.product)
-    if (this.product?.productObj.productId) {
-      console.log("update",this.product.productObj.productId)
+    if (this.product?.productId) {
+      console.log("update",this.product.productId)
       this.item.productObj.productId = JSON.parse(JSON.stringify(this.product)).productId
       this.closeCertificate(false)
       this.viewProductService.updateProduct(this.item).subscribe({
@@ -176,7 +176,7 @@ export class DetailProductComponent implements OnInit{
 
   addCertificate(data: any) {
     if (this.product) {
-      this.product.productObj.certificateUrl = data;
+      this.product.certificateUrl = data;
     }
   }
 

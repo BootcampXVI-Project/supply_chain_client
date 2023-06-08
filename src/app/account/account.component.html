@@ -18,26 +18,26 @@
     style="min-width: 12rem"
     [ngClass]="dropdownPopoverShow ? 'block' : 'hidden'"
   >
-    <div>
-      <a class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-white">
+    <div class="">
+      <a class="text-sm py-2 px-4 font-normal  flex justify-center w-full whitespace-nowrap bg-transparent text-white">
         <div class="avatar-wrapper">
           <img class="avatar-image" src="{{ user.avatar }}">
         </div>
       </a>
       <a
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-white"
+        class="text-sm py-2 px-4 font-normal  flex justify-center w-full whitespace-nowrap bg-transparent text-white"
       >
-        Action
+        {{ user.fullName }}
       </a>
       <a
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-white"
+        class="text-sm py-2 px-4 font-normal w-full whitespace-nowrap bg-transparent text-white flex justify-center"
       >
-        Another action
+        {{ user.phoneNumber }}
       </a>
       <a
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-white"
+        class="text-sm py-2 px-4 font-normal w-full whitespace-nowrap bg-transparent text-white flex justify-center"
       >
-        Something else here
+        {{ user.email }}
       </a>
     </div>
 
@@ -46,17 +46,17 @@
     ></div>
     <div>
       <a
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-white"
+        class="text-sm py-2 px-4 font-normal w-full whitespace-nowrap bg-transparent text-white flex justify-center"
       >
         Action
       </a>
       <a
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-white"
+        class="text-sm py-2 px-4 font-normal w-full whitespace-nowrap bg-transparent text-white flex justify-center"
       >
         Another action
       </a>
       <a
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-white"
+        class="text-sm py-2 px-4 font-normal w-full whitespace-nowrap bg-transparent text-white flex justify-center"
       >
         Something else here
       </a>
@@ -68,7 +68,7 @@
     <div>
       <a
         href="/"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-white active:bg-yellow-900"
+        class="text-sm py-2 px-4 font-normal w-full whitespace-nowrap bg-transparent text-white active:bg-yellow-900 flex justify-center"
         (click)="logout()"
       >
         Logout

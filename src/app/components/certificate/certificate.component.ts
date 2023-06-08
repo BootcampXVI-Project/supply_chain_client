@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, Input, Output} from '@angular/core';
-import {Product} from "../../models/product-model";
+import {Product, ProductObj} from "../../models/product-model";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
 import {UploadImageService} from "../../_services/upload-image.service";
 import {FileUpLoadService} from "../../_services/file-up-load.service";
@@ -14,7 +14,7 @@ import {ViewProductService} from "../../supplier/components/view-product/view-pr
 export class CertificateComponent {
   @Output() dataEvent = new EventEmitter<any>();
 
-  @Input() product: Product | undefined
+  @Input() product: ProductObj | undefined
   @Input() isCreateForm: boolean = false
 
   imageUrl: string = '';
@@ -53,8 +53,8 @@ export class CertificateComponent {
     this.dataEvent.emit({event: "close", data: false})
   }
   onSubmit() {
-    this.product!.productObj.certificateUrl = this.imageUrl
-    this.dataEvent.emit({event: "addcert", data: this.product?.productObj.certificateUrl})
+    this.product!.certificateUrl = this.imageUrl
+    this.dataEvent.emit({event: "addcert", data: this.product?.certificateUrl})
     this.close()
   }
 }

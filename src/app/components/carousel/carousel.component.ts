@@ -52,7 +52,6 @@ export class CarouselComponent implements AfterViewInit {
     private _elementRef: ElementRef,
     private uploadFile: FileUpLoadService
   ) {
-    console.log("carousel", this.currentImagePos)
   }
 
   ngOnInit(): void {
@@ -61,6 +60,8 @@ export class CarouselComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    console.log("carousel",this.imageList);
+
     this.setLimitDrag();
 
   }

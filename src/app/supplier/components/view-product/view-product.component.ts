@@ -31,7 +31,7 @@ export class ViewProductComponent implements OnInit {
   hasCertificate: boolean = false
 
   user: any = this.userService.getUser();
-  product: Product = {
+  item: Product = {
     userId: '',
     productObj: {
       productId: '',
@@ -64,6 +64,8 @@ export class ViewProductComponent implements OnInit {
       image: []
     }
   };
+
+  product : ProductObj = this.item.productObj
 
   onBackdropClick(event: MouseEvent) {
     console.log("click");
@@ -101,8 +103,8 @@ export class ViewProductComponent implements OnInit {
       this.currentUser = x
       this.currentUser.username = authService.getTokenName()
       if (this.currentUser.userId != null) {
-        this.product.userId = this.currentUser.userId
-        this.product.productObj.supplierId = this.currentUser.userId
+        this.item.userId = this.currentUser.userId
+        this.item.productObj.supplierId = this.currentUser.userId
       }
     });
   }

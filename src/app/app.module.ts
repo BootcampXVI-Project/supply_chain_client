@@ -83,6 +83,7 @@ import {ManageAccountComponent} from './manufacturer/manage-account/manage-accou
 import {ManufacturerNavbarComponent} from './manufacturer/manufacturer-navbar/manufacturer-navbar.component';
 import {ManufacturerChartComponent} from './manufacturer/manufacturer-chart/manufacturer-chart.component';
 import {AccountComponent} from './account/account.component';
+import { TableSupplierComponent } from './supplier/components/table-supplier/table-supplier.component'
 
 @NgModule({
   declarations: [
@@ -141,8 +142,11 @@ import {AccountComponent} from './account/account.component';
     ManufacturerNavbarComponent,
     ManufacturerChartComponent,
     AccountComponent,
+    TableSupplierComponent,
   ],
   imports: [
+    MatPaginatorModule,
+    MatTableModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
