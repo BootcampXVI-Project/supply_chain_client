@@ -46,10 +46,6 @@
               class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
               Action
             </th>
-            <th
-              class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-center bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-              Harvest
-            </th>
           </tr>
           </thead>
           <tbody>
@@ -130,22 +126,11 @@
               <button type="button"
                       class="fa-solid focus:outline-none fa-trash-can text-base text-red-500 hover:text-red-600 transition-colors duration-300 ease-in-out transform"></button>
             </td>
-            <td
-              class="w-[181px] border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-center">
-              <button type="button"
-                      class="justify-center border bg-yellow-400 active:bg-yellow-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      (click)="harvestProduct(item.productObj.productId)"
-                      *ngIf="item.productObj.status.toLowerCase() == 'cultivating'">
-                Harvest this product!
-              </button>
-              <button type="button" *ngIf="item.productObj.status.toLowerCase()  == 'harvested'"
-                      class="w-[181px] justify-center bg-gray-200 font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      disabled>
-                Harvested Product
-              </button>
-            </td>
           </tr>
           </tbody>
+          <tfoot>
+
+          </tfoot>
         </table>
       </div>
     </div>
@@ -155,7 +140,7 @@
       <p class="text-xl font-medium">Update product</p>
 
       <button type="button" class="absolute top-2 right-6 focus:outline-none text-xl font-bold text-red-600"
-              (click)="close(false)">X
+              (click)="close({isClose: true, isReload: false})">X
       </button>
 
       <app-detail-product [product]="product" [reload]="reloadDetailProduct"

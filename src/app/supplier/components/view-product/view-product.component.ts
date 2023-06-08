@@ -83,9 +83,12 @@ export class ViewProductComponent implements OnInit {
 
   close(data: any) {
     console.log("du lieu truyen ve", data)
-    this.openDialog = data
+    this.openDialog = !data.isClose
     this.myDialog?.nativeElement.close();
-    location.reload()
+    if (data.isReload) {
+      location.reload()
+
+    }
   }
 
   constructor(
@@ -105,6 +108,7 @@ export class ViewProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("INIT")
     this.loadData()
   }
 
@@ -115,6 +119,7 @@ export class ViewProductComponent implements OnInit {
         for (let i of this.data.data) {
           this.products.push(this.viewProductService.mapProductobjToproduct(i))
         }
+        console.log("HARVEST",this.products)
       },
       error: (err) => {
         console.error(err)

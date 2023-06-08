@@ -111,8 +111,10 @@ export class IndexNavbarComponent implements OnInit {
         AlertService.setAlertModel('success', 'Login successfully');
         if (user.role.toLowerCase() === "supplier"){
           this.route.navigate(['/supplier']);
-
-        } else {
+        } else if (user.role.toLowerCase()=== "manufacturer") {
+          this.route.navigate(['/manufacturer'])
+        }
+        else {
           this.route.navigate([JSON.parse(response).data.userType]);
 
         }

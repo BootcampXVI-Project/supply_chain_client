@@ -25,6 +25,7 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/assets/styles/tailwind.scss",
               "src/assets/styles/index.scss",
               "src/styles.scss"
@@ -84,6 +85,7 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/assets/styles/tailwind.scss",
               "src/assets/styles/index.scss",
               "src/styles.scss"

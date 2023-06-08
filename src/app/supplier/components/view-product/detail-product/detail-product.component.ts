@@ -5,6 +5,7 @@ import {ViewProductService} from "../view-product.service";
 import { Unit } from "../../../../../assets/ENUM";
 import { Product } from "../../../../models/product-model";
 import {ProductService} from "../../../../_services/product.service";
+import {reload} from "@angular/fire/auth";
 
 @Component({
   selector: 'app-detail-product',
@@ -24,13 +25,14 @@ export class DetailProductComponent implements OnInit{
   openDialog: boolean = false
   openCertification: boolean = false
   hasCertificate: boolean = false
+  loading: boolean = false
+  isCreateForm: boolean = false;
+  reloadDetailProduct = false;
 
   status = common.status
   statusSelected = 0
   units = Object.values(Unit);
-  isCreateForm: boolean = false;
   user: any = '';
-  reloadDetailProduct = false;
   data: any
 
   item: Product = {
@@ -88,8 +90,8 @@ export class DetailProductComponent implements OnInit{
   ngOnChanges(changes: SimpleChanges) {
     console.log("DETAIL",this.product)
     console.log("DETAIL",this.user)
-    this.item.productObj.supplierId = this.item.userId = this.user.userId
     if(this.product) {
+      this.item.productObj.supplierId = this.item.userId = this.user.userId
       this.isCreateForm = false;
       this.productService.setProduct(this.product)
       this.data = this.productService.getProduct()
@@ -108,11 +110,13 @@ export class DetailProductComponent implements OnInit{
     }
   }
   ngOnInit(): void {
-
+    this.user = this.userService.getUser()
+    console.log("INITDETAIL",this.user)
   }
 
 
   onSubmit() {
+    this.loading = true
     console.log("this is submit");
     console.log("item", this.product)
     if (this.product?.productObj.productId) {
@@ -122,7 +126,8 @@ export class DetailProductComponent implements OnInit{
       this.viewProductService.updateProduct(this.item).subscribe({
         next: (response) => {
           console.log(response);
-          this.close()
+          this.loading = false
+          this.close(true, true)
         }
       });
     } else {
@@ -131,7 +136,8 @@ export class DetailProductComponent implements OnInit{
       this.viewProductService.createProduct(this.item).subscribe({
         next: (response) => {
           console.log(response);
-          this.close()
+          this.loading = false
+          this.close(true, true)
         }
       });
     }
@@ -139,8 +145,11 @@ export class DetailProductComponent implements OnInit{
     // this.productService.createProduct(item)
   }
 
-  close() {
-    this.dataEvent.emit(false)
+  close(isClose= true, isReload= false ) {
+    this.dataEvent.emit({
+      isClose : isClose,
+      isReload: isReload
+    })
   }
 
   handleDataEvent(data: any) {

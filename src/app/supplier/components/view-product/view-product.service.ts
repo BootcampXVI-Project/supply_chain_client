@@ -27,12 +27,23 @@ export class ViewProductService {
     // return this.http.get("http://localhost:4000/product/all?userId=" + user.userId)
     return this.http.get(API_PRODUCT.GETALLPRODUCTS(), {headers:this.headers})
       .pipe(
-      catchError((error) => {
-        this.notification.showError("An error has occurred on the server, please try again later.", "Error");
-        return throwError(error.message);
-      })
-    );
+        catchError((error) => {
+          this.notification.showError("An error has occurred on the server, please try again later.", "Error");
+          return throwError(error.message);
+        })
+      );
   }
+
+  getPaginationProduct(pageNumber: string) {
+    return this.http.get(API_PRODUCT.GETPAGINATIONPRODUCTS(pageNumber), {headers: this.headers})
+      .pipe(
+        catchError((error) => {
+          this.notification.showError("An error has occurred on the server, please try again later.", "Error");
+          return throwError(error.message);
+        })
+      )
+  }
+
   getProduct(productId: string) {
     // const user = this.userService.getUser()
     // return this.http.get("http://localhost:4000/product/all?userId=" + user.userId)

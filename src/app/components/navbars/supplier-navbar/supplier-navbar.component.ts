@@ -32,8 +32,10 @@ export class SupplierNavbarComponent implements OnInit{
   }
   close(data: any) {
     console.log("du lieu truyen ve", data)
-    this.openDialog = data
+    this.openDialog = !data.isClose
     this.myDialog?.nativeElement.close();
-    location.reload()
+    if (data.isReload) {
+      location.reload()
+    }
   }
 }
