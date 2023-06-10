@@ -8,7 +8,9 @@ import {AppComponent} from './app.component';
 // layouts
 import {AdminComponent} from './layouts/admin/admin.component';
 import {AuthComponent} from './layouts/auth/auth.component';
-import {NgxLoadingModule} from "ngx-loading";
+import {NgxLoadingModule} from 'ngx-loading';
+import { DateFnsModule } from 'ngx-date-fns';
+// import { jqxDateTimeInputComponent } from 'jqwidgets-ng/angular_jqxdatetimeinput';
 
 // admin views
 import {DashboardComponent} from './views/admin/dashboard/dashboard.component';
@@ -83,7 +85,11 @@ import {ManageAccountComponent} from './manufacturer/manage-account/manage-accou
 import {ManufacturerNavbarComponent} from './manufacturer/manufacturer-navbar/manufacturer-navbar.component';
 import {ManufacturerChartComponent} from './manufacturer/manufacturer-chart/manufacturer-chart.component';
 import {AccountComponent} from './account/account.component';
-import { TableSupplierComponent } from './supplier/components/table-supplier/table-supplier.component'
+import {TableSupplierComponent} from './supplier/components/table-supplier/table-supplier.component'
+import {ChartComponent} from './supplier/components/chart/chart.component'
+import {HighchartsChartModule} from 'highcharts-angular';
+import {DatePipe} from "@angular/common";
+import { ViewOrderComponent } from './manufacturer/view-order/view-order.component';
 
 @NgModule({
   declarations: [
@@ -137,16 +143,17 @@ import { TableSupplierComponent } from './supplier/components/table-supplier/tab
     ViewCertificateComponent,
     AddCertificateComponent,
     LoadingComponent,
+    ChartComponent,
     ManageProductComponent,
     ManageAccountComponent,
     ManufacturerNavbarComponent,
     ManufacturerChartComponent,
     AccountComponent,
     TableSupplierComponent,
+    ViewOrderComponent,
+    // jqxDateTimeInputCompon ent,
   ],
   imports: [
-    MatPaginatorModule,
-    MatTableModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -162,14 +169,16 @@ import { TableSupplierComponent } from './supplier/components/table-supplier/tab
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
+    HighchartsChartModule,
     BrowserAnimationsModule,
     NgxLoadingModule.forRoot({}),
     MatPaginatorModule,
     MatInputModule,
     MatDatepickerModule,
     MatTableModule,
+    DateFnsModule.forRoot(),
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {

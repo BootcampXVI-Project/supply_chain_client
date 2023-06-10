@@ -7,6 +7,7 @@ import {API_PRODUCT, API_URL} from "../../../../assets/API_URL";
 import {Product, ProductObj} from "../../../models/product-model";
 import {Unit} from "../../../../assets/ENUM";
 import {AuthService} from "../../../_services/auth.service";
+import {ProductService} from "../../../_services/product.service";
 
 @Injectable({
   providedIn: 'root'
@@ -19,52 +20,50 @@ export class ViewProductService {
     private http: HttpClient,
     private notification: NotificationService,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private productService: ProductService
   ) { }
 
   getAllProduct() {
-    const user = this.userService.getUser()
-    // return this.http.get("http://localhost:4000/product/all?userId=" + user.userId)
-    return this.http.get(API_PRODUCT.GETALLPRODUCTS(), {headers:this.headers})
-      .pipe(
-        catchError((error) => {
-          this.notification.showError("An error has occurred on the server, please try again later.", "Error");
-          return throwError(error.message);
-        })
-      );
+    // const user = this.userService.getUser()
+    // // return this.http.get("http://localhost:4000/product/all?userId=" + user.userId)
+    // return this.http.get(API_PRODUCT.GETALLPRODUCTS(), {headers:this.headers})
+    //   .pipe(
+    //     catchError((error) => {
+    //       this.notification.showError("An error has occurred on the server, please try again later.", "Error");
+    //       return throwError(error.message);
+    //     })
+    //   );
+    return this.productService.getAllProduct()
   }
 
   getPaginationProduct(pageNumber: string) {
-    return this.http.get(API_PRODUCT.GETPAGINATIONPRODUCTS(pageNumber), {headers: this.headers})
-      .pipe(
-        catchError((error) => {
-          this.notification.showError("An error has occurred on the server, please try again later.", "Error");
-          return throwError(error.message);
-        })
-      )
+    return this.productService.getPaginationProduct(pageNumber)
   }
 
   getProduct(productId: string) {
     // const user = this.userService.getUser()
     // return this.http.get("http://localhost:4000/product/all?userId=" + user.userId)
-    return this.http.get(API_PRODUCT.GETPRODUCT(productId), {headers:this.headers})
-      .pipe(
-      catchError((error) => {
-        this.notification.showError("An error has occurred on the server, please try again later.", "Error");
-        return throwError(error.message);
-      })
-    );
+    // return this.http.get(API_PRODUCT.GETPRODUCT(productId), {headers:this.headers})
+    //   .pipe(
+    //   catchError((error) => {
+    //     this.notification.showError("An error has occurred on the server, please try again later.", "Error");
+    //     return throwError(error.message);
+    //   })
+    // );
+    return this.productService.getProductById(productId)
   }
 
   updateProduct(producObj: Product) {
-    const user = this.userService.getUser()
-    return this.http.patch(API_PRODUCT.UPDATEPRODUCT(user.userId),producObj, {headers:this.headers})
-      .pipe(
-        catchError((error) => {
-          this.notification.showError("An error has occurred on the server, please try again later.", "Error");
-          return throwError(error.message);
-        })
-      )
+    // const user = this.userService.getUser()
+    // return this.http.patch(API_PRODUCT.UPDATEPRODUCT(user.userId),producObj, {headers:this.headers})
+    //   .pipe(
+    //     catchError((error) => {
+    //       this.notification.showError("An error has occurred on the server, please try again later.", "Error");
+    //       return throwError(error.message);
+    //     })
+    //   )
+    return this.productService.updateProduct(producObj)
   }
 
   createProduct(productObj: Product) {

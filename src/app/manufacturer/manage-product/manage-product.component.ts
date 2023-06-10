@@ -2,12 +2,17 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {UserToken} from "../../models/user-model";
-import {Product, ProductObj} from "../../models/product-model";
-import {Unit} from "../../../assets/ENUM";
+import {Product, ProductImport, ProductManufacture, ProductObj} from "../../models/product-model";
+import {StatusColor, Time, Unit} from "../../../assets/ENUM";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
 import {ViewProductService} from "../../supplier/components/view-product/view-product.service";
 import {UserService} from "../../_services/user.service";
 import {AuthService} from "../../_services/auth.service";
+import {ManufacturerService} from "../manufacturer.service";
+import {ShareDataService} from "../../_services/share-data.service";
+import {FileUpLoadService} from "../../_services/file-up-load.service";
+import {DatePipe} from "@angular/common";
+import {TimeModel} from "../../models/time-model";
 
 @Component({
   selector: 'app-manage-product',
@@ -31,6 +36,8 @@ export class ManageProductComponent {
   openCertification: boolean = false
   hasCertificate: boolean = false
 
+
+  statusColor : StatusColor = StatusColor.CULTIVATED
   // dataSource = new MatTableDataSource<any>()
   user: any = this.userService.getUser();
   item: Product = {
@@ -66,10 +73,33 @@ export class ManageProductComponent {
       image: []
     }
   };
+
   product: ProductObj = this.item.productObj
   productModel : ProductObj []=[]
   dataSourceProduct = new MatTableDataSource<any>;
   displayedColumns: string[] = ['Index','ProductName','CultivatedDate','HarvestedDate','Price','Status','Action']
+
+
+
+  constructor(
+    private storage: AngularFireStorage,
+    private viewProductService: ViewProductService,
+    private userService: UserService,
+    private authService: AuthService,
+    private manufacturerService: ManufacturerService,
+    private datePipe: DatePipe,
+    //--------------Image-------------//
+
+    public shareInfor: ShareDataService,
+    private _elementRef: ElementRef,
+    private uploadFile: FileUpLoadService
+  ) {
+    this.authService.currentUser?.subscribe(x => {
+      this.currentUser = x
+      this.currentUser.username = authService.getTokenName()
+      this.item.userId = this.user.userId
+    });
+  }
 
   ngOnInit(): void {
     this.getAllProduct();
@@ -100,31 +130,29 @@ export class ManageProductComponent {
   open(product: any) {
     this.product = product
     this.openDialog = true
+    //---------manufacturer--------//
+
+    if (this.product.status.toLowerCase() == 'imported') {
+      const currentDate = new Date();
+      const futureDate = new Date();
+      futureDate.setMonth(currentDate.getMonth() + 1);
+
+      this.expireTime.setMonth(currentDate.getMonth() + 1);
+    }
+
+    //---------image-------//
+    this.shareInfor.setImageSlideValue([]);
+    this.imageList = product.image
+
   }
 
-  close(data: any) {
+  close(data: any = {isClose: true, isReload: false}) {
     console.log("du lieu truyen ve", data)
     this.openDialog = !data.isClose
     this.manufacturerDetailDialog?.nativeElement.close();
     if (data.isReload) {
       location.reload()
     }
-  }
-
-  constructor(
-    private storage: AngularFireStorage,
-    private viewProductService: ViewProductService,
-    private userService: UserService,
-    private authService: AuthService
-  ) {
-    this.authService.currentUser?.subscribe(x => {
-      this.currentUser = x
-      this.currentUser.username = authService.getTokenName()
-      if (this.currentUser.userId != null) {
-        this.item.userId = this.currentUser.userId
-        this.item.productObj.supplierId = this.currentUser.userId
-      }
-    });
   }
 
   loadData() {
@@ -141,52 +169,28 @@ export class ManageProductComponent {
     })
   }
 
-  harvestProduct(productId: any) {
-    console.log("HARVEST",productId)
-    this.viewProductService.harvestProduct(productId)
-      .subscribe({
-        next: (response) => {
-          this.data.data.map(response);
-          this.product = this.data.data;
-          location.reload();
-        }
-      })
-  }
 
 
   //-------------------- detail ----------------------------//
+  times = Object.values(Time)
   loading: boolean = false
   units = Object.values(Unit);
   isCreateForm: boolean = false;
 
   onSubmit() {
     this.loading = true
-    console.log("this is submit");
-    console.log("item", this.product)
     if (this.product?.productId) {
-      console.log("update",this.product.productId)
-      this.item.productObj.productId = JSON.parse(JSON.stringify(this.product)).productId
+      this.item.productObj = JSON.parse(JSON.stringify(this.product))
       this.closeCertificate(false)
       this.viewProductService.updateProduct(this.item).subscribe({
         next: (response) => {
           console.log(response);
+          console.log("successful",response)
           this.loading = false
-          this.close({isClose:true, isReload:true})
-        }
-      });
-    } else {
-      console.log("create")
-      this.closeCertificate(false)
-      this.viewProductService.createProduct(this.item).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.loading = false
-          this.close({isClose:true, isReload:true})
+          this.close({isClose:true, isReload:false})
         }
       });
     }
-
-    // this.productService.createProduct(item)
   }
 
 
@@ -205,4 +209,222 @@ export class ManageProductComponent {
       this.item.productObj.image = [data];
     }
   }
+
+  //--------------------------manufacturer--------------------//
+
+  time: TimeModel = {
+    numbOfTime: 1,
+    unitOfTime: Time.Month
+  }
+  expireTime: Date = new Date();
+
+  productImport: ProductImport = {
+    productId: '',
+    price: ''
+  }
+
+  productExport: ProductImport = {
+    productId: '',
+    price: ''
+  }
+
+  productManufacture: ProductManufacture = {
+    productId: '',
+    imageUrl: [],
+    expireTime: ''
+  }
+
+
+  importProduct() {
+    this.productImport.productId = this.product.productId
+    this.productImport.price = this.product.price
+    console.log("IMPORT",this.productImport)
+
+    this.manufacturerService.importProduct(this.productImport)
+      .subscribe({
+        next: (response) => {
+          console.log("successful",response)
+          this.close({isClose:true, isReload:true});
+        }
+      })
+  }
+
+  manufactureProduct() {
+    this.productManufacture.productId = this.product.productId
+    this.productManufacture.imageUrl = this.imageList
+
+    switch (this.time.unitOfTime) {
+      case Time.Day:
+        this.expireTime.setDate(this.expireTime.getDate() + this.time.numbOfTime);
+        break;
+      case Time.Week:
+        this.expireTime.setDate(this.expireTime.getDate() + (7*this.time.numbOfTime));
+        break;
+      case Time.Month:
+        this.expireTime.setMonth(this.expireTime.getMonth() + this.time.numbOfTime);
+        break;
+      case Time.Year:
+        this.expireTime.setFullYear(this.expireTime.getFullYear() + this.time.numbOfTime);
+        break;
+    }
+    const options: Intl.DateTimeFormatOptions = {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    };
+    this.productManufacture.expireTime = this.expireTime.toLocaleString('en-US', options);
+
+
+    console.log(this.time)
+    console.log("MANUFACTURE",this.productManufacture)
+
+    this.manufacturerService.manufacture(this.productManufacture)
+      .subscribe({
+        next: (response) => {
+          console.log("successful",response)
+          this.close({isClose:true, isReload:true});
+        }
+      })
+  }
+
+  //---------------------------Image-------------------------//
+  imageList: string[] = []
+  isImageLoading: boolean = false;
+  currentImagePos: number = 0;
+  currentDragImage: number = 0;
+  startDragPos: number = 0;
+  distanNumber: number = 0;
+  distanceString: string = '0px';
+  limitDrag: number = 0;
+
+  widthListImage: number = 0;
+  widthContain: number = 0;
+
+  ngAfterViewInit(): void {
+    console.log("carousel",this.imageList);
+
+    this.setLimitDrag();
+
+  }
+
+  setLimitDrag() {
+    this.shareInfor.getImageSlideValueAsTracking()
+      .subscribe(
+        respone => {
+          this.widthContain = this._elementRef.nativeElement.querySelector('#imageThumnailContain').offsetWidth;
+          this.widthListImage = respone.length * 120 + 10;
+          if (this.widthListImage > this.widthContain) {
+            this.limitDrag = this.widthListImage - this.widthContain;
+            return;
+          }
+          this.limitDrag = 0;
+        }
+      )
+  }
+
+  addImage1(e: any) {
+    console.log("POS-A", this.currentImagePos)
+    this.isImageLoading = true;
+    this.uploadFile.convertFileToUrl(e.target.files[0]).subscribe((url: string) => {
+      this.imageList?.push(url);
+      this.isImageLoading = false
+      console.log(this.imageList)
+
+    });
+  }
+
+  changeImage(e: any) {
+    this.isImageLoading = true;
+    console.log("POS-C",this.currentImagePos)
+    this.uploadFile.convertFileToUrl(e.target.files[0]).subscribe((url: string) => {
+      this.imageList![this.currentImagePos] = url;
+      this.isImageLoading = false
+      console.log(this.imageList)
+
+    });
+  }
+
+  previousImage() {
+    this.setLimitDrag();
+    if (this.currentImagePos - 1 < 0) {
+      this.currentImagePos = this.imageList!.length - 1;
+      this.distanNumber = -(this.limitDrag + 110)
+      this.distanceString = (this.distanNumber).toString() + 'px';
+    } else {
+      this.currentImagePos -= 1;
+    }
+    const widthOfCurrentImagePos = (this.currentImagePos + 1) * 120;
+    if (widthOfCurrentImagePos + this.distanNumber < this.widthContain) {
+      if (this.distanNumber + 110 >= 0) {
+        this.distanNumber = 0
+        this.distanceString = (this.distanNumber).toString() + 'px';
+        return
+      }
+      this.distanceString = (this.distanNumber + 110).toString() + 'px';
+      this.distanNumber += 110;
+    }
+  }
+
+  deleteImage(i: number) {
+    this.currentImagePos = 0;
+    this.imageList?.splice(i, 1);
+    this.distanNumber = 0;
+    this.distanceString = (this.distanNumber).toString() + 'px';
+    this.setLimitDrag();
+  }
+
+  forwardImage() {
+    this.setLimitDrag();
+    if (this.currentImagePos + 1 > this.imageList!.length - 1) {
+      this.currentImagePos = 0;
+      this.distanNumber = 0
+      this.distanceString = (this.distanNumber).toString() + 'px';
+      return;
+    } else {
+      this.currentImagePos += 1;
+    }
+
+    const widthOfCurrentImagePos = (this.currentImagePos + 1) * 120;
+    if (widthOfCurrentImagePos + this.distanNumber > this.widthContain) {
+      if (this.distanNumber - 110 <= -this.limitDrag) {
+        this.distanNumber = -this.limitDrag
+        this.distanceString = (this.distanNumber).toString() + 'px';
+        return
+      }
+      this.distanceString = (this.distanNumber - 110).toString() + 'px';
+      this.distanNumber -= 110;
+    }
+  }
+
+
+  moveImages(e: any) {
+
+    const movedDistance = this.startDragPos - Number(e.clientX);
+    const leftPos = this.distanNumber - movedDistance;
+    if (leftPos <= -this.limitDrag || leftPos > 0) {
+      return;
+    }
+    this.distanceString = leftPos.toString() + 'px';
+  }
+
+  endDrag(e: any) {
+    this.distanNumber = Number(this.distanceString.replace('px', ''));
+
+  }
+
+  getFirstPos(e: any) {
+    this.startDragPos = Number(e.clientX);
+
+  }
+
+  chooseImage(pos: number) {
+
+    this.currentImagePos = pos;
+
+  }
+
+  protected readonly StatusColor = StatusColor;
 }
