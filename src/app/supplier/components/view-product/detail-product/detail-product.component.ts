@@ -40,22 +40,20 @@ export class DetailProductComponent implements OnInit{
     productObj: {
       productId: '',
       productName: '',
-      dates: {
-        cultivated: '',
-        harvested: '',
-        imported: '',
-        manufacturered: '',
-        exported: '',
-        distributed: '',
-        selling: '',
-        sold: ''
-      },
-      actors: {
-        supplierId: '',
-        manufacturerId: '',
-        distributorId: '',
-        retailerId: ''
-      },
+      dates: [
+        {
+          actor: {
+            address: "",
+            avatar: "",
+            fullName: "",
+            phoneNumber: "",
+            role: "",
+            userId: "",
+          },
+          status: '',
+          time: '',
+        }
+      ],
       expireTime: '',
       price: '',
       amount: '',
@@ -63,9 +61,16 @@ export class DetailProductComponent implements OnInit{
       status: '',
       description: '',
       certificateUrl: '',
-      supplierId: '',
+      supplier: {
+        address: "",
+        avatar: "",
+        fullName: "",
+        phoneNumber: "",
+        role: "",
+        userId: "",
+      },
       qrCode: '',
-      image: [] as string[] | undefined
+      image: []
     }
   };
 
@@ -91,7 +96,7 @@ export class DetailProductComponent implements OnInit{
     console.log("DETAIL",this.product)
     console.log("DETAIL",this.user)
     if(this.product) {
-      this.item.productObj.supplierId = this.item.userId = this.user.userId
+      this.item.productObj = this.product
       this.isCreateForm = false;
       this.productService.setProduct(this.product)
       this.data = this.productService.getProduct()

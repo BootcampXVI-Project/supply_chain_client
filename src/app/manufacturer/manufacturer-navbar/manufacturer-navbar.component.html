@@ -17,16 +17,33 @@
       <ul class="flex flex-col lg:flex-row list-none ml-auto">
         <li class="nav-item">
           <a class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-             href="#pablo">
+          >
             <i class="fab fa-facebook-square text-lg leading-lg text-orange-300 opacity-75"></i><span
             class="ml-2">Share</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-orange-300 hover:opacity-75"
-             href="#pablo">
-            <i class="fab fa-twitter text-lg leading-lg text-white opacity-75"></i><span class="ml-2">Tweet</span>
-          </a>
+          <div class="w-full sm:w-6/12 md:w-4/12 px-4">
+            <div class="relative inline-flex align-middle w-full">
+              <button
+                mat-button
+                class="px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                [matMenuTriggerFor]="menu" >
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5"></path>
+                </svg>
+                <div class="badge" *ngIf="orders.length > 0">{{ orders.length }}</div>
+              </button>
+
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item *ngFor="let order of orders" (click)="openDetailRequestDialog(order);detailRequestDialog.showModal()">
+                  <app-view-order [retailer]="order.retailer"></app-view-order>
+                </button>
+              </mat-menu>
+
+            </div>
+          </div>
         </li>
         <li class="nav-item">
           <app-account></app-account>
@@ -35,3 +52,17 @@
     </div>
   </div>
 </nav>
+
+
+<dialog [ngClass]="isOpenDetailRequestDialog ? 'flex':'hidden'" class=" relative flex-col bg-blueGray-100 rounded-lg w-5/6" #detailRequestDialog>
+  <p class="text-xl font-medium">Detail Order</p>
+
+  <button type="button" class="absolute top-2 right-6 focus:outline-none text-xl font-bold text-red-600" (click)="closeDetailRequestDialog(false)">X
+  </button>
+
+  <div>Detail</div>
+</dialog>
+
+<dialog #detailRequestDialog>
+
+</dialog>

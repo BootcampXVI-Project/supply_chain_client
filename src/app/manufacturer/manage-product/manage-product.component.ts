@@ -2,7 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {UserToken} from "../../models/user-model";
-import {Product, ProductImport, ProductManufacture, ProductObj} from "../../models/product-model";
+import {Actor, Product, ProductImport, ProductManufacture, ProductObj} from "../../models/product-model";
 import {StatusColor, Time, Unit} from "../../../assets/ENUM";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
 import {ViewProductService} from "../../supplier/components/view-product/view-product.service";
@@ -37,7 +37,7 @@ export class ManageProductComponent {
   hasCertificate: boolean = false
 
 
-  statusColor : StatusColor = StatusColor.CULTIVATED
+  statusColor: StatusColor = StatusColor.CULTIVATED
   // dataSource = new MatTableDataSource<any>()
   user: any = this.userService.getUser();
   item: Product = {
@@ -45,22 +45,20 @@ export class ManageProductComponent {
     productObj: {
       productId: '',
       productName: '',
-      dates: {
-        cultivated: '',
-        harvested: '',
-        imported: '',
-        manufacturered: '',
-        exported: '',
-        distributed: '',
-        selling: '',
-        sold: ''
-      },
-      actors: {
-        supplierId: '',
-        manufacturerId: '',
-        distributorId: '',
-        retailerId: ''
-      },
+      dates: [
+        {
+          actor: {
+            address: "",
+            avatar: "",
+            fullName: "",
+            phoneNumber: "",
+            role: "",
+            userId: "",
+          },
+          status: '',
+          time: '',
+        }
+      ],
       expireTime: '',
       price: '',
       amount: '',
@@ -68,17 +66,24 @@ export class ManageProductComponent {
       status: '',
       description: '',
       certificateUrl: '',
-      supplierId: '',
+      supplier: {
+        address: "",
+        avatar: "",
+        fullName: "",
+        phoneNumber: "",
+        role: "",
+        userId: "",
+      },
       qrCode: '',
       image: []
     }
   };
 
   product: ProductObj = this.item.productObj
-  productModel : ProductObj []=[]
+  productModel: ProductObj [] = []
   dataSourceProduct = new MatTableDataSource<any>;
-  displayedColumns: string[] = ['Index','ProductName','CultivatedDate','HarvestedDate','Price','Status','Action']
-
+  displayedColumns: string[] = ['Index', 'ProductName', 'Price', 'Status', 'Action']
+  // displayedColumns: string[] = ['Index', 'ProductName', 'CultivatedDate', 'HarvestedDate', 'Price', 'Status', 'Action']
 
 
   constructor(
@@ -105,10 +110,10 @@ export class ManageProductComponent {
     this.getAllProduct();
   }
 
-  getAllProduct(){
+  getAllProduct() {
     this.viewProductService.getAllProduct().subscribe(
-      response =>{
-        let data:any = response
+      response => {
+        let data: any = response
         this.productModel = data.data
         this.dataSourceProduct = new MatTableDataSource(this.productModel)
         this.dataSourceProduct.paginator = this.manufacturerPaginator
@@ -123,12 +128,13 @@ export class ManageProductComponent {
     const dialogContent = this.manufacturerDetailDialog?.nativeElement.querySelector('.backdrop');
 
     if (backdrop === dialogContent) {
-      this.close({isClose:true, isReload:true});
+      this.close({isClose: true, isReload: true});
     }
   }
 
   open(product: any) {
     this.product = product
+    console.log("DETAIL", product)
     this.openDialog = true
     //---------manufacturer--------//
 
@@ -170,7 +176,6 @@ export class ManageProductComponent {
   }
 
 
-
   //-------------------- detail ----------------------------//
   times = Object.values(Time)
   loading: boolean = false
@@ -185,9 +190,9 @@ export class ManageProductComponent {
       this.viewProductService.updateProduct(this.item).subscribe({
         next: (response) => {
           console.log(response);
-          console.log("successful",response)
+          console.log("successful", response)
           this.loading = false
-          this.close({isClose:true, isReload:false})
+          this.close({isClose: true, isReload: false})
         }
       });
     }
@@ -238,13 +243,13 @@ export class ManageProductComponent {
   importProduct() {
     this.productImport.productId = this.product.productId
     this.productImport.price = this.product.price
-    console.log("IMPORT",this.productImport)
+    console.log("IMPORT", this.productImport)
 
     this.manufacturerService.importProduct(this.productImport)
       .subscribe({
         next: (response) => {
-          console.log("successful",response)
-          this.close({isClose:true, isReload:true});
+          console.log("successful", response)
+          this.close({isClose: true, isReload: true});
         }
       })
   }
@@ -258,7 +263,7 @@ export class ManageProductComponent {
         this.expireTime.setDate(this.expireTime.getDate() + this.time.numbOfTime);
         break;
       case Time.Week:
-        this.expireTime.setDate(this.expireTime.getDate() + (7*this.time.numbOfTime));
+        this.expireTime.setDate(this.expireTime.getDate() + (7 * this.time.numbOfTime));
         break;
       case Time.Month:
         this.expireTime.setMonth(this.expireTime.getMonth() + this.time.numbOfTime);
@@ -279,13 +284,13 @@ export class ManageProductComponent {
 
 
     console.log(this.time)
-    console.log("MANUFACTURE",this.productManufacture)
+    console.log("MANUFACTURE", this.productManufacture)
 
     this.manufacturerService.manufacture(this.productManufacture)
       .subscribe({
         next: (response) => {
-          console.log("successful",response)
-          this.close({isClose:true, isReload:true});
+          console.log("successful", response)
+          this.close({isClose: true, isReload: true});
         }
       })
   }
@@ -304,7 +309,7 @@ export class ManageProductComponent {
   widthContain: number = 0;
 
   ngAfterViewInit(): void {
-    console.log("carousel",this.imageList);
+    console.log("carousel", this.imageList);
 
     this.setLimitDrag();
 
@@ -338,7 +343,7 @@ export class ManageProductComponent {
 
   changeImage(e: any) {
     this.isImageLoading = true;
-    console.log("POS-C",this.currentImagePos)
+    console.log("POS-C", this.currentImagePos)
     this.uploadFile.convertFileToUrl(e.target.files[0]).subscribe((url: string) => {
       this.imageList![this.currentImagePos] = url;
       this.isImageLoading = false

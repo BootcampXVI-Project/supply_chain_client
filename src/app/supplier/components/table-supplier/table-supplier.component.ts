@@ -36,22 +36,20 @@ export class TableSupplierComponent implements OnInit{
     productObj: {
       productId: '',
       productName: '',
-      dates: {
-        cultivated: '',
-        harvested: '',
-        imported: '',
-        manufacturered: '',
-        exported: '',
-        distributed: '',
-        selling: '',
-        sold: ''
-      },
-      actors: {
-        supplierId: '',
-        manufacturerId: '',
-        distributorId: '',
-        retailerId: ''
-      },
+      dates: [
+        {
+          actor: {
+            address: "",
+            avatar: "",
+            fullName: "",
+            phoneNumber: "",
+            role: "",
+            userId: "",
+          },
+          status: '',
+          time: '',
+        }
+      ],
       expireTime: '',
       price: '',
       amount: '',
@@ -59,7 +57,14 @@ export class TableSupplierComponent implements OnInit{
       status: '',
       description: '',
       certificateUrl: '',
-      supplierId: '',
+      supplier: {
+        address: "",
+        avatar: "",
+        fullName: "",
+        phoneNumber: "",
+        role: "",
+        userId: "",
+      },
       qrCode: '',
       image: []
     }
@@ -119,7 +124,6 @@ export class TableSupplierComponent implements OnInit{
       this.currentUser.username = authService.getTokenName()
       if (this.currentUser.userId != null) {
         this.item.userId = this.currentUser.userId
-        this.item.productObj.supplierId = this.currentUser.userId
       }
     });
   }

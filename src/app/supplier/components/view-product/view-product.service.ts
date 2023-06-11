@@ -94,30 +94,15 @@ export class ViewProductService {
       productObj: {
         productId: productObj.productId,
         productName: productObj.productName,
-        dates: {
-          cultivated: productObj.dates.cultivated,
-          harvested: productObj.dates.harvested,
-          imported: productObj.dates.imported,
-          manufacturered: productObj.dates.manufacturered,
-          exported: productObj.dates.exported,
-          distributed: productObj.dates.distributed,
-          selling: productObj.dates.selling,
-          sold: productObj.dates.sold
-        },
-        actors: {
-          supplierId: productObj.actors.supplierId,
-          manufacturerId: productObj.actors.manufacturerId,
-          distributorId: productObj.actors.distributorId,
-          retailerId: productObj.actors.retailerId
-        },
+        dates: productObj.dates,
         expireTime: productObj.expireTime,
         price: productObj.price,
         amount: productObj.amount,
-        unit: Unit.Kilogram,
+        unit: productObj.unit,
         status: productObj.status,
         description: productObj.description,
         certificateUrl: productObj.certificateUrl,
-        supplierId: productObj.supplierId,
+        supplier: productObj.supplier,
         qrCode: productObj.qrCode,
         image: productObj.image
       }

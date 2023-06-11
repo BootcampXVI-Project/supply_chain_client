@@ -3,8 +3,8 @@ export enum Unit {
   Gram = 'g',
   Liter = 'l',
   Milliliter = 'ml',
-  Pound = 'lb',
-  Ounce = 'oz'
+  Can = 'can',
+  Cans = 'cans'
 }
 
 

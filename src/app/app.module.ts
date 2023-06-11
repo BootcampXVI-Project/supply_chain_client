@@ -90,6 +90,11 @@ import {ChartComponent} from './supplier/components/chart/chart.component'
 import {HighchartsChartModule} from 'highcharts-angular';
 import {DatePipe} from "@angular/common";
 import { ViewOrderComponent } from './manufacturer/view-order/view-order.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatCardModule} from "@angular/material/card";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatButtonModule} from "@angular/material/button";
+
 
 @NgModule({
   declarations: [
@@ -177,6 +182,10 @@ import { ViewOrderComponent } from './manufacturer/view-order/view-order.compone
     MatDatepickerModule,
     MatTableModule,
     DateFnsModule.forRoot(),
+    MatIconModule,
+    MatCardModule,
+    MatMenuModule,
+    MatButtonModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],
