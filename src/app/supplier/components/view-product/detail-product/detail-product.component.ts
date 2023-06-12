@@ -19,7 +19,41 @@ export class DetailProductComponent implements OnInit{
   @ViewChild('dialogCert') certDialog: ElementRef | undefined;
 
 
-  @Input() product: ProductObj | undefined;
+  @Input() product: ProductObj = {
+    productId: '',
+    productName: '',
+    dates: [
+      {
+        actor: {
+          address: "",
+          avatar: "",
+          fullName: "",
+          phoneNumber: "",
+          role: "",
+          userId: "",
+        },
+        status: '',
+        time: '',
+      }
+    ],
+    expireTime: '',
+    price: '',
+    amount: '',
+    unit: Unit.Kilogram,
+    status: '',
+    description: '',
+    certificateUrl: '',
+    supplier: {
+      address: "",
+      avatar: "",
+      fullName: "",
+      phoneNumber: "",
+      role: "",
+      userId: "",
+    },
+    qrCode: '',
+    image: []
+  }
   @Input() reload = false;
 
   openDialog: boolean = false
@@ -203,15 +237,15 @@ export class DetailProductComponent implements OnInit{
   }
 
   harvestProduct(productId: any) {
-    console.log("HARVEST",productId)
     this.data = this.productService.getProduct()
     this.viewProductService.harvestProduct(productId)
       .subscribe({
         next: (response) => {
-          console.log(this.data.data)
+          console.log("HARVEST",this.data.data)
           if (this.data?.data) {
             this.data.data.map(response);
             this.product = this.data.data;
+            this.product.status = "HARVESTED"
           }
           this.close()
         }

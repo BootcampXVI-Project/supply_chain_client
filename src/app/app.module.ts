@@ -94,6 +94,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatCardModule} from "@angular/material/card";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
+import { DropDownComponent } from './components/navbars/drop-down/drop-down.component';
 
 
 @NgModule({
@@ -157,6 +158,7 @@ import {MatButtonModule} from "@angular/material/button";
     TableSupplierComponent,
     ViewOrderComponent,
     // jqxDateTimeInputCompon ent,
+    DropDownComponent,
   ],
   imports: [
     BrowserModule,
