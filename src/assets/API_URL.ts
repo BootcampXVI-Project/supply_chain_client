@@ -1,4 +1,4 @@
-export const DOMAIN = 'https://2356220b1567.ngrok.app';
+export const DOMAIN = 'https://0ddeed6f66b9.ngrok.app';
 
 export const API_URL = {
   LOGIN: () => `${DOMAIN}/auth/login`,
