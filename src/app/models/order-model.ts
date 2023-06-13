@@ -2,18 +2,18 @@ import {Unit} from "../../assets/ENUM";
 import {Actor, ProductItem} from "./product-model";
 
 export interface Order {
-  orderId: string;
-  productItemList: ProductItem[];
-  deliveryStatuses: DeliveryStatus[];
-  signatures: string[];
-  status: string;
-  createDate: string;
-  updateDate: string;
-  finishDate: string;
-  qrCode: string;
-  retailer: Actor;
-  manufacturer: Actor;
-  distributor: Actor;
+  orderId: string,
+  productItemList: ProductItem[],
+  deliveryStatuses: DeliveryStatus[],
+  signatures: string[],
+  status: string,
+  createDate: string,
+  updateDate: string,
+  finishDate: string,
+  qrCode: string,
+  retailer: Actor,
+  manufacturer: Actor,
+  distributor: Actor,
 }
 
 export interface DeliveryStatus {
@@ -21,4 +21,12 @@ export interface DeliveryStatus {
   deliveryDate: string,
   address: string,
   actor: Actor,
+}
+
+export interface Bill {
+  productName: string,
+  quantityAvailable: string,
+  quantityRequest: string,
+  unitPrice: string,
+  totalPrice: string
 }

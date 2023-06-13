@@ -24,6 +24,7 @@ export const API_PRODUCT = {
 export const API_ORDER = {
   GETALLORDERS: () => `${DOMAIN}/order/all?status=PENDING`,
   GETALLORDERSMANUFACTURER: () => `${DOMAIN}/order/all/of-manufacturer`,
+  APPROVEORDER: () => `${DOMAIN}/manufacturer/order/approve`
 }
 
 

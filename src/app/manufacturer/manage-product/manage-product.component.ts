@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {UserToken} from "../../models/user-model";
@@ -13,6 +13,7 @@ import {ShareDataService} from "../../_services/share-data.service";
 import {FileUpLoadService} from "../../_services/file-up-load.service";
 import {DatePipe} from "@angular/common";
 import {TimeModel} from "../../models/time-model";
+import {ProductService} from "../../_services/product.service";
 
 @Component({
   selector: 'app-manage-product',
@@ -150,6 +151,11 @@ export class ManageProductComponent {
     this.shareInfor.setImageSlideValue([]);
     this.imageList = product.image
 
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscKey(event: KeyboardEvent) {
+    this.close();
   }
 
   close(data: any = {isClose: true, isReload: false}) {

@@ -47,4 +47,15 @@ export class OrderService {
       );
   }
 
+  approveOrder(orderId : string) {
+    const user = this.userService.getUser()
+    return this.http.patch(API_ORDER.APPROVEORDER(), {orderId: orderId }, {headers: this.headers})
+      .pipe(
+        catchError((error) => {
+          this.notification.showError("An error has occurred on the server, please try again later.", "Error");
+          return throwError(error.message);
+        })
+      )
+  }
+
 }
