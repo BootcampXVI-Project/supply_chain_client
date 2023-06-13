@@ -1,4 +1,4 @@
-export const DOMAIN = 'https://0ddeed6f66b9.ngrok.app';
+export const DOMAIN = 'https://bf65e7c30fcf.ngrok.app';
 
 export const API_URL = {
   LOGIN: () => `${DOMAIN}/auth/login`,
@@ -26,7 +26,6 @@ export const API_ORDER = {
   GETALLORDERSMANUFACTURER: () => `${DOMAIN}/order/all/of-manufacturer`,
   APPROVEORDER: () => `${DOMAIN}/manufacturer/order/approve`
 }
-
 
 
 export const API_USER = {

@@ -24,6 +24,9 @@ import {DetailProductComponent} from "./supplier/components/view-product/detail-
 import {SupplierComponent} from "./supplier/components/supplier.component";
 import {AuthGuard} from "./_guards/auth.guard";
 import {ManufacturerComponent} from "./manufacturer/manufacturer.component";
+import { TableSupplierComponent } from './supplier/components/table-supplier/table-supplier.component';
+import { Chart } from 'chart.js';
+import { ChartComponent } from './supplier/components/chart/chart.component';
 
 const routes: Routes = [
   // admin views
@@ -32,8 +35,7 @@ const routes: Routes = [
     component: AdminComponent,
     children: [
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'settings', component: SettingsComponent },
-      { path: 'tables', component: TablesComponent },
+
       { path: 'maps', component: MapsComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
@@ -45,8 +47,12 @@ const routes: Routes = [
     component: SupplierComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: "all", component: ViewProductComponent },
-      { path: "", redirectTo: "supplier", pathMatch: "full" },
+      // { path: "all", component: ViewProductComponent },
+
+      { path: 'chart-supplier', component: ChartComponent },
+      { path: 'table-supplier', component: TableSupplierComponent },
+      { path: '**', redirectTo: 'chart-supplier', pathMatch: 'full' },
+
     ],
   },
 
@@ -74,7 +80,6 @@ const routes: Routes = [
   { path: 'product', component: ProductsComponent },
   { path: 'profile', component: ProfileComponent },
   { path: '', component: IndexComponent },
-  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

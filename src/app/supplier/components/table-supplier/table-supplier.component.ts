@@ -138,4 +138,9 @@ export class TableSupplierComponent implements OnInit{
         }
       })
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceProduct.filter = filterValue.trim().toLowerCase();
+}
 }

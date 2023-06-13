@@ -30,6 +30,7 @@
     "highcharts-angular": "^3.1.2",
     "jqwidgets-ng": "^16.0.2",
     "ngx-date-fns": "^10.0.1",
+    "material": "^0.5.3",
     "ngx-loading": "^15.0.0",
     "ngx-toastr": "^15.0.2",
     "rxjs": "~7.5.0",
