@@ -4,7 +4,7 @@ import {AngularFireStorage} from "@angular/fire/compat/storage";
 import {UploadImageService} from "../../_services/upload-image.service";
 import {FileUpLoadService} from "../../_services/file-up-load.service";
 import {ProductService} from "../../_services/product.service";
-import {ViewProductService} from "../../supplier/components/view-product/view-product.service";
+import {ViewProductService} from "../../supplier/table-supplier/view-product.service";
 
 @Component({
   selector: 'app-certificate',

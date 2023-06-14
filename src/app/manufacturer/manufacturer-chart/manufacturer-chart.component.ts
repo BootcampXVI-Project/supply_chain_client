@@ -5,7 +5,7 @@ import HighchartsExporting from 'highcharts/modules/exporting';
 import HighchartsAccessibility from 'highcharts/modules/accessibility';
 
 import { Chart } from 'highcharts';
-import { ViewProductService } from 'src/app/supplier/components/view-product/view-product.service';
+import { ViewProductService } from 'src/app/supplier/table-supplier/view-product.service';
 
 HighchartsMore(Highcharts);
 HighchartsExporting(Highcharts);

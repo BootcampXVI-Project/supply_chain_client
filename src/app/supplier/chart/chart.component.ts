@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
-import { ViewProductService } from '../view-product/view-product.service';
+import { ViewProductService } from '../table-supplier/view-product.service';
 import HighchartsMore from 'highcharts/highcharts-more';
 import HighchartsExporting from 'highcharts/modules/exporting';
 import HighchartsAccessibility from 'highcharts/modules/accessibility';

@@ -1,6 +1,6 @@
 import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {ViewProductService} from '../view-product/view-product.service';
+import {ViewProductService} from './view-product.service';
 import {Actor, Dates, Product, ProductObj} from 'src/app/models/product-model';
 import {Unit} from 'src/assets/ENUM';
 import {UserToken} from 'src/app/models/user-model';
@@ -8,7 +8,7 @@ import {AngularFireStorage} from '@angular/fire/compat/storage';
 import {UserService} from 'src/app/_services/user.service';
 import {AuthService} from 'src/app/_services/auth.service';
 import {MatPaginator} from '@angular/material/paginator';
-import {FileUpLoadService} from "../../../_services/file-up-load.service";
+import {FileUpLoadService} from "../../_services/file-up-load.service";
 
 
 @Component({

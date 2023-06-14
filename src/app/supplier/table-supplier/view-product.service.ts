@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, throwError} from "rxjs";
-import {NotificationService} from "../../../_services/notification.service";
-import {UserService} from "../../../_services/user.service";
-import {API_PRODUCT, API_URL} from "../../../../assets/API_URL";
-import {Product, ProductObj} from "../../../models/product-model";
-import {Unit} from "../../../../assets/ENUM";
-import {AuthService} from "../../../_services/auth.service";
-import {ProductService} from "../../../_services/product.service";
+import {NotificationService} from "../../_services/notification.service";
+import {UserService} from "../../_services/user.service";
+import {API_PRODUCT, API_URL} from "../../../assets/API_URL";
+import {Product, ProductObj} from "../../models/product-model";
+import {Unit} from "../../../assets/ENUM";
+import {AuthService} from "../../_services/auth.service";
+import {ProductService} from "../../_services/product.service";
 
 @Injectable({
   providedIn: 'root'

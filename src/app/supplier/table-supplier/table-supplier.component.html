@@ -13,22 +13,10 @@
       class=" ml-2 block w-2/12 p-2 mb-6 text-sm text-white font-bold border uppercase rounded-full bg-green-500 hover:bg-green-600 active:bg-green-700 focus:outline-none  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       (click)="openToAdd(); dialog.showModal()"> + Cultivate
     </button>
-    <!--        <select id="small" class="block w-2/12 p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-r-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">-->
-    <!--          <option selected>All status</option>-->
-    <!--          <option value="US">United States</option>-->
-    <!--          <option value="CA">Canada</option>-->
-    <!--          <option value="FR">France</option>-->
-    <!--          <option value="DE">Germany</option>-->
-    <!--        </select>-->
   </div>
 </form>
 <table mat-table [dataSource]="dataSourceProduct" class=" min-h-max">
 
-
-  <!--- Note that these columns can be defined in any order.
-      The actual rendered columns are set as a property on the row definition" -->
-
-  <!-- Position Column -->
   <ng-container matColumnDef="index">
     <th mat-header-cell *matHeaderCellDef> No.</th>
     <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
@@ -90,12 +78,6 @@
       <div class="flex justify-center items-center lg:flex-row flex-col gap-8">
         <div class="w-full ">
           <div style="height: 40vh; width: 100%;" class="mb-2">
-            <!--            <carousel [imageList]="item.productObj.image" *ngIf="!isCreateForm && item.productObj.image">-->
-            <!--              >-->
-            <!--            </carousel>-->
-            <!--            <app-post-image *ngIf="isCreateForm" (dataEvent)="addImage($event)">-->
-
-            <!--            </app-post-image>-->
 
             <div style="display: flex; flex-direction: column; height: 100%; width: 100%;">
               <div style=" flex: 5">
@@ -104,8 +86,10 @@
                   [ngStyle]="{'background-image': imageList && imageList.length > 0 ? 'url('+ imageList![currentImagePos] +' ) ': 'url(https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/signatureimg%2Fhình%20ảnh_2023-06-14_094736470.png?alt=media&token=88d5e1bc-84a7-4849-8b76-65d8e965e413&_gl=1*y6x5nc*_ga*MTM3MTA5MTU2LjE2ODUwOTY5NjU.*_ga_CW55HF8NVT*MTY4NjcxMDgzNi41LjEuMTY4NjcxMDg2MC4wLjAuMA..) '}"
                 >
                   <div style="position: absolute; right: 7px; top: 7px;">
-                    <label for="file-input" >
-                      <mat-icon class="rounded-md bg-aliceblue h-35 w-35 bg-blueGray-100 " *ngIf="!isImageLoading">library_add</mat-icon>
+                    <label for="file-input">
+                      <mat-icon class="rounded-md bg-aliceblue h-35 w-35 bg-blueGray-100 " *ngIf="!isImageLoading">
+                        library_add
+                      </mat-icon>
 
                       <app-loading [isLoading]="isImageLoading"></app-loading>
                     </label>
@@ -126,7 +110,8 @@
                       <line x1="5" y1="12" x2="11" y2="6"/>
                     </svg>
                   </div>
-                  <div class="rounded-md bg-aliceblue h-35 w-35 bg-blueGray-100 " (click)="afterImage()" *ngIf="imageList.length > 1">
+                  <div class="rounded-md bg-aliceblue h-35 w-35 bg-blueGray-100 " (click)="afterImage()"
+                       *ngIf="imageList.length > 1">
                     <svg class="h-8 w-8 text-black" width="24" height="24" viewBox="0 0 24 24"
                          stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                          stroke-linejoin="round">
@@ -184,17 +169,18 @@
         </div>
         <div class="w-full sm:w-96 md:w-8/12 lg:w-6/12 items-center">
           <h2 class="font-semibold lg:text-4xl text-3xl lg:leading-9 leading-7 text-gray-800 mt-4">
-            <input class="border-none font-semibold lg:text-4xl text-3xl lg:leading-9 leading-7 text-gray-800 rounded-lg placeholder-gray-300"
-                   type="text"
-                   placeholder="Product Name"
-                   id="productNameEd" name="productName" [(ngModel)]="product.productName">
+            <input
+              class="border-none font-semibold lg:text-4xl text-3xl lg:leading-9 leading-7 text-gray-800 rounded-lg placeholder-gray-300"
+              type="text"
+              placeholder="Product Name"
+              id="productNameEd" name="productName" [(ngModel)]="product.productName">
 
           </h2>
           <div>
 
             <p class="font-medium text-base leading-4 text-gray-600">Certificate:
               <button type="button" class="w-1/12 h-1/12 focus:outline-none"
-                (click)="openCertificate();dialogCert.showModal()"
+                      (click)="openCertificate();dialogCert.showModal()"
               >
                 <mat-icon *ngIf="product.certificateUrl==''">add_a_photo</mat-icon>
                 <!--                <mat-icon>library_add</mat-icon>-->
@@ -218,9 +204,11 @@
             <p class=" mt-6">
 
 
-              <input class="border-none font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-right rounded-lg placeholder-gray-300" type="text"
-                     placeholder="Unit Price"
-                     id="priceEd" name="price" [(ngModel)]="product.price ">
+              <input
+                class="border-none font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-right rounded-lg placeholder-gray-300"
+                type="text"
+                placeholder="Unit Price"
+                id="priceEd" name="price" [(ngModel)]="product.price ">
             </p>
 
           </div>
@@ -247,16 +235,19 @@
                 >Cultivated
                   Date:</label>
                 <br>
-                <input type="text" id="cultivatedDate" name="cultivatedDate" class="border-0 rounded-lg" *ngIf="product.dates[0]"
+                <input type="text" id="cultivatedDate" name="cultivatedDate" class="border-0 rounded-lg"
+                       *ngIf="product.dates[0]"
                        [value]="product.dates[0].time | date: 'dd - MMM - yyyy HH:mm:ss'" disabled>
                 <input
                   class="rounded-lg border-none"
-                  type="text" name="currentDate" [value]="currentDate | date: 'dd - MMM - yyyy'" *ngIf="!product.dates[0]" disabled>
+                  type="text" name="currentDate" [value]="currentDate | date: 'dd - MMM - yyyy'"
+                  *ngIf="!product.dates[0]" disabled>
               </div>
               <div class="ml-1 ">
                 <label for="harvestedDate" class="font-medium text-base leading-4 text-gray-600">Harvested Date:</label>
                 <br>
-                <input type="text" id="harvestedDate" name="harvestedDate" class="border-0 rounded-lg" *ngIf="product.dates[1]"
+                <input type="text" id="harvestedDate" name="harvestedDate" class="border-0 rounded-lg"
+                       *ngIf="product.dates[1]"
                        [value]="product.dates[1].time | date: 'dd - MMM - yyyy HH:mm:ss'" disabled>
                 <input
                   class="rounded-lg border-none"
@@ -279,30 +270,33 @@
             (click)="closeCertificate()">X
     </button>
 
-<!--    <app-certificate [product]="product"></app-certificate>-->
+    <!--    <app-certificate [product]="product"></app-certificate>-->
 
     <form (ngSubmit)="onSubmitCertificate()">
-      <a href="{{ imageUrl }}" target="_blank"  *ngIf="imageUrl!=''">
-        <div style="width: 100%; position: relative; background-size: contain; background-position: center; padding: 0 15px; display: flex; justify-content: space-between; align-items: center; height: 30vh; background-repeat: no-repeat;"
-             [ngStyle]="{'background-image': 'url('+ imageUrl +' )'}">
+      <a href="{{ imageUrl }}" target="_blank" *ngIf="imageUrl!=''">
+        <div
+          style="width: 100%; position: relative; background-size: contain; background-position: center; padding: 0 15px; display: flex; justify-content: space-between; align-items: center; height: 30vh; background-repeat: no-repeat;"
+          [ngStyle]="{'background-image': 'url('+ imageUrl +' )'}">
           <label for="cert-update">
-            <mat-icon >add_photo_alternate</mat-icon>
-            <app-loading [isLoading] = "isImageLoading"></app-loading>
+            <mat-icon>add_photo_alternate</mat-icon>
+            <app-loading [isLoading]="isImageLoading"></app-loading>
           </label>
-          <input *ngIf="!isImageLoading" id="cert-update" type="file" accept="image/png, image/jpeg" style="height: 1px; width: 1px; opacity: 0; "
-                 (change)="addCert($event)" />
+          <input *ngIf="!isImageLoading" id="cert-update" type="file" accept="image/png, image/jpeg"
+                 style="height: 1px; width: 1px; opacity: 0; "
+                 (change)="addCert($event)"/>
         </div>
       </a>
       <div
         *ngIf="imageUrl==''"
         style="position: relative; background-size: contain; background-position: center; padding: 0 15px; display: flex; justify-content: space-between; align-items: center; background-repeat: no-repeat;"
-           [ngStyle]="{'background-image': 'url('+ imageUrl +' )'}">
+        [ngStyle]="{'background-image': 'url('+ imageUrl +' )'}">
         <label for="cert-input">
-          <mat-icon >add_photo_alternate</mat-icon>
-          <app-loading [isLoading] = "isImageLoading"></app-loading>
+          <mat-icon>add_photo_alternate</mat-icon>
+          <app-loading [isLoading]="isImageLoading"></app-loading>
         </label>
-        <input *ngIf="!isImageLoading" id="cert-input" type="file" accept="image/png, image/jpeg" style="height: 1px; width: 1px; opacity: 0; "
-               (change)="addCert($event)" />
+        <input *ngIf="!isImageLoading" id="cert-input" type="file" accept="image/png, image/jpeg"
+               style="height: 1px; width: 1px; opacity: 0; "
+               (change)="addCert($event)"/>
       </div>
       <button type="submit">
         Confirm

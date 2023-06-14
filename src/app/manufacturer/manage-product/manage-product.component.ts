@@ -5,7 +5,7 @@ import {UserToken} from "../../models/user-model";
 import {Actor, Product, ProductImport, ProductManufacture, ProductObj} from "../../models/product-model";
 import {StatusColor, Time, Unit} from "../../../assets/ENUM";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
-import {ViewProductService} from "../../supplier/components/view-product/view-product.service";
+import {ViewProductService} from "../../supplier/table-supplier/view-product.service";
 import {UserService} from "../../_services/user.service";
 import {AuthService} from "../../_services/auth.service";
 import {ManufacturerService} from "../manufacturer.service";
@@ -86,6 +86,7 @@ export class ManageProductComponent {
   productModel: ProductObj [] = []
   dataSourceProduct = new MatTableDataSource<any>;
   displayedColumns: string[] = ['Index', 'ProductName', 'Price', 'Status', 'Action']
+
   // displayedColumns: string[] = ['Index', 'ProductName', 'CultivatedDate', 'HarvestedDate', 'Price', 'Status', 'Action']
 
 
@@ -162,7 +163,6 @@ export class ManageProductComponent {
   }
 
   close(data: any = {isClose: true, isReload: false}) {
-    console.log("du lieu truyen ve", data)
     this.openDialog = !data.isClose
     this.manufacturerDetailDialog?.nativeElement.close();
     if (data.isReload) {
@@ -195,7 +195,6 @@ export class ManageProductComponent {
     this.loading = true
     if (this.product?.productId) {
       this.item.productObj = JSON.parse(JSON.stringify(this.product))
-      this.closeCertificate(false)
       this.viewProductService.updateProduct(this.item).subscribe({
         next: (response) => {
           console.log(response);
@@ -208,21 +207,7 @@ export class ManageProductComponent {
   }
 
 
-  closeCertificate(data: any) {
-    console.log("du lieu truyen ve", data)
-    this.openCertification = data
-    // this.openDialog = data
-    this.certDialog?.nativeElement.close();
-  }
 
-  addImage(data: any) {
-    console.log("add")
-    if (this.item.productObj?.image) {
-      this.item.productObj.image.push(data);
-    } else {
-      this.item.productObj.image = [data];
-    }
-  }
 
   //--------------------------manufacturer--------------------//
 
@@ -337,24 +322,29 @@ export class ManageProductComponent {
       )
   }
 
-  addImage1(e: any) {
+  addImage(e: any) {
     console.log("POS-A", this.currentImagePos)
     this.isImageLoading = true;
     this.uploadFile.convertFileToUrl(e.target.files[0]).subscribe((url: string) => {
+      this.imageList = [...this.imageList];
       this.imageList?.push(url);
       this.isImageLoading = false
-      console.log(this.imageList)
+      console.log("afterAdd",this.product)
 
     });
   }
+
+
 
   changeImage(e: any) {
     this.isImageLoading = true;
     console.log("POS-C", this.currentImagePos)
     this.uploadFile.convertFileToUrl(e.target.files[0]).subscribe((url: string) => {
+      this.imageList = [...this.imageList];
       this.imageList![this.currentImagePos] = url;
       this.isImageLoading = false
-      console.log(this.imageList)
+      console.log("afterChange",this.product)
+
 
     });
   }
@@ -382,6 +372,7 @@ export class ManageProductComponent {
 
   deleteImage(i: number) {
     this.currentImagePos = 0;
+    this.imageList = [...this.imageList];
     this.imageList?.splice(i, 1);
     this.distanNumber = 0;
     this.distanceString = (this.distanNumber).toString() + 'px';
@@ -437,10 +428,28 @@ export class ManageProductComponent {
     this.currentImagePos = pos;
 
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSourceProduct.filter = filterValue.trim().toLowerCase();
-}
+  }
+//---------------------------------------------Certificate-----------------------------------//
+  @ViewChild('dialogCertManufacturer') dialogCertManufacturer: ElementRef | undefined;
+  imageUrl = ''
+
+  openCertificate() {
+    if (this.product.certificateUrl!='') {
+      this.imageUrl = this.product.certificateUrl
+    } else {
+      this.imageUrl = ''
+    }
+    this.openCertification = true
+  }
+  closeCertificate() {
+    this.openCertification = false
+    this.dialogCertManufacturer?.nativeElement.close()
+  }
+
   protected readonly StatusColor = StatusColor;
   protected readonly ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
 }
