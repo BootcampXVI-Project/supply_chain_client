@@ -1,0 +1,12 @@
+.avatar-wrapper {
+  width: 20vh; /* Định nghĩa kích thước của hình tròn */
+  height: 20vh;
+  border-radius: 50%; /* Đặt hình dạng thành hình tròn */
+  overflow: hidden; /* Ẩn phần bị tràn ra ngoài hình tròn */
+}
+
+.avatar-image {
+  width: 100%; /* Đảm bảo hình ảnh lấp đầy toàn bộ không gian của hình tròn */
+  height: 100%;
+  object-fit: cover; /* Căn chỉnh kích thước hình ảnh để lấp đầy hình tròn */
+}

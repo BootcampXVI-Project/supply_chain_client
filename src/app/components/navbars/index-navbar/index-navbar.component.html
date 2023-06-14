@@ -74,7 +74,7 @@
           <label for="checkbox" class="checkbox-text">Remember me</label>
         </div>
         <button class="sigin-btn bg-gradient-to-r from-[#ec556c] to-[#ea723e]" type="submit">
-          Submit
+          <app-loading [text]="'Submit'" [isLoading]="loading"></app-loading>
         </button>
         <a class="forget" href="#">Forget password ?</a>
         <button class="border-[#ec556c] border rounded-[0.5rem] cancel-btn" type="reset" (click)="close()"

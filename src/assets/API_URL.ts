@@ -1,4 +1,4 @@
-export const DOMAIN = 'https://f20f59bc6393.ngrok.app';
+export const DOMAIN = 'https://bf65e7c30fcf.ngrok.app';
 
 export const API_URL = {
   LOGIN: () => `${DOMAIN}/auth/login`,
@@ -6,9 +6,34 @@ export const API_URL = {
 
 export const API_PRODUCT = {
   GETALLPRODUCTS: () => `${DOMAIN}/product/all`,
-  GETPRODUCT: (productId: string) => `${DOMAIN}/product/detail?productId=`+productId,
+  GETALLPRODUCTSOFSUPPLIER: () => `${DOMAIN}/product/all-of-supplier`,
+  GETPAGINATIONPRODUCTS: (pageNumber: string) => `${DOMAIN}/product/pagination?page=`+pageNumber,
+  GETPRODUCT: (productId: string) => `${DOMAIN}/product/`+productId,
+
+  //-----------------------------------supplier--------------------------------------//
   UPDATEPRODUCT: (userId:string) => `${DOMAIN}/product/update?userId=`+userId,
   CREATEPRODUCT: () => `${DOMAIN}/product/cultivate`,
   HARVESTPRODUCT: () => `${DOMAIN}/product/harvest`,
+
+  //------------------------------------manufacturer----------------------------------//
+  IMPORTPRODUCT: () => `${DOMAIN}/product/import`,
+  MANUFACTUREPRODUCT: () => `${DOMAIN}/product/manufacture`,
+  EXPORTPRODUCT: () => `${DOMAIN}/product/export`,
+
+}
+
+export const API_ORDER = {
+  GETALLORDERS: () => `${DOMAIN}/order/all?status=PENDING`,
+  GETALLORDERSMANUFACTURER: () => `${DOMAIN}/order/all/of-manufacturer`,
+  GETORDER: (orderId: string) => `${DOMAIN}/order/`+ orderId,
+  APPROVEORDER: () => `${DOMAIN}/manufacturer/order/approve`,
+  REJECTORDER: () => `${DOMAIN}/manufacturer/order/reject`,
+}
+
+
+export const API_USER = {
+  GETALLUSERS: () => `${DOMAIN}/user/all`,
+  GETUSER: (userId:string) => `${DOMAIN}/user/`+userId,
+  ADDUSER: () => `${DOMAIN}/user/`
 }
 

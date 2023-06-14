@@ -3,7 +3,9 @@ import {UserService} from "../../../../_services/user.service";
 import {common} from "../../../../../../common";
 import {ViewProductService} from "../view-product.service";
 import { Unit } from "../../../../../assets/ENUM";
-import { Product } from "../../../../models/product-model";
+import { Product, ProductObj } from "../../../../models/product-model";
+import {ProductService} from "../../../../_services/product.service";
+import {reload} from "@angular/fire/auth";
 
 @Component({
   selector: 'app-detail-product',
@@ -17,53 +19,75 @@ export class DetailProductComponent implements OnInit{
   @ViewChild('dialogCert') certDialog: ElementRef | undefined;
 
 
-  @Input() product: Product | undefined;
+  @Input() product: ProductObj = {
+    productId: '',
+    productName: '',
+    dates: [
+      {
+        actor: {
+          address: "",
+          avatar: "",
+          fullName: "",
+          phoneNumber: "",
+          role: "",
+          userId: "",
+        },
+        status: '',
+        time: '',
+      }
+    ],
+    expireTime: '',
+    price: '',
+    amount: '',
+    unit: Unit.Kilogram,
+    status: '',
+    description: '',
+    certificateUrl: '',
+    supplier: {
+      address: "",
+      avatar: "",
+      fullName: "",
+      phoneNumber: "",
+      role: "",
+      userId: "",
+    },
+    qrCode: '',
+    image: []
+  }
   @Input() reload = false;
 
   openDialog: boolean = false
   openCertification: boolean = false
+  hasCertificate: boolean = false
+  loading: boolean = false
+  isCreateForm: boolean = false;
+  reloadDetailProduct = false;
 
   status = common.status
   statusSelected = 0
   units = Object.values(Unit);
-  isCreateForm: boolean = false;
   user: any = '';
-  reloadDetailProduct = false;
   data: any
-
-  // item: any = {
-  //   productName: "",
-  //   image: [],
-  //   price: "",
-  //   amount: "",
-  //   unit: "",
-  //   dates: "",
-  //   status:"",
-  //   description:"",
-  //   certificateUrl:"",
-  // };
 
   item: Product = {
     userId: '',
     productObj: {
       productId: '',
       productName: '',
-      dates: {
-        cultivated: '',
-        harvested: '',
-        imported: '',
-        manufacturered: '',
-        exported: '',
-        distributed: '',
-        selling: '',
-        sold: ''
-      },
-      actors: {
-        supplierId: '',
-        manufacturerId: '',
-        distributorId: '',
-        retailerId: ''
-      },
+      dates: [
+        {
+          actor: {
+            address: "",
+            avatar: "",
+            fullName: "",
+            phoneNumber: "",
+            role: "",
+            userId: "",
+          },
+          status: '',
+          time: '',
+        }
+      ],
       expireTime: '',
       price: '',
       amount: '',
@@ -71,20 +95,30 @@ export class DetailProductComponent implements OnInit{
       status: '',
       description: '',
       certificateUrl: '',
-      supplierId: '',
+      supplier: {
+        address: "",
+        avatar: "",
+        fullName: "",
+        phoneNumber: "",
+        role: "",
+        userId: "",
+      },
       qrCode: '',
-      image: [] as string[] | undefined
+      image: []
     }
   };
 
   openCertificate(product: any) {
     this.product = product
+    console.log("OPEN", product)
+    this.hasCertificate = !!product.productObj.certificateUrl;
     this.openCertification = true
   }
 
-  closeCertificate() {
-    this.openCertification = false
-    this.openDialog = false
+  closeCertificate(data: any) {
+    console.log("du lieu truyen ve", data)
+    this.openCertification = data
+    // this.openDialog = data
     this.certDialog?.nativeElement.close();
   }
 
@@ -93,12 +127,13 @@ export class DetailProductComponent implements OnInit{
     this.openDialog = true
   }
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.product)
-    console.log(this.user)
-    this.item.productObj.supplierId = this.item.userId = this.user.userId
+    console.log("DETAIL",this.product)
+    console.log("DETAIL",this.user)
     if(this.product) {
+      this.item.productObj = this.product
       this.isCreateForm = false;
-      this.data = this.product
+      this.productService.setProduct(this.product)
+      this.data = this.productService.getProduct()
       this.item.productObj = this.data
     } else {
       console.log("false", this.product)
@@ -114,27 +149,34 @@ export class DetailProductComponent implements OnInit{
     }
   }
   ngOnInit(): void {
-
+    this.user = this.userService.getUser()
+    console.log("INITDETAIL",this.user)
   }
 
+
   onSubmit() {
+    this.loading = true
     console.log("this is submit");
     console.log("item", this.product)
-    if (this.product) {
-      console.log("update")
+    if (this.product?.productId) {
+      console.log("update",this.product.productId)
       this.item.productObj.productId = JSON.parse(JSON.stringify(this.product)).productId
-      this.productService.updateProduct(this.item).subscribe({
+      this.closeCertificate(false)
+      this.viewProductService.updateProduct(this.item).subscribe({
         next: (response) => {
           console.log(response);
-          close()
+          this.loading = false
+          this.close(true, true)
         }
       });
     } else {
       console.log("create")
-      this.productService.createProduct(this.item).subscribe({
+      this.closeCertificate(false)
+      this.viewProductService.createProduct(this.item).subscribe({
         next: (response) => {
           console.log(response);
-          close()
+          this.loading = false
+          this.close(true, true)
         }
       });
     }
@@ -142,13 +184,20 @@ export class DetailProductComponent implements OnInit{
     // this.productService.createProduct(item)
   }
 
-  close() {
-    this.dataEvent.emit(false)
+  close(isClose= true, isReload= false ) {
+    this.dataEvent.emit({
+      isClose : isClose,
+      isReload: isReload
+    })
   }
 
   handleDataEvent(data: any) {
-    this.addImage(data);
-    this.changeImage(data);
+    if (data.event == "close") {
+      this.closeCertificate(data.data)
+    }
+    if (data.event == 'addcert') {
+      this.addCertificate(data.data);
+    }
   }
 
   addImage(data: any) {
@@ -164,16 +213,42 @@ export class DetailProductComponent implements OnInit{
     console.log("change")
   }
 
+  addCertificate(data: any) {
+    if (this.product) {
+      this.product.certificateUrl = data;
+    }
+  }
+
 
   getProduct(){
     // console.log(this.productId)
   }
-  constructor(private userService: UserService, private productService: ViewProductService) {
+  constructor(
+    private userService: UserService,
+    private viewProductService: ViewProductService,
+    private productService: ProductService
+  ) {
     this.user = this.userService.getUser()
     console.log("Detail")
   }
 
   loadData() {
     console.log(JSON.parse(JSON.stringify(this.product)))
+  }
+
+  harvestProduct(productId: any) {
+    this.data = this.productService.getProduct()
+    this.viewProductService.harvestProduct(productId)
+      .subscribe({
+        next: (response) => {
+          console.log("HARVEST",this.data.data)
+          if (this.data?.data) {
+            this.data.data.map(response);
+            this.product = this.data.data;
+            this.product.status = "HARVESTED"
+          }
+          this.close()
+        }
+      })
   }
 }

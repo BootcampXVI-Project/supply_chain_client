@@ -11,3 +11,16 @@ export class LoginUser {
   password: string = "";
 }
 
+export class User {
+  email: string = "";
+  password: string = "";
+  userName: string = "";
+  fullName: string = "";
+  avatar: string = "";
+  phoneNumber: string = "";
+  address: string = "";
+  role: string = "";
+  status: string = "";
+  signature: string = "";
+  userId: string = ""
+}

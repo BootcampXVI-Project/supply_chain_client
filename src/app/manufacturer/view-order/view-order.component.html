@@ -1,0 +1,25 @@
+<div class="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4">
+  <div class="flex justify-center items-center lg:flex-row flex-col gap-8">
+    <div class="w-1/6">
+      <mat-card class="avatar-card">
+        <mat-card-header>
+          <mat-card-title>
+            <img [src]="retailer?.avatar" alt="Avatar">
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <!-- Thêm nội dung của avatar tại đây -->
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="w-full items-center">
+      <mat-card class="info-card">
+        <mat-card-content>
+          <h2>{{retailer?.fullName}}</h2>
+          <p>{{retailer?.phoneNumber}}</p>
+          <p>{{retailer?.address}}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

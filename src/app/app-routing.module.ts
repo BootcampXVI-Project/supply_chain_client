@@ -23,16 +23,22 @@ import {ViewProductComponent} from "./supplier/components/view-product/view-prod
 import {DetailProductComponent} from "./supplier/components/view-product/detail-product/detail-product.component";
 import {SupplierComponent} from "./supplier/components/supplier.component";
 import {AuthGuard} from "./_guards/auth.guard";
+import {ManufacturerComponent} from "./manufacturer/manufacturer.component";
+import { TableSupplierComponent } from './supplier/components/table-supplier/table-supplier.component';
+import { Chart } from 'chart.js';
+import { ChartComponent } from './supplier/components/chart/chart.component';
+import { ManufacturerChartComponent } from './manufacturer/manufacturer-chart/manufacturer-chart.component';
+import { ManageProductComponent } from './manufacturer/manage-product/manage-product.component';
 
 const routes: Routes = [
   // admin views
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'settings', component: SettingsComponent },
-      { path: 'tables', component: TablesComponent },
+
       { path: 'maps', component: MapsComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
@@ -44,14 +50,30 @@ const routes: Routes = [
     component: SupplierComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: "all", component: ViewProductComponent },
-      { path: "", redirectTo: "supplier", pathMatch: "full" },
+      // { path: "all", component: ViewProductComponent },
+
+      { path: 'chart-supplier', component: ChartComponent },
+      { path: 'table-supplier', component: TableSupplierComponent },
+      { path: '**', redirectTo: 'chart-supplier', pathMatch: 'full' },
+
+    ],
+  },
+
+  {
+    path: "manufacturer",
+    component: ManufacturerComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'chart-manufacturer', component: ManufacturerChartComponent },
+      { path: 'table-manufacturer', component: ManageProductComponent },
+      { path: '**', redirectTo: 'chart-supplier', pathMatch: 'full' },
     ],
   },
   // auth views
   {
     path: 'auth',
     component: AuthComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
@@ -63,7 +85,6 @@ const routes: Routes = [
   { path: 'product', component: ProductsComponent },
   { path: 'profile', component: ProfileComponent },
   { path: '', component: IndexComponent },
-  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

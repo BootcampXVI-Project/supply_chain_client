@@ -52,7 +52,6 @@ export class CarouselComponent implements AfterViewInit {
     private _elementRef: ElementRef,
     private uploadFile: FileUpLoadService
   ) {
-    console.log("carousel", this.currentImagePos)
   }
 
   ngOnInit(): void {
@@ -61,6 +60,8 @@ export class CarouselComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    console.log("carousel",this.imageList);
+
     this.setLimitDrag();
 
   }
@@ -80,12 +81,13 @@ export class CarouselComponent implements AfterViewInit {
       )
   }
 
-  addImage(e: any) {
+  addImage1(e: any) {
+    console.log("POS-A", this.currentImagePos)
     this.isImageLoading = true;
     this.uploadFile.convertFileToUrl(e.target.files[0]).subscribe((url: string) => {
       this.imageList?.push(url);
 
-      // this.dataEvent.emit(url);
+      this.dataEvent.emit(url);
       this.isImageLoading = false
       console.log(this.imageList)
 
@@ -94,13 +96,14 @@ export class CarouselComponent implements AfterViewInit {
 
   changeImage(e: any) {
     this.isImageLoading = true;
-    console.log("POS",this.currentImagePos)
-    // this.uploadFile.convertFileToUrl(e.target.files[0]).subscribe((url: string) => {
-    //   this.dataEvent.emit(url);
-    //   this.isImageLoading = false
-    //   console.log(this.imageList)
+    console.log("POS-C",this.currentImagePos)
+    this.uploadFile.convertFileToUrl(e.target.files[0]).subscribe((url: string) => {
+      this.imageList![this.currentImagePos] = url;
+      this.dataEvent.emit(url);
+      this.isImageLoading = false
+      console.log(this.imageList)
 
-    // });
+    });
   }
 
   previousImage() {
@@ -125,7 +128,11 @@ export class CarouselComponent implements AfterViewInit {
   }
 
   deleteImage(i: number) {
-
+    this.currentImagePos = 0;
+    this.imageList?.splice(i, 1);
+    this.distanNumber = 0;
+    this.distanceString = (this.distanNumber).toString() + 'px';
+    this.setLimitDrag();
   }
 
   forwardImage() {

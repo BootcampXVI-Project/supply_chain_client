@@ -1,0 +1,14 @@
+<form (ngSubmit)="onSubmit()">
+  <div style="width: 100%; position: relative; background-size: contain; background-position: center; padding: 0 15px; display: flex; justify-content: space-between; align-items: center; height: 30vh; background-repeat: no-repeat;"
+       [ngStyle]="{'background-image': 'url('+ imageUrl +' )'}">
+    <label for="cert-input">
+      <i *ngIf="!isImageLoading" class="fas fa-edit" style="color: #0c367e;font-size: 30px;"></i>
+      <app-loading [isLoading] = "isImageLoading"></app-loading>
+    </label>
+    <input *ngIf="!isImageLoading" id="cert-input" type="file" accept="image/png, image/jpeg" style="height: 1px; width: 1px; opacity: 0; "
+           (change)="addImage($event)" />
+  </div>
+  <button type="submit">
+    Confirm
+  </button>
+</form>

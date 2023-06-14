@@ -8,8 +8,7 @@ export interface Product {
 export interface ProductObj {
   productId: string;
   productName: string;
-  dates: Dates;
-  actors: Actors;
+  dates: Dates[];
   expireTime: string;
   price: string;
   amount: string;
@@ -17,20 +16,24 @@ export interface ProductObj {
   status: string;
   description: string;
   certificateUrl: string;
-  supplierId: string;
+  supplier: Actor;
   qrCode: string;
   image?: string[];
 }
 
 export interface Dates {
-  cultivated: string;
-  harvested: string;
-  imported: string;
-  manufacturered: string;
-  exported: string;
-  distributed: string;
-  selling: string;
-  sold: string;
+  actor: Actor;
+  status: string;
+  time: string;
+}
+
+export interface Actor {
+  address: string,
+  avatar: string,
+  fullName: string,
+  phoneNumber: string,
+  role: string,
+  userId: string,
 }
 
 export interface Actors {
@@ -38,4 +41,20 @@ export interface Actors {
   manufacturerId: string;
   distributorId: string;
   retailerId: string;
+}
+
+export interface ProductImport {
+  productId: string;
+  price: string;
+}
+
+export interface ProductManufacture {
+  productId: string,
+  imageUrl: string[],
+  expireTime: string
+}
+
+export interface ProductItem {
+  product: ProductObj,
+  quantity: string
 }
