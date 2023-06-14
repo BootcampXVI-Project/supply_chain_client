@@ -27,12 +27,15 @@ import {ManufacturerComponent} from "./manufacturer/manufacturer.component";
 import { TableSupplierComponent } from './supplier/components/table-supplier/table-supplier.component';
 import { Chart } from 'chart.js';
 import { ChartComponent } from './supplier/components/chart/chart.component';
+import { ManufacturerChartComponent } from './manufacturer/manufacturer-chart/manufacturer-chart.component';
+import { ManageProductComponent } from './manufacturer/manage-product/manage-product.component';
 
 const routes: Routes = [
   // admin views
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: 'dashboard', component: DashboardComponent },
 
@@ -61,14 +64,16 @@ const routes: Routes = [
     component: ManufacturerComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: "all", component: ViewProductComponent },
-      { path: "", redirectTo: "supplier", pathMatch: "full" },
+      { path: 'chart-manufacturer', component: ManufacturerChartComponent },
+      { path: 'table-manufacturer', component: ManageProductComponent },
+      { path: '**', redirectTo: 'chart-supplier', pathMatch: 'full' },
     ],
   },
   // auth views
   {
     path: 'auth',
     component: AuthComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },

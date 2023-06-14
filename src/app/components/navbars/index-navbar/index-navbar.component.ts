@@ -58,7 +58,16 @@ export class IndexNavbarComponent implements OnInit {
     private auth: AuthService,
     private route: Router,
     private userService: UserService
-  ) {}
+  ) {
+    if (this.auth.getToken()) {
+      if (this.auth.getTokenRole().toLowerCase() == 'supplier') {
+        this.route.navigate(['/supplier']);
+      }
+      if (this.auth.getTokenRole().toLowerCase() == 'manufacturer') {
+        this.route.navigate(['/manufacturer']);
+      }
+    }
+  }
 
   ngOnInit(): void {
     this.password = 'password';

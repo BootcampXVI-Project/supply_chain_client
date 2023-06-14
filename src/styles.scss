@@ -61,6 +61,64 @@
   max-width: 1000px !important;
 }
 
+
+
+// Chart - STYLE
+
+@import './assets/highcharts.css';
+
+
+
+
+
+/* Define the stop colors */
+#gradient-0 stop {
+	stop-color: #0FA9E6;
+}
+#gradient-0 stop[offset="0"] {
+	stop-opacity: 0.25;
+}
+#gradient-0 stop[offset="1"] {
+	stop-opacity: 0;
+}
+#gradient-1 stop {
+	stop-color: #BD3E3E;
+}
+#gradient-1 stop[offset="0"] {
+	stop-opacity: 0.25;
+}
+#gradient-1 stop[offset="1"] {
+	stop-opacity: 0;
+}
+
+/* Apply the gradients */
+// .highcharts-plot-background {
+// 	fill: url(#gradient-1);
+// }
+.highcharts-color-0 {
+  fill: #0FA9E6;
+  stroke: #0FA9E6;
+}
+.highcharts-color-0 .highcharts-area {
+	fill-opacity: 1;
+	fill: url(#gradient-0);
+}
+.highcharts-color-1 {
+  fill: #BD3E3E;
+  stroke: #BD3E3E;
+}
+.highcharts-color-1 .highcharts-area {
+	fill-opacity: 1;
+	fill: url(#gradient-1);
+}
+
+
+
+
+
+
+
+
 ///* You can add global styles to this file, and also import other style files */
 //@tailwind base;
 //@tailwind components;

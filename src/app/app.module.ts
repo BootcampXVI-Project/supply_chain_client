@@ -96,7 +96,6 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
 import { DropDownComponent } from './components/navbars/drop-down/drop-down.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

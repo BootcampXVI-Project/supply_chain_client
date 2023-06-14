@@ -1,32 +1,253 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
+import { ViewProductService } from '../view-product/view-product.service';
+import HighchartsMore from 'highcharts/highcharts-more';
+import HighchartsExporting from 'highcharts/modules/exporting';
+import HighchartsAccessibility from 'highcharts/modules/accessibility';
+
+import { Chart } from 'highcharts';
+
+HighchartsMore(Highcharts);
+HighchartsExporting(Highcharts);
+HighchartsAccessibility(Highcharts);
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent {
+export class ChartComponent implements OnInit {
+  product!: any[];
 
+  chartData!: any[]
+  chart: Highcharts.Chart | undefined;
+  chartOptions2!: Highcharts.Options;
+  barChart!: Highcharts.Options;
+  areaChart!: Highcharts.Options;
 
-  constructor() {
+  constructor(
+    private productApi: ViewProductService
+  ) {
 
   }
+  randomColor(): string {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  ngOnInit() {
+
+    this.productApi.getAllProduct().subscribe((res: any) => {
+      this.product = res.data
+
+
+      console.log(this.product.length);
+
+      const apiResponse: any[] = [];
+      apiResponse.length = 0; // Clear the existing values
+
+      // Assign the data from the API to apiResponse
+      for (let i = 0; i < this.product.length; i++) {
+        apiResponse.push(this.product[i].price);
+      }
+
+      this.areaChart = {
+        chart: {
+          styledMode: true,
+        },
+        plotOptions: {
+          series: {
+            marker: {
+              enabled: false,
+            },
+          },
+        },
+        legend: {
+          enabled: false,
+        },
+        credits: {
+          enabled: false,
+        },
+        title: {
+          text: 'Statistics',
+        },
+        yAxis: {
+          visible: true,
+        },
+
+        xAxis: {
+          visible: false,
+
+          categories: this.product.map((item: any) => item.productName),
+
+        },
+
+        defs: {
+          gradient0: {
+            tagName: 'linearGradient',
+            id: 'gradient-0',
+            x1: 0,
+            y1: 0,
+            x2: 0,
+            y2: 1,
+            children: [
+              {
+                tagName: 'stop',
+                offset: 0,
+              },
+              {
+                tagName: 'stop',
+                offset: 1,
+              },
+            ],
+          },
+        } as any,
+
+        series: [
+          // {
+          //   color: 'red',
+          //   type: 'areaspline',
+          //   keys: ['y', 'selected'],
+          //   data: apiResponse.map(price => parseInt(price))
+          // },
+          {
+            color: 'red',
+            type: 'column',
+            keys: ['y', 'selected'],
+            data: [
+              [29.9, false],
+              [71.5, false],
+              [106.4, false],
+              [144.0, false],
+              [176.0, false],
+              [135.6, false],
+              [148.5, false],
+              [216.4, false],
+              [194.1, false],
+              [95.6, false],
+              [54.4, false],
+
+            ],
+
+
+          },
+
+        ],
+      };
+      this.barChart = {
+        chart: {
+          type: 'bar',
+        },
+        credits: {
+          enabled: false,
+        },
+        title: {
+          text: 'Bar',
+        },
+        yAxis: {
+          visible: false,
+          gridLineColor: '#fff',
+        },
+        legend: {
+          enabled: false,
+        },
+        xAxis: {
+          lineColor: '#fff',
+          categories: this.product.map((item: any) => item.productName),
+        },
+
+        plotOptions: {
+          series: {
+            borderRadius: 5,
+          } as any,
+        },
+
+        series: [
+          {
+            type: 'bar',
+            color: '#506ef9',
+            data: apiResponse.map(price => parseInt(price))
+          },
+        ],
+      };
+
+
+      this.chartOptions2 = {
+        chart: {
+          type: 'areaspline'
+        },
+        title: {
+          text: 'Product Prices'
+        },
+        xAxis: {
+          categories: this.product.map((item: any) => item.productName),
+          title: {
+          }
+        },
+        yAxis: {
+          title: {
+            text: 'Price'
+          }
+        },
+        series: [
+          {
+            type: 'spline',
+            name: 'Manufacturer',
+            data: [
+              12000,
+              50000,
+              100000,
+              430000,
+              656450,
+              130000,
+              340000,
+              540000,
+              320004,
+              170023,
+              220343
+
+            ],
+
+          },
+          {
+            type: 'spline',
+            name: 'Supplier',
+            data: apiResponse.map(price => parseInt(price)),
+
+          },
+
+        ],
+        colors: ['#0FA9E6',
+          '#BD3E3E', '#FFF263', '#6AF9C4'],
+      };
+
+      this.chart = Highcharts.chart('chartContainer', this.chartOptions2);
+    });
+
+
+
+
+
+
+
+  }
+
   Highcharts: typeof Highcharts = Highcharts;
 
   chartOptions1: Highcharts.Options = {
     series: [
       {
 
-        type: 'line',
+        type: 'column',
         data: [1, 2, 3, 4, 5],
       },
-      {
-        type: 'line',
-        data: [2, 1, 4, 4, 5]
-      }
+
     ],
-    colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572',
+    colors: ['#E9CC26', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572',
       '#FF9655', '#FFF263', '#6AF9C4'],
     title: {
       text: 'Revenue'
@@ -48,27 +269,7 @@ export class ChartComponent {
 
 
 
-  chartOptions2: Highcharts.Options = {
-    series: [
-      {
-
-        type: 'pie',
-        data: [1, 2, 3, 4, 5],
-      },
-    ],
-    title: {
-      text: 'Revenue'
-    },
-    xAxis: {
 
 
-    },
-
-    yAxis: {
-      title: {
-        text: 'VND'
-      }
-    },
-  };
 
 }

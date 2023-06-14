@@ -56,6 +56,7 @@ export class ProductService {
   getProductById(productId: string) {
     // const user = this.userService.getUser()
     // return this.http.get("http://localhost:4000/product/all?userId=" + user.userId)
+    console.log("GETPRODUCTBYID",productId)
     return this.http.get(API_PRODUCT.GETPRODUCT(productId), {headers:this.headers})
       .pipe(
         catchError((error) => {

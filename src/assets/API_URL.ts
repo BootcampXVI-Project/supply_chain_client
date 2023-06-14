@@ -6,8 +6,9 @@ export const API_URL = {
 
 export const API_PRODUCT = {
   GETALLPRODUCTS: () => `${DOMAIN}/product/all`,
+  GETALLPRODUCTSOFSUPPLIER: () => `${DOMAIN}/product/all-of-supplier`,
   GETPAGINATIONPRODUCTS: (pageNumber: string) => `${DOMAIN}/product/pagination?page=`+pageNumber,
-  GETPRODUCT: (productId: string) => `${DOMAIN}/product/detail?productId=`+productId,
+  GETPRODUCT: (productId: string) => `${DOMAIN}/product/`+productId,
 
   //-----------------------------------supplier--------------------------------------//
   UPDATEPRODUCT: (userId:string) => `${DOMAIN}/product/update?userId=`+userId,
@@ -24,7 +25,9 @@ export const API_PRODUCT = {
 export const API_ORDER = {
   GETALLORDERS: () => `${DOMAIN}/order/all?status=PENDING`,
   GETALLORDERSMANUFACTURER: () => `${DOMAIN}/order/all/of-manufacturer`,
-  APPROVEORDER: () => `${DOMAIN}/manufacturer/order/approve`
+  GETORDER: (orderId: string) => `${DOMAIN}/order/`+ orderId,
+  APPROVEORDER: () => `${DOMAIN}/manufacturer/order/approve`,
+  REJECTORDER: () => `${DOMAIN}/manufacturer/order/reject`,
 }
 
 

@@ -14,6 +14,7 @@ import {FileUpLoadService} from "../../_services/file-up-load.service";
 import {DatePipe} from "@angular/common";
 import {TimeModel} from "../../models/time-model";
 import {ProductService} from "../../_services/product.service";
+import {ngxLoadingAnimationTypes} from "ngx-loading";
 
 @Component({
   selector: 'app-manage-product',
@@ -32,11 +33,12 @@ export class ManageProductComponent {
   data: any
   reloadDetailProduct = false;
   currentUser?: UserToken;
+  selectedStatus!: string;
 
   openDialog: boolean = false
   openCertification: boolean = false
   hasCertificate: boolean = false
-
+  isLoading: boolean = false
 
   statusColor: StatusColor = StatusColor.CULTIVATED
   // dataSource = new MatTableDataSource<any>()
@@ -112,7 +114,8 @@ export class ManageProductComponent {
   }
 
   getAllProduct() {
-    this.viewProductService.getAllProduct().subscribe(
+
+    this.manufacturerService.getAllProduct().subscribe(
       response => {
         let data: any = response
         this.productModel = data.data
@@ -315,8 +318,6 @@ export class ManageProductComponent {
   widthContain: number = 0;
 
   ngAfterViewInit(): void {
-    console.log("carousel", this.imageList);
-
     this.setLimitDrag();
 
   }
@@ -436,6 +437,10 @@ export class ManageProductComponent {
     this.currentImagePos = pos;
 
   }
-
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceProduct.filter = filterValue.trim().toLowerCase();
+}
   protected readonly StatusColor = StatusColor;
+  protected readonly ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
 }

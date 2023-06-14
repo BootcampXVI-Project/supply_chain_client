@@ -8,6 +8,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {ProductService} from "../../_services/product.service";
 import {UserService} from "../../_services/user.service";
+import {forkJoin, map} from 'rxjs';
 @Component({
   selector: 'app-manufacturer-navbar',
   templateUrl: './manufacturer-navbar.component.html',
@@ -101,6 +102,8 @@ export class ManufacturerNavbarComponent {
     },
   };
 
+  canApprove: boolean = false
+
   totalCost = 0
 
   dataSourceBill = new MatTableDataSource<any>;
@@ -123,31 +126,85 @@ export class ManufacturerNavbarComponent {
     )
   }
 
-
   openDetailRequestDialog(e: any) {
-    this.isOpenDetailRequestDialog = true
-    console.log("DETAILORDER", e)
+    this.isOpenDetailRequestDialog = true;
 
-    this.order = e
-    let billList: Bill[] = []
-    let total = 0
-    for (let productItem of this.order.productItemList) {
-      let billDetail: Bill = {
-        productName : productItem.product.productName,
-        quantityAvailable: productItem.product.amount,
-        quantityRequest: productItem.quantity,
-        unitPrice: productItem.product.price,
-        totalPrice: (parseFloat(productItem.product.price) * parseFloat(productItem.quantity)).toString()
-      }
-      total += parseFloat(billDetail.totalPrice)
-      billList.push(billDetail)
-    }
-    this.totalCost = total
-    this.bills = billList
-    this.dataSourceBill = new MatTableDataSource(this.bills)
-    this.dataSourceBill.paginator = this.billPaginator
-    console.log("BILLS", this.bills)
+    this.order = e;
+    let billList: Bill[] = [];
+    let total = 0;
+
+    const getProductObservables = this.order.productItemList.map((productItem) =>
+      this.productService.getProductById(productItem.product.productId)
+    );
+
+    forkJoin(getProductObservables).pipe(
+      map((responses: any[]) =>
+        responses.map((response, index) => {
+          const product = response.data;
+          console.log("FORK", product)
+          const productItem = this.order.productItemList[index];
+          const billDetail: Bill = {
+            productName: product.productName,
+            quantityAvailable: product.amount,
+            quantityRequest: productItem.quantity,
+            unitPrice: product.price,
+            totalPrice: (parseFloat(product.price) * parseFloat(productItem.quantity)).toString(),
+          };
+          if (billDetail.quantityAvailable >= billDetail.quantityRequest) {
+            this.canApprove = true
+          }
+          total += parseFloat(billDetail.totalPrice);
+          return billDetail;
+        })
+      )
+    ).subscribe(response => {
+      let bills: any = response
+      this.totalCost = total;
+      this.bills = bills;
+      this.dataSourceBill = new MatTableDataSource(this.bills);
+      this.dataSourceBill.paginator = this.billPaginator;
+    });
   }
+
+
+  // openDetailRequestDialog(e: any) {
+  //   this.isOpenDetailRequestDialog = true;
+  //   console.log("DETAILORDER", e);
+  //
+  //   this.order = e;
+  //   let billList: Bill[] = [];
+  //   let total = 0;
+  //
+  //   const getProductObservables = this.order.productItemList.map((productItem) =>
+  //     this.productService.getProductById(productItem.product.productId)
+  //   );
+  //
+  //   forkJoin(getProductObservables)
+  //     .subscribe((responses) => {
+  //       for (let i = 0; i < responses.length; i++) {
+  //         let response:any = responses[i];
+  //         let product: any = response.data;
+  //         console.log("ISORDER", product);
+  //         product.amount;
+  //         let productItem = this.order.productItemList[i];
+  //         let billDetail: Bill = {
+  //           productName: product.productName,
+  //           quantityAvailable: product.amount,
+  //           quantityRequest: productItem.quantity,
+  //           unitPrice: product.price,
+  //           totalPrice: (parseFloat(product.price) * parseFloat(productItem.quantity)).toString(),
+  //         };
+  //         total += parseFloat(billDetail.totalPrice);
+  //         billList.push(billDetail);
+  //       }
+  //
+  //       this.totalCost = total;
+  //       this.bills = billList;
+  //       this.dataSourceBill = new MatTableDataSource(this.bills);
+  //       this.dataSourceBill.paginator = this.billPaginator;
+  //       console.log("BILLS", this.bills);
+  //     });
+  // }
 
   closeDetailRequestDialog(isReload = false) {
     this.isOpenDetailRequestDialog = false
@@ -168,18 +225,34 @@ export class ManufacturerNavbarComponent {
         console.log("APPROVE",response)
         for (let productOrders of this.orders) {
           for (let productOrder of productOrders.productItemList) {
-            let product = productOrder.product
-            product.amount = (parseFloat(product.amount)                        - parseFloat(productOrder.quantity)).toString()
-            this.productService.updateProduct({
-              userId: this.userService.getUser().userId,
-              productObj: product
-            }).subscribe(
+            console.log("ISPRODUCT",productOrder.product.productId)
+            this.productService.getProductById(productOrder.product.productId).subscribe(
               response => {
-                console.log("Is Available", response)
+                let product: any = response
+                console.log("ISORDER", product)
+                product.data.amount = (parseFloat(product.data.amount) - parseFloat(productOrder.quantity)).toString()
+
+                this.productService.updateProduct({
+                  userId: this.userService.getUser().userId,
+                  productObj: product.data
+                }).subscribe(
+                  response => {
+                    console.log("Is Available", response)
+                  }
+                )
               }
             )
+
           }
         }
+      }
+    )
+  }
+
+  rejectOrder(orderId: string) {
+    this.orderService.rejectOrder(orderId).subscribe(
+      response => {
+        console.log("REJECT", response)
       }
     )
   }

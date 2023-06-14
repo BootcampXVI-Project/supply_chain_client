@@ -25,16 +25,15 @@ export class ViewProductService {
   ) { }
 
   getAllProduct() {
-    // const user = this.userService.getUser()
-    // // return this.http.get("http://localhost:4000/product/all?userId=" + user.userId)
-    // return this.http.get(API_PRODUCT.GETALLPRODUCTS(), {headers:this.headers})
-    //   .pipe(
-    //     catchError((error) => {
-    //       this.notification.showError("An error has occurred on the server, please try again later.", "Error");
-    //       return throwError(error.message);
-    //     })
-    //   );
-    return this.productService.getAllProduct()
+    const user = this.userService.getUser()
+    // return this.http.get("http://localhost:4000/product/all?userId=" + user.userId)
+    return this.http.get(API_PRODUCT.GETALLPRODUCTSOFSUPPLIER(), {headers:this.headers})
+      .pipe(
+        catchError((error) => {
+          this.notification.showError("An error has occurred on the server, please try again later.", "Error");
+          return throwError(error.message);
+        })
+      );
   }
 
   getPaginationProduct(pageNumber: string) {
@@ -42,27 +41,10 @@ export class ViewProductService {
   }
 
   getProduct(productId: string) {
-    // const user = this.userService.getUser()
-    // return this.http.get("http://localhost:4000/product/all?userId=" + user.userId)
-    // return this.http.get(API_PRODUCT.GETPRODUCT(productId), {headers:this.headers})
-    //   .pipe(
-    //   catchError((error) => {
-    //     this.notification.showError("An error has occurred on the server, please try again later.", "Error");
-    //     return throwError(error.message);
-    //   })
-    // );
     return this.productService.getProductById(productId)
   }
 
   updateProduct(producObj: Product) {
-    // const user = this.userService.getUser()
-    // return this.http.patch(API_PRODUCT.UPDATEPRODUCT(user.userId),producObj, {headers:this.headers})
-    //   .pipe(
-    //     catchError((error) => {
-    //       this.notification.showError("An error has occurred on the server, please try again later.", "Error");
-    //       return throwError(error.message);
-    //     })
-    //   )
     return this.productService.updateProduct(producObj)
   }
 
