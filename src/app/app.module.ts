@@ -93,6 +93,10 @@ import {MatCardModule} from "@angular/material/card";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
 import { DropDownComponent } from './components/navbars/drop-down/drop-down.component';
+import { LoadingTableComponent } from './loading/loading-table/loading-table.component';
+import { LoadingImageComponent } from './loading/loading-image/loading-image.component';
+import { LoadingDetailComponent } from './loading/loading-detail/loading-detail.component';
+import { DotSeparatorPipe } from './dot-separator.pipe';
 
 @NgModule({
   declarations: [
@@ -154,6 +158,10 @@ import { DropDownComponent } from './components/navbars/drop-down/drop-down.comp
     ViewOrderComponent,
     // jqxDateTimeInputCompon ent,
     DropDownComponent,
+    LoadingTableComponent,
+    LoadingImageComponent,
+    LoadingDetailComponent,
+    DotSeparatorPipe,
   ],
   imports: [
     BrowserModule,

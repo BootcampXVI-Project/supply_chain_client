@@ -9,6 +9,7 @@ import {UserService} from 'src/app/_services/user.service';
 import {AuthService} from 'src/app/_services/auth.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {FileUpLoadService} from "../../_services/file-up-load.service";
+import {ngxLoadingAnimationTypes} from "ngx-loading";
 
 
 @Component({
@@ -30,6 +31,11 @@ export class TableSupplierComponent implements OnInit {
   openDialog: boolean = false
   openCertification: boolean = false
   hasCertificate: boolean = false
+
+  isTableLoading = false
+  isDetailLoading= false
+  isImageLoading=false
+
   currentDate: Date = new Date()
 
   user: any = this.userService.getUser();
@@ -91,6 +97,7 @@ export class TableSupplierComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    console.log("")
     this.getAllProduct();
   }
 
@@ -99,12 +106,17 @@ export class TableSupplierComponent implements OnInit {
   productModel: ProductObj [] = []
 
   getAllProduct() {
+    this.isTableLoading = true
     this.viewProductService.getAllProduct().subscribe(
       response => {
         let data: any = response
-        this.productModel = data.data
+        // this.productModel = data.data
+        this.productModel = data.data.filter((i:any) => i.dates[0].time != '' )
+
+        console.log("ALL", this.productModel)
         this.dataSourceProduct = new MatTableDataSource(this.productModel)
         this.dataSourceProduct.paginator = this.productPaginator
+        this.isTableLoading = false
       }
     )
   }
@@ -121,10 +133,13 @@ export class TableSupplierComponent implements OnInit {
   }
 
   open(product: any) {
+    this.isDetailLoading = true
     this.isCreate = false
     this.product = product
+    console.log("OPEN",product)
     this.imageList = product.image
     this.openDialog = true
+    this.isDetailLoading = false
   }
 
   openToAdd() {
@@ -173,12 +188,15 @@ export class TableSupplierComponent implements OnInit {
 
 
   harvestProduct(productId: any) {
+    this.loading = true
     console.log("HARVEST", productId)
     this.viewProductService.harvestProduct(productId)
       .subscribe({
         next: (response) => {
-          this.data.data.map(response);
-          this.product = this.data.data;
+          this.data = response;
+          console.log(this.data)
+          this.product = this.data;
+          this.loading = false
           location.reload();
         }
       })
@@ -202,13 +220,15 @@ export class TableSupplierComponent implements OnInit {
     console.log("this is submit");
     console.log("item", this.product)
     if (this.product?.productId) {
-      console.log("update",this.product.productId)
-      this.item.productObj.productId = JSON.parse(JSON.stringify(this.product)).productId
+
+      this.item.productObj = JSON.parse(JSON.stringify(this.product))
+      console.log("update",this.item)
+      this.item.productObj.amount = this.item.productObj.amount.toString()
       this.viewProductService.updateProduct(this.item).subscribe({
         next: (response) => {
           console.log(response);
           this.loading = false
-          this.close(true, true)
+          // this.close(true, true)
         }
       });
     } else {
@@ -234,8 +254,6 @@ export class TableSupplierComponent implements OnInit {
   widthContain: number = 0;
   startDragPos: number = 0;
   limitDrag: number = 0;
-
-  isImageLoading: boolean = false;
 
 
   addImage(e: any) {
@@ -362,4 +380,7 @@ export class TableSupplierComponent implements OnInit {
     });
 
   }
+
+  protected readonly ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+
 }

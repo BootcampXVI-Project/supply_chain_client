@@ -1,147 +1,11 @@
-<!--<nav class="relative flex flex-wrap items-center justify-between px-2 py-3 bg-white mb-3 border-yellow-300 border-solid border" >-->
-<!--  <div class="container px-4 mx-auto flex flex-wrap items-center justify-between">-->
-<!--    <div class="w-full relative flex justify-between lg:w-auto  px-4 lg:static lg:block lg:justify-start">-->
-<!--      <a class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-orange-300"-->
-<!--         href="#pablo">-->
-<!--        LOGO-->
-<!--      </a>-->
-<!--&lt;!&ndash;      (click)="toggleNavbar()"&ndash;&gt;-->
-<!--      <button-->
-<!--        class="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"-->
-<!--        type="button" >-->
-<!--        <i class="fas fa-bars"></i>-->
-<!--      </button>-->
-<!--    </div>-->
-<!--&lt;!&ndash;    [ngClass]="{'hidden': !showMenu, 'flex': showMenu}"&ndash;&gt;-->
-<!--    <div  class="lg:flex lg:flex-grow items-center">-->
-<!--      <ul class="flex flex-col lg:flex-row list-none ml-auto">-->
-<!--        <li class="nav-item">-->
-<!--          <a class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"-->
-<!--          >-->
-<!--            <i class="fab fa-facebook-square text-lg leading-lg text-orange-300 opacity-75"></i><span-->
-<!--            class="ml-2">Share</span>-->
-<!--          </a>-->
-<!--        </li>-->
-<!--        <li class="nav-item">-->
-<!--          <div class="w-full sm:w-6/12 md:w-4/12 px-4">-->
-<!--            <div class="relative inline-flex align-middle w-full">-->
-
-
-<!--              <button-->
-<!--                mat-button-->
-<!--                class="px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"-->
-<!--                      type="button"-->
-<!--                [matMenuTriggerFor]="menu" >-->
-<!--                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">-->
-<!--                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5"></path>-->
-<!--                </svg>-->
-<!--                <div class="badge" *ngIf="orders.length > 0">{{ orders.length }}</div>-->
-<!--              </button>-->
-
-<!--              <mat-menu #menu="matMenu">-->
-<!--                <button mat-menu-item *ngFor="let order of orders" (click)="openDetailRequestDialog(order);detailRequestDialog.showModal()">-->
-<!--                  <app-view-order [retailer]="order.retailer"></app-view-order>-->
-<!--                </button>-->
-<!--              </mat-menu>-->
-
-<!--            </div>-->
-<!--          </div>-->
-<!--        </li>-->
-<!--        <li class="nav-item">-->
-<!--          <app-account></app-account>-->
-<!--        </li>-->
-<!--      </ul>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</nav>-->
-
-<dialog [ngClass]="isOpenDetailRequestDialog ? 'flex':'hidden'" class=" relative flex-col bg-blueGray-100 rounded-lg w-5/6" #detailRequestDialog>
-    <p class="text-xl font-medium">Detail Order</p>
-
-    <button type="button" class="absolute top-2 right-6 focus:outline-none text-xl font-bold text-red-600" (click)="closeDetailRequestDialog(false)">X
-  </button>
-
-    <div class="block">
-        <div class="flex flex-wrap mt-4 justify-center">
-            <div class="w-full mb-4 px-4">
-                <div class="block w-full overflow-x-auto">
-                    <table mat-table [dataSource]="dataSourceBill" class="mat-elevation-z8">
-                        <ng-container matColumnDef="Index">
-                            <th mat-header-cell *matHeaderCellDef> No.</th>
-                            <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="ProductName">
-                            <th mat-header-cell *matHeaderCellDef> Product Name</th>
-                            <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="QuantityAvailable">
-                            <th mat-header-cell *matHeaderCellDef> Quantity Available</th>
-                            <td mat-cell *matCellDef="let element"> {{element.quantityAvailable}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="QuantityRequest">
-                            <th mat-header-cell *matHeaderCellDef> Quantity Request</th>
-                            <td mat-cell *matCellDef="let element"> {{element.quantityRequest}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="UnitPrice">
-                            <th mat-header-cell *matHeaderCellDef> Unit Price</th>
-                            <td mat-cell *matCellDef="let element"> {{element.unitPrice | currency: 'VND'}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="TotalPrice">
-                            <th mat-header-cell *matHeaderCellDef> Total Price</th>
-                            <td mat-cell *matCellDef="let element"> {{element.totalPrice | currency: 'VND'}} </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="displayedBilColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedBilColumns;"></tr>
-                    </table>
-
-                    <mat-paginator #billPaginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
-                    <div style="text-align: right; font-size: 1.2em;">
-                        Total: {{totalCost | currency: 'VND'}}
-                    </div>
-
-                </div>
-                <div class="flex justify-around mb-2 mt-5">
-                    <button type="button" class="w-3/12 border bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" (click)="closeDetailRequestDialog(false)">
-            Cancel
-          </button>
-                    <button
-                      type="button" class="w-3/12 border bg-yellow-400 active:bg-yellow-600 font-bold text-white uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      (click)="rejectOrder(order.orderId)"
-                    >
-            Reject
-          </button>
-                    <button type="button" class="w-3/12 border text-white font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" (click)="approveOrder(order.orderId)"
-                      [disabled]="!canApprove"
-                      [ngClass]="!canApprove ? 'bg-slate-400' : 'bg-green-500 hover:bg-green-600'"
-                    >
-            Approve
-          </button>
-                </div>
-
-            </div>
-
-        </div>
-
-
-    </div>
-</dialog>
-
-<dialog #detailRequestDialog>
-
-</dialog>
-
 <nav class="bg-gray-800">
-    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div class="relative flex h-16 items-center justify-between">
-            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                <!-- Mobile menu button-->
-                <button type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+  <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+    <div class="relative flex h-16 items-center justify-between">
+      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+        <!-- Mobile menu button-->
+        <button type="button"
+                class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                aria-controls="mobile-menu" aria-expanded="false">
           <span class="sr-only">Open main menu</span>
           <!--
           Icon when menu is closed.
@@ -150,7 +14,7 @@
         -->
           <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
           </svg>
           <!--
           Icon when menu is open.
@@ -159,89 +23,94 @@
         -->
           <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
-            </div>
-            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div class="flex flex-shrink-0 items-center">
-                    <img class="block h-8 w-auto lg:hidden" src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/logo%2Flogo.png?alt=media&token=82860508-bacc-4e73-8afa-675134faa8fa&_gl=1*1gkan4e*_ga*ODc2NDc0NDM1LjE2ODQyMzA5NDQ.*_ga_CW55HF8NVT*MTY4NTU5ODg5MS4xMy4xLjE2ODU1OTg4OTcuMC4wLjA."
-                        alt="Your Company">
-                    <img class="hidden h-8 w-auto lg:block" src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/logo%2Flogo.png?alt=media&token=82860508-bacc-4e73-8afa-675134faa8fa&_gl=1*1gkan4e*_ga*ODc2NDc0NDM1LjE2ODQyMzA5NDQ.*_ga_CW55HF8NVT*MTY4NTU5ODg5MS4xMy4xLjE2ODU1OTg4OTcuMC4wLjA."
-                        alt="Your Company">
-                </div>
-                <div class="hidden sm:ml-6 sm:block">
-                    <div class="flex space-x-4">
-                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <a [routerLink]="['chart-manufacturer']" routerLinkActive #adminDashboard="routerLinkActive" [ngClass]="adminDashboard.isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700'" class=" rounded-md px-3 py-2 text-sm font-medium">
+      </div>
+      <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+        <div class="flex flex-shrink-0 items-center">
+          <img class="block h-8 w-auto lg:hidden"
+               src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/logo%2Flogo.png?alt=media&token=82860508-bacc-4e73-8afa-675134faa8fa&_gl=1*1gkan4e*_ga*ODc2NDc0NDM1LjE2ODQyMzA5NDQ.*_ga_CW55HF8NVT*MTY4NTU5ODg5MS4xMy4xLjE2ODU1OTg4OTcuMC4wLjA."
+               alt="Your Company">
+          <img class="hidden h-8 w-auto lg:block"
+               src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/logo%2Flogo.png?alt=media&token=82860508-bacc-4e73-8afa-675134faa8fa&_gl=1*1gkan4e*_ga*ODc2NDc0NDM1LjE2ODQyMzA5NDQ.*_ga_CW55HF8NVT*MTY4NTU5ODg5MS4xMy4xLjE2ODU1OTg4OTcuMC4wLjA."
+               alt="Your Company">
+        </div>
+        <div class="hidden sm:ml-6 sm:block">
+          <div class="flex space-x-4">
+            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+            <a [routerLink]="['chart-manufacturer']" routerLinkActive #adminDashboard="routerLinkActive"
+               [ngClass]="adminDashboard.isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700'"
+               class=" rounded-md px-3 py-2 text-sm font-medium">
               Insight
-           </a>
-                        <a [routerLink]="['table-manufacturer']" routerLinkActive #adminTable="routerLinkActive" [ngClass]="adminTable.isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'" class=" rounded-md px-3 py-2 text-sm font-medium">
+            </a>
+            <a [routerLink]="['table-manufacturer']" routerLinkActive #requesttTable="routerLinkActive"
+               [ngClass]="requesttTable.isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'"
+               class=" rounded-md px-3 py-2 text-sm font-medium">
               Product
 
-           </a>
-                        <!-- <a href="#"
-               class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Projects</a>
-            <a href="#"
-               class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Calendar</a> -->
-                    </div>
-                </div>
-            </div>
-            <div style="max-width: 1000px !important;" class=" flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button mat-button class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2  focus:ring-offset-2 focus:ring-offset-gray-800" type="button" [matMenuTriggerFor]="menu">
-              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray"
-                   aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-              </svg>
-              <div class="badge" *ngIf="orders.length > 0">{{ orders.length }}</div>
-            </button>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item *ngFor="let order of orders" (click)="openDetailRequestDialog(order);detailRequestDialog.showModal()">
-                  <app-view-order [retailer]="order.retailer"></app-view-order>
-                </button>
-                </mat-menu>
+            </a>
+            <a [routerLink]="['request-manufacturer']" routerLinkActive #adminTable="routerLinkActive"
+               [ngClass]="adminTable.isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'"
+               class=" rounded-md px-3 py-2 text-sm font-medium">
+              Request
 
-
-
-
-                <!-- Profile dropdown -->
-                <div class="relative ml-3">
-                    <div>
-
-                        <app-account></app-account>
-                    </div>
-
-                    <!--
-          Dropdown menu, show/hide based on menu state.
-
-          Entering: "transition ease-out duration-100"
-            From: "transform opacity-0 scale-95"
-            To: "transform opacity-100 scale-100"
-          Leaving: "transition ease-in duration-75"
-            From: "transform opacity-100 scale-100"
-            To: "transform opacity-0 scale-95"
-        -->
-
-                </div>
-            </div>
+            </a>
+            <!-- <a href="#"
+   class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Projects</a>
+<a href="#"
+   class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Calendar</a> -->
+          </div>
         </div>
-    </div>
+      </div>
+      <div style="max-width: 1000px !important;"
+           class=" flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+        <button mat-button class="focus:outline-none" >
+          <mat-icon class="text-white">notifications</mat-icon>
+        </button>
+<!--        <button mat-button-->
+<!--                class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2  focus:ring-offset-2 focus:ring-offset-gray-800"-->
+<!--                type="button" [matMenuTriggerFor]="menu">-->
+<!--          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray"-->
+<!--               aria-hidden="true">-->
+<!--            <path stroke-linecap="round" stroke-linejoin="round"-->
+<!--                  d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>-->
+<!--          </svg>-->
+<!--          <div class="badge" *ngIf="orders.length > 0">{{ orders.length }}</div>-->
+<!--        </button>-->
+<!--        <mat-menu #menu="matMenu">-->
+<!--          <button mat-menu-item *ngFor="let order of orders"-->
+<!--                  (click)="openDetailRequestDialog(order);detailRequestDialog.showModal()">-->
+<!--            <app-view-order [retailer]="order.retailer"></app-view-order>-->
+<!--          </button>-->
+<!--        </mat-menu>-->
 
-    <!-- Mobile menu, show/hide based on menu state. -->
+
+        <!-- Profile dropdown -->
+        <div class="relative ml-3">
+          <div>
+
+            <app-account></app-account>
+          </div>
+
+          <!--
+Dropdown menu, show/hide based on menu state.
+
+Entering: "transition ease-out duration-100"
+  From: "transform opacity-0 scale-95"
+  To: "transform opacity-100 scale-100"
+Leaving: "transition ease-in duration-75"
+  From: "transform opacity-100 scale-100"
+  To: "transform opacity-0 scale-95"
+-->
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu, show/hide based on menu state. -->
 
 </nav>
 
 
-<dialog [ngClass]="isOpenDetailRequestDialog ? 'flex':'hidden'" class=" relative flex-col bg-blueGray-100 rounded-lg w-5/6" #detailRequestDialog>
-    <p class="text-xl font-medium">Detail Order</p>
-
-    <button type="button" class="absolute top-2 right-6 focus:outline-none text-xl font-bold text-red-600" (click)="closeDetailRequestDialog(false)">X
-  </button>
-
-    <div>Detail</div>
-</dialog>
-
-<dialog #detailRequestDialog>
-
-</dialog>

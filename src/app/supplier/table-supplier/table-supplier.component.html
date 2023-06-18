@@ -1,3 +1,7 @@
+<app-loading-table [isTableloading]="isTableLoading">
+
+</app-loading-table>
+
 <form class="mb-2">
   <div class="flex">
 
@@ -32,20 +36,62 @@
   <!-- Symbol Column -->
   <ng-container matColumnDef="cultivatedDate">
     <th mat-header-cell *matHeaderCellDef> Cultivated date</th>
-    <td mat-cell *matCellDef="let element"> {{element.dates.cultivated | date: 'dd - MMM - yyyy'}} </td>
+    <td mat-cell *matCellDef="let element">
+      <p>
+        <ng-container >
+          {{element.dates[0].time | date: 'dd - MMM - yyyy'}}
+        </ng-container>
+      </p>
+      <p>
+        <ng-container>
+          {{element.dates[0].time | date: 'HH:mm'}}
+        </ng-container>
+      </p>
+
+    </td>
   </ng-container>
   <ng-container matColumnDef="harvestedDate">
     <th mat-header-cell *matHeaderCellDef> Harvested date</th>
-    <td mat-cell *matCellDef="let element"> {{element.dates.harvested | date: 'dd - MMM - yyyy'}} </td>
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="element.dates[1]">
+        <p>
+          <ng-container >
+            {{element.dates[1].time | date: 'dd - MMM - yyyy'}}
+          </ng-container>
+        </p>
+        <p>
+          <ng-container>
+            {{element.dates[1].time | date: 'HH:mm'}}
+          </ng-container>
+        </p>
+      </ng-container>
+      <ng-container *ngIf="!element.dates[1]">
+        <p>
+          dd - MMM - yyyy
+        </p>
+        <p>
+          hh:mm
+        </p>
+      </ng-container>
+    </td>
   </ng-container>
+
   <ng-container matColumnDef="price">
-    <th mat-header-cell *matHeaderCellDef> Price</th>
-    <td mat-cell *matCellDef="let element"> {{element.price | currency : 'VND'}} </td>
+    <th mat-header-cell *matHeaderCellDef> Price (VND)</th>
+    <td mat-cell *matCellDef="let element"> {{element.price | dotSeparator}} </td>
   </ng-container>
   <ng-container matColumnDef="status">
     <th mat-header-cell *matHeaderCellDef> Status</th>
-    <td mat-cell *matCellDef="let element">
-      <i class="fa-solid fa-circle {{element.status.toUpperCase()}}"></i> {{element.status}}
+    <td mat-cell *matCellDef="let element" class="flex items-center">
+      <img src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/icon%2Fcultivation24px.png?alt=media&token=267734a8-b3bf-4f14-9ca9-5e6d56ac7c61" *ngIf="element.status?.toLowerCase() == 'cultivated'">
+      <img src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/icon%2Fharvest24px.png?alt=media&token=bf3ebe1e-feb6-4474-99b9-e5deb6a6671a" *ngIf="element.status?.toLowerCase() == 'harvested'">
+      <img src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/icon%2Fimport24px.png?alt=media&token=3fbd4eda-4ad0-4e6e-821e-ca574bde8e38" *ngIf="element.status?.toLowerCase() == 'imported'">
+      <img src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/icon%2Fmanufacturing24px.png?alt=media&token=2227c3f6-4bbf-4831-a7a1-d4ef7af19b42" *ngIf="element.status?.toLowerCase() == 'manufactured'">
+      <img src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/icon%2Fexport24px.png?alt=media&token=0ab4ee7a-73e7-49bc-b61c-0cb0cbb7badc" *ngIf="element.status?.toLowerCase() == 'exported'">
+      <img src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/icon%2Fdistributing24px.png?alt=media&token=4ee3a6f0-ea3a-45cc-b336-8598c986a639" *ngIf="element.status?.toLowerCase() == 'distributing'">
+      <img src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/icon%2Fretailer24px.png?alt=media&token=2c00fc6e-41c4-4a2a-bc0f-7142b496fd46" *ngIf="element.status?.toLowerCase() == 'retailing'">
+      <img src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/icon%2Fsold24px.png?alt=media&token=8ec66b83-8b8c-4a7e-ac5f-9e32882623b2" *ngIf="element.status?.toLowerCase() == 'sold'">
+      <span class="py-10">{{element.status}}</span>
     </td>
   </ng-container>
   <ng-container matColumnDef="action">
@@ -74,7 +120,7 @@
   <!--    <app-detail-product [product]="product" [reload]="reloadDetailProduct" (dataEvent)="close($event)" *ngIf="openDialog"></app-detail-product>-->
 
   <form (ngSubmit)="onSubmit()">
-    <div class="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4">
+    <div class="2xl:container 2xl:mx-auto lg:px-20 md:px-6 px-4">
       <div class="flex justify-center items-center lg:flex-row flex-col gap-8">
         <div class="w-full ">
           <div style="height: 40vh; width: 100%;" class="mb-2">
@@ -147,25 +193,7 @@
               </div>
             </div>
           </div>
-          <div class="flex justify-around mb-2 mt-5">
-            <button type="button"
-                    class="w-3/12 border bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    (click)="close()">Cancel
-            </button>
 
-            <button type="button"
-                    class="justify-center border bg-yellow-400 text-white active:bg-yellow-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    (click)="harvestProduct(product.productId)"
-                    *ngIf="product.status.toLowerCase() == 'cultivating' || product.status.toLowerCase() == 'cultivated'">
-              Harvest this product!
-            </button>
-            <button type="submit"
-                    class="w-3/12 border text-white font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    [disabled]="!product.productName || !product.amount || product.image == null || product.image.length == 0"
-                    [ngClass]="!product.productName || !product.amount || product.image == null || product.image.length == 0 ? 'bg-slate-400' : 'bg-green-500 hover:bg-green-600'">
-              Submit
-            </button>
-          </div>
         </div>
         <div class="w-full sm:w-96 md:w-8/12 lg:w-6/12 items-center">
           <h2 class="font-semibold lg:text-4xl text-3xl lg:leading-9 leading-7 text-gray-800 mt-4">
@@ -200,12 +228,10 @@
                                      [(ngModel)]="product.description">{{ product.description }}</textarea>
           </p>
           <div class="flex flex-row justify-between">
-            <p class="font-medium text-base leading-4 text-gray-600">Price(vnd)</p>
+            <p class="font-medium text-base leading-4 text-gray-600">Price (VND)</p>
             <p class=" mt-6">
-
-
               <input
-                class="border-none font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-right rounded-lg placeholder-gray-300"
+                class="border-none font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-right rounded-lg placeholder-gray-300 w-9/12"
                 type="text"
                 placeholder="Unit Price"
                 id="priceEd" name="price" [(ngModel)]="product.price ">
@@ -214,7 +240,7 @@
           </div>
 
 
-          <div class="lg:mt-11 mt-10">
+          <div class="lg:mt-6 mt-5">
             <div class="flex flex-row justify-between">
               <p class="font-medium text-base leading-4 text-gray-600">Amount</p>
               <div class="flex justify-end">
@@ -255,6 +281,20 @@
               </div>
             </div>
             <hr class="bg-gray-200 w-full mt-4"/>
+            <div class="flex justify-around mb-2 mt-5">
+              <button type="button"
+                      class="justify-center border bg-yellow-400 text-white active:bg-yellow-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      (click)="harvestProduct(product.productId)"
+                      *ngIf="product.status.toLowerCase() == 'cultivating' || product.status.toLowerCase() == 'cultivated'">
+                Harvest this product!
+              </button>
+              <button type="submit"
+                      class="w-3/12 border text-white font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      [disabled]="!product.productName || !product.amount || product.image == null || product.image.length == 0"
+                      [ngClass]="!product.productName || !product.amount || product.image == null || product.image.length == 0 ? 'bg-slate-400' : 'bg-green-500 hover:bg-green-600'">
+                Submit
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -278,7 +318,7 @@
           style="width: 100%; position: relative; background-size: contain; background-position: center; padding: 0 15px; display: flex; justify-content: space-between; align-items: center; height: 30vh; background-repeat: no-repeat;"
           [ngStyle]="{'background-image': 'url('+ imageUrl +' )'}">
           <label for="cert-update">
-            <mat-icon>add_photo_alternate</mat-icon>
+            <mat-icon *ngIf="!isImageLoading">edit</mat-icon>
             <app-loading [isLoading]="isImageLoading"></app-loading>
           </label>
           <input *ngIf="!isImageLoading" id="cert-update" type="file" accept="image/png, image/jpeg"
@@ -291,7 +331,7 @@
         style="position: relative; background-size: contain; background-position: center; padding: 0 15px; display: flex; justify-content: space-between; align-items: center; background-repeat: no-repeat;"
         [ngStyle]="{'background-image': 'url('+ imageUrl +' )'}">
         <label for="cert-input">
-          <mat-icon>add_photo_alternate</mat-icon>
+          <mat-icon *ngIf="!isImageLoading">add_photo_alternate</mat-icon>
           <app-loading [isLoading]="isImageLoading"></app-loading>
         </label>
         <input *ngIf="!isImageLoading" id="cert-input" type="file" accept="image/png, image/jpeg"
@@ -305,4 +345,12 @@
 
 
   </dialog>
+  <app-loading-detail [isDetailLoading]="isDetailLoading"></app-loading-detail>
+  <ngx-loading
+    [show]="loading"
+    [config]="{
+      fullScreenBackdrop: true,
+      animationType: ngxLoadingAnimationTypes.chasingDots
+    }"
+  ></ngx-loading>
 </dialog>

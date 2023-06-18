@@ -27,6 +27,7 @@ import { Chart } from 'chart.js';
 import { ChartComponent } from './supplier/chart/chart.component';
 import { ManufacturerChartComponent } from './manufacturer/manufacturer-chart/manufacturer-chart.component';
 import { ManageProductComponent } from './manufacturer/manage-product/manage-product.component';
+import {ViewOrderComponent} from "./manufacturer/view-order/view-order.component";
 
 const routes: Routes = [
   // admin views
@@ -64,7 +65,8 @@ const routes: Routes = [
     children: [
       { path: 'chart-manufacturer', component: ManufacturerChartComponent },
       { path: 'table-manufacturer', component: ManageProductComponent },
-      { path: '**', redirectTo: 'chart-supplier', pathMatch: 'full' },
+      { path: 'request-manufacturer', component: ViewOrderComponent },
+      { path: '**', redirectTo: 'chart-manufacturer', pathMatch: 'full' },
     ],
   },
   // auth views

@@ -26,6 +26,7 @@ export class ViewProductService {
 
   getAllProduct() {
     const user = this.userService.getUser()
+    console.log(API_PRODUCT.GETALLPRODUCTSOFSUPPLIER())
     // return this.http.get("http://localhost:4000/product/all?userId=" + user.userId)
     return this.http.get(API_PRODUCT.GETALLPRODUCTSOFSUPPLIER(), {headers:this.headers})
       .pipe(

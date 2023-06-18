@@ -166,46 +166,6 @@ export class ManufacturerNavbarComponent {
     });
   }
 
-
-  // openDetailRequestDialog(e: any) {
-  //   this.isOpenDetailRequestDialog = true;
-  //   console.log("DETAILORDER", e);
-  //
-  //   this.order = e;
-  //   let billList: Bill[] = [];
-  //   let total = 0;
-  //
-  //   const getProductObservables = this.order.productItemList.map((productItem) =>
-  //     this.productService.getProductById(productItem.product.productId)
-  //   );
-  //
-  //   forkJoin(getProductObservables)
-  //     .subscribe((responses) => {
-  //       for (let i = 0; i < responses.length; i++) {
-  //         let response:any = responses[i];
-  //         let product: any = response.data;
-  //         console.log("ISORDER", product);
-  //         product.amount;
-  //         let productItem = this.order.productItemList[i];
-  //         let billDetail: Bill = {
-  //           productName: product.productName,
-  //           quantityAvailable: product.amount,
-  //           quantityRequest: productItem.quantity,
-  //           unitPrice: product.price,
-  //           totalPrice: (parseFloat(product.price) * parseFloat(productItem.quantity)).toString(),
-  //         };
-  //         total += parseFloat(billDetail.totalPrice);
-  //         billList.push(billDetail);
-  //       }
-  //
-  //       this.totalCost = total;
-  //       this.bills = billList;
-  //       this.dataSourceBill = new MatTableDataSource(this.bills);
-  //       this.dataSourceBill.paginator = this.billPaginator;
-  //       console.log("BILLS", this.bills);
-  //     });
-  // }
-
   closeDetailRequestDialog(isReload = false) {
     this.isOpenDetailRequestDialog = false
     this.detailRequestDialog?.nativeElement.close();
