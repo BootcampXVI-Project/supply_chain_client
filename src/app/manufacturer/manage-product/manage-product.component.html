@@ -218,7 +218,7 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
-        <mat-paginator #manufacturerPaginator [pageSizeOptions]="[10, 25, 100]"
+        <mat-paginator #manufacturerPaginator [pageSizeOptions]="[5, 10, 25, 100]"
                        aria-label="Select page of users"></mat-paginator>
 
 
@@ -432,36 +432,33 @@ w-" type="text"
               </div>
 
               <hr class="bg-gray-200 w-full mt-4"/>
-
+              <div class="flex justify-around mb-2 mt-5">
+                <!--            <button type="button"-->
+                <!--                    class="w-3/12 border bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"-->
+                <!--                    (click)="close({isClose: true, isReload: false})">Cancel-->
+                <!--            </button>-->
+                <button type="button"
+                        class="justify-center border bg-yellow-400 active:bg-yellow-600 font-bold uppercase text-xs text-white px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        (click)="importProduct()" *ngIf="product.status.toLowerCase() == 'harvested'">
+                  Import this product!
+                </button>
+                <button type="button"
+                        class="justify-center border bg-yellow-400 active:bg-yellow-600 font-bold uppercase text-xs text-white px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        (click)="manufactureProduct()" *ngIf="product.status.toLowerCase() == 'imported'">
+                  Manufacture this product!
+                </button>
+                <button type="submit"
+                        class="w-3/12 border text-white font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        [disabled]="!product.productName || !product.amount || product.image == null || product.image.length == 0"
+                        [ngClass]="!product.productName || !product.amount || product.image == null || product.image.length == 0 ? 'bg-slate-400' : 'bg-green-500 hover:bg-green-600'">
+                  Submit
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </form>
-    <div class="block">
-      <div class="flex justify-around mb-2 mt-5">
-        <!--            <button type="button"-->
-        <!--                    class="w-3/12 border bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"-->
-        <!--                    (click)="close({isClose: true, isReload: false})">Cancel-->
-        <!--            </button>-->
-        <button type="button"
-                class="justify-center border bg-yellow-400 active:bg-yellow-600 font-bold uppercase text-xs text-white px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                (click)="importProduct()" *ngIf="product.status.toLowerCase() == 'harvested'">
-          Import this product!
-        </button>
-        <button type="button"
-                class="justify-center border bg-yellow-400 active:bg-yellow-600 font-bold uppercase text-xs text-white px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                (click)="manufactureProduct()" *ngIf="product.status.toLowerCase() == 'imported'">
-          Manufacture this product!
-        </button>
-        <button type="submit"
-                class="w-3/12 border text-white font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                [disabled]="!product.productName || !product.amount || product.image == null || product.image.length == 0"
-                [ngClass]="!product.productName || !product.amount || product.image == null || product.image.length == 0 ? 'bg-slate-400' : 'bg-green-500 hover:bg-green-600'">
-          Submit
-        </button>
-      </div>
-    </div>
   </div>
 
 

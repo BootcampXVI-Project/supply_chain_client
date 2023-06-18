@@ -179,10 +179,9 @@ export class ViewOrderComponent implements OnInit{
                 console.log("ISORDER", product)
                 product.data.amount = (parseFloat(product.data.amount) - parseFloat(productOrder.quantity)).toString()
 
-                this.productService.updateProduct({
-                  userId: this.userService.getUser().userId,
-                  productObj: product.data
-                }).subscribe(
+                this.productService.updateProduct(
+                  this.productService.mapProductObjtoProductModel(product.data)
+                ).subscribe(
                   response => {
                     this.isDetailLoading = false
                     this.closeDetailRequestDialog(true)

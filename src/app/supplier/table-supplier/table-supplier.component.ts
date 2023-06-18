@@ -1,7 +1,7 @@
 import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {ViewProductService} from './view-product.service';
-import {Actor, Dates, Product, ProductObj} from 'src/app/models/product-model';
+import {Actor, Dates, Product, ProductModel, ProductObj} from 'src/app/models/product-model';
 import {Unit} from 'src/assets/ENUM';
 import {UserToken} from 'src/app/models/user-model';
 import {AngularFireStorage} from '@angular/fire/compat/storage';
@@ -10,6 +10,7 @@ import {AuthService} from 'src/app/_services/auth.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {FileUpLoadService} from "../../_services/file-up-load.service";
 import {ngxLoadingAnimationTypes} from "ngx-loading";
+import {ProductService} from "../../_services/product.service";
 
 
 @Component({
@@ -85,7 +86,8 @@ export class TableSupplierComponent implements OnInit {
     private viewProductService: ViewProductService,
     private userService: UserService,
     private authService: AuthService,
-    private uploadFile: FileUpLoadService
+    private uploadFile: FileUpLoadService,
+    private productService: ProductService
 
   ) {
     this.authService.currentUser?.subscribe(x => {
@@ -111,7 +113,49 @@ export class TableSupplierComponent implements OnInit {
       response => {
         let data: any = response
         // this.productModel = data.data
-        this.productModel = data.data.filter((i:any) => i.dates[0].time != '' )
+        this.productModel = data.data
+          .filter((i:any) => i.dates[0].time != '' )
+          .sort((a: any, b: any) => {
+          // // So sánh trạng thái của hai phần tử
+          // if (a.status.toLowerCase() === 'cultivated' && b.status.toLowerCase() !== 'cultivated') {
+          //   return -1; // a trước b
+          // }
+          // if (a.status.toLowerCase() !== 'cultivated' && b.status.toLowerCase() === 'cultivated') {
+          //   return 1; // b trước a
+          // }
+          // return 0; // Không thay đổi thứ tự
+          //
+          // // Nếu bạn muốn sắp xếp theo thứ tự ngược lại (cultivated sau cùng), bạn có thể đổi giá trị trả về của các câu điều kiện.
+
+          // Sắp xếp theo thời gian ("dates[0].time") nếu cùng trạng thái
+          if (a.status.toLowerCase() === b.status.toLowerCase()) {
+            const timeA = new Date(a.dates[0].time).getTime();
+            const timeB = new Date(b.dates[0].time).getTime();
+            return timeB - timeA;
+          }
+
+          return 0; // Không thay đổi thứ tự
+        }).sort((a: any, b: any) => {
+          // So sánh trạng thái của hai phần tử
+          if (a.status.toLowerCase() === 'cultivated' && b.status.toLowerCase() !== 'cultivated') {
+            return -1; // a trước b
+          }
+          if (a.status.toLowerCase() !== 'cultivated' && b.status.toLowerCase() === 'cultivated') {
+            return 1; // b trước a
+          }
+          return 0; // Không thay đổi thứ tự
+
+          // Nếu bạn muốn sắp xếp theo thứ tự ngược lại (cultivated sau cùng), bạn có thể đổi giá trị trả về của các câu điều kiện.
+
+          // Sắp xếp theo thời gian ("dates[0].time") nếu cùng trạng thái
+          if (a.status.toLowerCase() === b.status.toLowerCase()) {
+            const timeA = new Date(a.dates[0].time).getTime();
+            const timeB = new Date(b.dates[0].time).getTime();
+            return timeB - timeA;
+          }
+
+          return 0; // Không thay đổi thứ tự
+        });
 
         console.log("ALL", this.productModel)
         this.dataSourceProduct = new MatTableDataSource(this.productModel)
@@ -122,14 +166,14 @@ export class TableSupplierComponent implements OnInit {
   }
 
   onBackdropClick(event: MouseEvent) {
-    console.log("click");
-
-    const backdrop = event.target as HTMLElement;
-    const dialogContent = this.myDialog?.nativeElement.querySelector('.backdrop');
-
-    if (backdrop === dialogContent) {
-      this.close(false);
-    }
+    // console.log("click");
+    //
+    // const backdrop = event.target as HTMLElement;
+    // const dialogContent = this.myDialog?.nativeElement.querySelector('.backdrop');
+    //
+    // if (backdrop === dialogContent) {
+    //   this.close(false);
+    // }
   }
 
   open(product: any) {
@@ -184,6 +228,7 @@ export class TableSupplierComponent implements OnInit {
   @HostListener('document:keydown.escape', ['$event'])
   handleEscKey(event: KeyboardEvent) {
     this.close();
+    this.closeCertificate();
   }
 
 
@@ -213,34 +258,62 @@ export class TableSupplierComponent implements OnInit {
 
   isCreate: boolean = false
   loading: boolean = false
-
+  hasName: boolean = true
+  hasPrice: boolean = true
+  hasAmount: boolean = true
+  hasImage: boolean = true
+  productSubmit: ProductModel = {
+    productObj: {
+      productId: "",
+      productName: "",
+      image: [],
+      price: "",
+      amount: "",
+      unit: Unit.Kilogram,
+      description: "",
+      certificateUrl: ""
+    }
+  }
 
   onSubmit() {
     this.loading = true
     console.log("this is submit");
     console.log("item", this.product)
-    if (this.product?.productId) {
-
-      this.item.productObj = JSON.parse(JSON.stringify(this.product))
-      console.log("update",this.item)
-      this.item.productObj.amount = this.item.productObj.amount.toString()
-      this.viewProductService.updateProduct(this.item).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.loading = false
-          // this.close(true, true)
-        }
-      });
-    } else {
-      console.log("create")
-      this.viewProductService.createProduct(this.item).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.loading = false
-          this.close(true, true)
-        }
-      });
+    console.log("CONDITION",{
+      name: !this.product.productName,
+        price: !this.product.price,
+        amount: !this.product.amount,
+        image: this.product.image.length <=0,
+    })
+    this.hasName = !!this.product.productName
+    this.hasAmount = !!this.product.amount && parseFloat(this.product.amount) > 0
+    this.hasPrice = !!this.product.price && parseFloat(this.product.price) > 0
+    this.hasImage = this.product.image.length > 0
+    if (this.hasName && this.hasAmount && this.hasPrice && this.hasImage) {
+      if (this.product?.productId) {
+        this.productSubmit = this.productService.mapProductObjtoProductModel(JSON.parse(JSON.stringify(this.product)))
+        console.log("update",this.productSubmit)
+        this.viewProductService.updateProduct(this.productSubmit).subscribe({
+          next: (response) => {
+            console.log(response);
+            this.loading = false
+            this.close(true, true)
+          }
+        });
+      } else {
+        this.productSubmit = this.productService.mapProductObjtoProductModel(JSON.parse(JSON.stringify(this.product)))
+        console.log("create", this.productSubmit)
+        this.productSubmit.productObj.productId = undefined
+        this.viewProductService.createProduct(this.productSubmit).subscribe({
+          next: (response) => {
+            console.log(response);
+            this.loading = false
+            this.close(true, true)
+          }
+        });
+      }
     }
+
 
     // this.productService.createProduct(item)
   }
@@ -263,7 +336,7 @@ export class TableSupplierComponent implements OnInit {
       this.imageList.push(url);
       this.isImageLoading = false
       console.log(this.imageList)
-
+      this.product.image = this.imageList
     });
     // this.uploadImageService.upload(e.target.files[0]).subscribe((url: string) => {
     //   this.imageList.push(url);

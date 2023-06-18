@@ -4,7 +4,7 @@ import {catchError, throwError} from "rxjs";
 import {NotificationService} from "../../_services/notification.service";
 import {UserService} from "../../_services/user.service";
 import {API_PRODUCT, API_URL} from "../../../assets/API_URL";
-import {Product, ProductObj} from "../../models/product-model";
+import {Product, ProductModel, ProductObj} from "../../models/product-model";
 import {Unit} from "../../../assets/ENUM";
 import {AuthService} from "../../_services/auth.service";
 import {ProductService} from "../../_services/product.service";
@@ -45,11 +45,11 @@ export class ViewProductService {
     return this.productService.getProductById(productId)
   }
 
-  updateProduct(producObj: Product) {
+  updateProduct(producObj: ProductModel) {
     return this.productService.updateProduct(producObj)
   }
 
-  createProduct(productObj: Product) {
+  createProduct(productObj: ProductModel) {
     const user = this.userService.getUser()
     return this.http.post(API_PRODUCT.CREATEPRODUCT(),productObj, {headers:this.headers})
       .pipe(
