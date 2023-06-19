@@ -116,17 +116,6 @@ export class TableSupplierComponent implements OnInit {
         this.productModel = data.data
           .filter((i:any) => i.dates[0].time != '' )
           .sort((a: any, b: any) => {
-          // // So sánh trạng thái của hai phần tử
-          // if (a.status.toLowerCase() === 'cultivated' && b.status.toLowerCase() !== 'cultivated') {
-          //   return -1; // a trước b
-          // }
-          // if (a.status.toLowerCase() !== 'cultivated' && b.status.toLowerCase() === 'cultivated') {
-          //   return 1; // b trước a
-          // }
-          // return 0; // Không thay đổi thứ tự
-          //
-          // // Nếu bạn muốn sắp xếp theo thứ tự ngược lại (cultivated sau cùng), bạn có thể đổi giá trị trả về của các câu điều kiện.
-
           // Sắp xếp theo thời gian ("dates[0].time") nếu cùng trạng thái
           if (a.status.toLowerCase() === b.status.toLowerCase()) {
             const timeA = new Date(a.dates[0].time).getTime();
@@ -147,15 +136,17 @@ export class TableSupplierComponent implements OnInit {
 
           // Nếu bạn muốn sắp xếp theo thứ tự ngược lại (cultivated sau cùng), bạn có thể đổi giá trị trả về của các câu điều kiện.
 
-          // Sắp xếp theo thời gian ("dates[0].time") nếu cùng trạng thái
-          if (a.status.toLowerCase() === b.status.toLowerCase()) {
-            const timeA = new Date(a.dates[0].time).getTime();
-            const timeB = new Date(b.dates[0].time).getTime();
-            return timeB - timeA;
-          }
+        })
+          .sort((a: any, b: any) => {
+            // Sắp xếp theo thời gian ("dates[0].time") nếu cùng trạng thái
+            if (a.status.toLowerCase() === 'harvested' && b.status.toLowerCase() === 'harvested') {
+              const timeA = new Date(a.dates[1].time).getTime();
+              const timeB = new Date(b.dates[1].time).getTime();
+              return timeB - timeA;
+            }
 
-          return 0; // Không thay đổi thứ tự
-        });
+            return 0; // Không thay đổi thứ tự
+          });
 
         console.log("ALL", this.productModel)
         this.dataSourceProduct = new MatTableDataSource(this.productModel)

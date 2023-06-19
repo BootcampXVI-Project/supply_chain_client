@@ -101,7 +101,26 @@ export class ViewOrderComponent implements OnInit{
     this.orderService.getAllOrder().subscribe(
       response => {
         let data: any = response
-        this.orders = data.data
+        this.orders = data.data.sort(
+          (a: any, b: any) => {
+            if (a.status.toLowerCase() === b.status.toLowerCase()) {
+              const timeA = new Date(a.createDate).getTime();
+              const timeB = new Date(b.createDate).getTime();
+              return timeB - timeA;
+            }
+            return 0
+          }
+        ).sort(
+          (a: any, b: any) => {
+            if (a.status.toLowerCase() === 'pending' && b.status.toLowerCase() !== 'pending') {
+              return -1; // a trước b
+            }
+            if (a.status.toLowerCase() !== 'pending' && b.status.toLowerCase() === 'pending') {
+              return 1; // b trước a
+            }
+            return 0;
+          }
+        )
         for (let od of this.orders) {
           this.retailerList.push(od.retailer)
         }
