@@ -100,8 +100,7 @@ import { DotSeparatorPipe } from './dot-separator.pipe';
 import { QrCodeComponent } from './components/qr-code/qr-code.component';
 import { HistoryTransactionComponent } from './layouts/history-transaction/history-transaction.component';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
-
-
+import { HistoryManufacturerComponent } from './manufacturer/history-manufacturer/history-manufacturer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -168,6 +167,7 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
     DotSeparatorPipe,
     QrCodeComponent,
     HistoryTransactionComponent,
+    HistoryManufacturerComponent,
   ],
   imports: [
     NgxScannerQrcodeModule,

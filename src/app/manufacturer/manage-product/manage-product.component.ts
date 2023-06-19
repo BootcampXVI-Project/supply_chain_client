@@ -15,6 +15,8 @@ import {DatePipe} from "@angular/common";
 import {TimeModel} from "../../models/time-model";
 import {ProductService} from "../../_services/product.service";
 import {ngxLoadingAnimationTypes} from "ngx-loading";
+import html2canvas from 'html2canvas';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-manage-product',
@@ -168,6 +170,7 @@ export class ManageProductComponent {
   handleEscKey(event: KeyboardEvent) {
     this.close();
     this.closeCertificate()
+    this.closeQrCode()
   }
 
   close(data: any = {isClose: true, isReload: false}) {
@@ -504,6 +507,34 @@ export class ManageProductComponent {
     this.dialogCertManufacturer?.nativeElement.close()
   }
 
+  @ViewChild('dialogQrCode') dialogQrCode : ElementRef | undefined
+  openQrCodeDialog: boolean =false
+
+  openQrCode() {
+    this.openQrCodeDialog = true
+  }
+
+  closeQrCode() {
+    this.openQrCodeDialog = false;
+    this.dialogQrCode?.nativeElement.close()
+  }
+
+  @ViewChild('qrCodeDiv') qrCodeDiv!: ElementRef;
+  exportQrCode() {
+    // Chụp ảnh của phần tử qrCodeDiv bằng html2canvas
+    html2canvas(this.qrCodeDiv.nativeElement).then((canvas: HTMLCanvasElement) => {
+      // Chuyển đổi canvas thành đối tượng Blob
+      canvas.toBlob((blob: Blob | null) => {
+        if (blob) {
+          // Lưu file bằng saveAs từ file-saver
+          saveAs(blob, 'qr-code.png');
+        }
+      }, 'image/png');
+    });
+  }
+
+
   protected readonly StatusColor = StatusColor;
   protected readonly ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+
 }

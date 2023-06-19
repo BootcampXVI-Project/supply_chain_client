@@ -67,6 +67,8 @@ const routes: Routes = [
       { path: 'chart-manufacturer', component: ManufacturerChartComponent },
       { path: 'table-manufacturer', component: ManageProductComponent },
       { path: 'request-manufacturer', component: ViewOrderComponent },
+      { path: 'history-manager', component: ManageProductComponent },
+      { path: 'account-manager', component: ManageProductComponent },
       { path: '**', redirectTo: 'chart-manufacturer', pathMatch: 'full' },
     ],
   },

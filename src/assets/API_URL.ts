@@ -31,6 +31,9 @@ export const API_ORDER = {
   REJECTORDER: () => `${DOMAIN}/manufacturer/order/reject`,
 }
 
+export const API_HISTORY = {
+  GETALLHISTORIES: () => `${DOMAIN}/product/transaction-history`
+}
 
 export const API_USER = {
   GETALLUSERS: () => `${DOMAIN}/user/all`,
