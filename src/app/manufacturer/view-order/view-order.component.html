@@ -72,6 +72,27 @@
     <div class="flex flex-wrap mt-4 justify-center">
       <div class="w-full mb-4 px-4">
         <div class="block w-full overflow-x-auto">
+          <div class="flex justify-between">
+            <div>
+              <img src="{{order.qrCode}}">
+            </div>
+            <div>
+              <div>
+                <p class="font-medium text-base leading-4 text-gray-600">Retailer:</p>
+                <span>{{order.retailer.fullName}}</span>
+              </div>
+              <div>
+                <p class="font-medium text-base leading-4 text-gray-600">Phone Number:</p>
+                <span>{{order.retailer.phoneNumber}}</span>
+              </div>
+              <div>
+                <p class="font-medium text-base leading-4 text-gray-600">Address:</p>
+                <span>{{order.retailer.address}}</span>
+              </div>
+
+
+            </div>
+          </div>
           <table mat-table [dataSource]="dataSourceBill" class="mat-elevation-z2">
             <ng-container matColumnDef="Index">
               <th mat-header-cell *matHeaderCellDef> No.</th>
