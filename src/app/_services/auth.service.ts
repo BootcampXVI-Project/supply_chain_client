@@ -99,7 +99,7 @@ export class AuthService {
     const currentUser = localStorage.getItem('currentUser');
     if (currentUser) {
       const data: any = JSON.parse(currentUser)
-      const token = data?.data.token
+      const token = data?.data?.token
       if (token) {
         const payloadBase64 = token.split('.')[1];
         const payloadJson = atob(payloadBase64);
@@ -122,7 +122,7 @@ export class AuthService {
     const currentUser = localStorage.getItem('currentUser');
     if (currentUser) {
       const data: any = JSON.parse(currentUser)
-      return data?.data.token
+      return data?.data?.token
     }
   }
   getTokenId() {

@@ -59,9 +59,7 @@ import {DistributorComponent} from './layouts/distributor/distributor.component'
 import {RetailerComponent} from './layouts/retailer/retailer.component';
 import {SupplierSidebarComponent} from './components/sidebar/supplier-sidebar/supplier-sidebar.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ViewProductComponent} from './supplier/components/view-product/view-product.component';
 import {ToastrModule} from "ngx-toastr";
-import {DetailProductComponent} from './supplier/components/view-product/detail-product/detail-product.component';
 import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
@@ -70,7 +68,7 @@ import {CarouselComponent} from './components/carousel/carousel.component';
 import {CarouselItemDirective} from './components/carousel/carousel-item.directive';
 import {CarouselItemElementDirective} from './components/carousel/carousel-item-element.directive';
 import {PostImageComponent} from './components/post-image/post-image.component';
-import {SupplierComponent} from './supplier/components/supplier.component';
+import {SupplierComponent} from './supplier/supplier.component';
 import {CertificateComponent} from './components/certificate/certificate.component';
 import {ViewCertificateComponent} from './components/certificate/view-certificate/view-certificate.component';
 import {AddCertificateComponent} from './components/certificate/add-certificate/add-certificate.component';
@@ -85,8 +83,8 @@ import {ManageAccountComponent} from './manufacturer/manage-account/manage-accou
 import {ManufacturerNavbarComponent} from './manufacturer/manufacturer-navbar/manufacturer-navbar.component';
 import {ManufacturerChartComponent} from './manufacturer/manufacturer-chart/manufacturer-chart.component';
 import {AccountComponent} from './account/account.component';
-import {TableSupplierComponent} from './supplier/components/table-supplier/table-supplier.component'
-import {ChartComponent} from './supplier/components/chart/chart.component'
+import {TableSupplierComponent} from './supplier/table-supplier/table-supplier.component'
+import {ChartComponent} from './supplier/chart/chart.component'
 import {HighchartsChartModule} from 'highcharts-angular';
 import {DatePipe} from "@angular/common";
 import { ViewOrderComponent } from './manufacturer/view-order/view-order.component';
@@ -95,6 +93,14 @@ import {MatCardModule} from "@angular/material/card";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
 import { DropDownComponent } from './components/navbars/drop-down/drop-down.component';
+import { LoadingTableComponent } from './loading/loading-table/loading-table.component';
+import { LoadingImageComponent } from './loading/loading-image/loading-image.component';
+import { LoadingDetailComponent } from './loading/loading-detail/loading-detail.component';
+import { DotSeparatorPipe } from './dot-separator.pipe';
+import { QrCodeComponent } from './components/qr-code/qr-code.component';
+import { HistoryTransactionComponent } from './layouts/history-transaction/history-transaction.component';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+
 
 @NgModule({
   declarations: [
@@ -138,8 +144,6 @@ import { DropDownComponent } from './components/navbars/drop-down/drop-down.comp
     DistributorComponent,
     RetailerComponent,
     SupplierSidebarComponent,
-    ViewProductComponent,
-    DetailProductComponent,
     CarouselComponent,
     CarouselItemDirective,
     CarouselItemElementDirective,
@@ -158,8 +162,17 @@ import { DropDownComponent } from './components/navbars/drop-down/drop-down.comp
     ViewOrderComponent,
     // jqxDateTimeInputCompon ent,
     DropDownComponent,
+    LoadingTableComponent,
+    LoadingImageComponent,
+    LoadingDetailComponent,
+    DotSeparatorPipe,
+    QrCodeComponent,
+    HistoryTransactionComponent,
   ],
   imports: [
+    NgxScannerQrcodeModule,
+    MatPaginatorModule,
+    MatTableModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -174,7 +187,6 @@ import { DropDownComponent } from './components/navbars/drop-down/drop-down.comp
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireStorageModule,
     HighchartsChartModule,
     BrowserAnimationsModule,
     NgxLoadingModule.forRoot({}),

@@ -1,16 +1,17 @@
-<nav role="navigation" aria-label="main navigation" class="navbar is-screen-only">
+<nav role="navigation" aria-label="main navigation" class="navbar is-screen-only h-20 shadow-md">
   <div class="container flex items-center" bis_skin_checked="1">
     <div class="navbar-brand" bis_skin_checked="1">
       <a href="/" (click)="stateOpenTab(0)" class="navbar-item is-justify-content-flex-start mt-1/2"
-        style="padding-top: 0px"><img
-          src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/logo%2Flogo.png?alt=media&token=82860508-bacc-4e73-8afa-675134faa8fa" /></a><a
-        role="button" data-target="nav-menu" aria-label="menu" aria-expanded="false" class="navbar-burger burger"><span
-          aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></a>
+         style="padding-top: 0px"><img
+        src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/logo%2Flogo.png?alt=media&token=82860508-bacc-4e73-8afa-675134faa8fa"/></a><a
+      role="button" data-target="nav-menu" aria-label="menu" aria-expanded="false" class="navbar-burger burger"><span
+      aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></a>
     </div>
     <div class="navbar-menu is-flex-shrinkable" id="nav-menu" bis_skin_checked="1">
       <div class="navbar-start" bis_skin_checked="1">
-        <a (click)="stateOpenTab(1)" class="navbar-item" bis_skin_checked="1">About Us</a><a (click)="stateOpenTab(2)"
-          class="navbar-item" bis_skin_checked="1">Contact Us</a>
+<!--        <a (click)="stateOpenTab(1)" class="navbar-item" bis_skin_checked="1">About Us</a>-->
+<!--        <a (click)="stateOpenTab(2)" class="navbar-item" bis_skin_checked="1">Contact Us</a>-->
+        <a (click)="stateOpenTab(3)" class="navbar-item" bis_skin_checked="1">Scan Qr</a>
       </div>
       <div class="navbar-end is-flex-shrinkable" bis_skin_checked="1">
         <div class="navbar-item p-0" bis_skin_checked="1">
@@ -31,7 +32,7 @@
       </div>
       <div class="inputs">
         <input placeholder="Phone Number" class="input" type="phoneNumber" id="phoneNumber"
-          formControlName="phoneNumber" />
+               formControlName="phoneNumber"/>
         <div class="invalid" *ngIf="
             loginForm.get('phoneNumber')?.invalid &&
             (loginForm.get('phoneNumber')?.dirty ||
@@ -51,7 +52,7 @@
           </div>
         </div>
         <input placeholder="Password" class="input" type="password" formControlName="password" id="password"
-          [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" required="" />
+               [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" required=""/>
         <div class="invalid" *ngIf="
             loginForm.get('password')?.invalid &&
             (loginForm.get('password')?.dirty ||
@@ -67,18 +68,18 @@
             Password should have at under 30 characters.
           </div>
         </div>
-        <div class="checkbox-container">
-          <label class="checkbox">
-            <input type="checkbox" class="focus:ring-[#f8f8f8]" id="checkbox" />
-          </label>
-          <label for="checkbox" class="checkbox-text">Remember me</label>
-        </div>
+<!--        <div class="checkbox-container">-->
+<!--          <label class="checkbox">-->
+<!--            <input type="checkbox" class="focus:ring-[#f8f8f8]" id="checkbox"/>-->
+<!--          </label>-->
+<!--          <label for="checkbox" class="checkbox-text">Remember me</label>-->
+<!--        </div>-->
         <button class="sigin-btn bg-gradient-to-r from-[#ec556c] to-[#ea723e]" type="submit">
           <app-loading [text]="'Submit'" [isLoading]="loading"></app-loading>
         </button>
         <a class="forget" href="#">Forget password ?</a>
         <button class="border-[#ec556c] border rounded-[0.5rem] cancel-btn" type="reset" (click)="close()"
-          [disabled]="loginForm.invalid">
+                [disabled]="loginForm.invalid">
           Cancel
         </button>
       </div>

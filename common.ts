@@ -5,6 +5,14 @@ export const common = {
     'distributed',
     'selling',
     'sold'
-  ]
+  ],
+  cultivated: 'Cultivated',
+  distributed: 'Distributed',
+  exported: 'Exported',
+  harvested: 'Harvested',
+  imported: 'Imported',
+  manufacturered: 'Manufacturered',
+  selling: 'Selling',
+  sold: 'Sold'
 
 }

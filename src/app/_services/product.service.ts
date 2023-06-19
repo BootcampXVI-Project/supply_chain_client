@@ -5,7 +5,11 @@ import {NotificationService} from "./notification.service";
 import {UserService} from "./user.service";
 import {API_PRODUCT} from "../../assets/API_URL";
 import {catchError, throwError} from "rxjs";
-import {Product} from "../models/product-model";
+import {Product, ProductModel, ProductObj} from "../models/product-model";
+import {Unit} from "../../assets/ENUM";
+import { Observable } from 'rxjs';
+import { ProductCommercialModel } from '../models/product-commercial-model';
+import { ResponeModel } from '../models/respone-model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,7 +70,7 @@ export class ProductService {
       );
   }
 
-  updateProduct(producObj: Product) {
+  updateProduct(producObj: ProductModel) {
     const user = this.userService.getUser()
     return this.http.patch(API_PRODUCT.UPDATEPRODUCT(user.userId),producObj, {headers:this.headers})
       .pipe(
@@ -77,4 +81,24 @@ export class ProductService {
       )
   }
 
+  getCommercialProductByProductId(productId: string): Observable<ResponeModel<ProductCommercialModel>>{
+    return this.http.get<ResponeModel<ProductCommercialModel>>(API_PRODUCT.GET_COMMERCIAL_PRODUCT_BY_PRODUCT_ID(productId))
+  }
+  mapProductObjtoProductModel(productObj: ProductObj): ProductModel {
+    return {
+      productObj: {
+        productId: productObj.productId,
+        productName: productObj.productName,
+        image: productObj.image,
+        price: productObj.price.toString(),
+        amount: productObj.amount.toString(),
+        unit: productObj.unit,
+        description: productObj.description,
+        certificateUrl: productObj.certificateUrl
+      }
+    };
+  }
+
+
 }
+

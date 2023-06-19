@@ -19,16 +19,16 @@ import { ProductsComponent } from './views/auth/products/products.component';
 // no layouts views
 import { IndexComponent } from './views/index/index.component';
 import { ProfileComponent } from './views/profile/profile.component';
-import {ViewProductComponent} from "./supplier/components/view-product/view-product.component";
-import {DetailProductComponent} from "./supplier/components/view-product/detail-product/detail-product.component";
-import {SupplierComponent} from "./supplier/components/supplier.component";
+import {SupplierComponent} from "./supplier/supplier.component";
 import {AuthGuard} from "./_guards/auth.guard";
 import {ManufacturerComponent} from "./manufacturer/manufacturer.component";
-import { TableSupplierComponent } from './supplier/components/table-supplier/table-supplier.component';
+import { TableSupplierComponent } from './supplier/table-supplier/table-supplier.component';
 import { Chart } from 'chart.js';
-import { ChartComponent } from './supplier/components/chart/chart.component';
+import { ChartComponent } from './supplier/chart/chart.component';
 import { ManufacturerChartComponent } from './manufacturer/manufacturer-chart/manufacturer-chart.component';
 import { ManageProductComponent } from './manufacturer/manage-product/manage-product.component';
+import {ViewOrderComponent} from "./manufacturer/view-order/view-order.component";
+import { HistoryTransactionComponent } from './layouts/history-transaction/history-transaction.component';
 
 const routes: Routes = [
   // admin views
@@ -66,8 +66,14 @@ const routes: Routes = [
     children: [
       { path: 'chart-manufacturer', component: ManufacturerChartComponent },
       { path: 'table-manufacturer', component: ManageProductComponent },
-      { path: '**', redirectTo: 'chart-supplier', pathMatch: 'full' },
+      { path: 'request-manufacturer', component: ViewOrderComponent },
+      { path: '**', redirectTo: 'chart-manufacturer', pathMatch: 'full' },
     ],
+  },
+
+  {
+    path: "product-commercial/:productId",
+    component: HistoryTransactionComponent,
   },
   // auth views
   {

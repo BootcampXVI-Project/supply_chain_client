@@ -3,12 +3,13 @@ import {AuthService} from "../../_services/auth.service";
 import {Bill, Order} from "../../models/order-model";
 import {OrderService} from "../view-order/order.service";
 import {Actor, ProductObj} from "../../models/product-model";
-import { HostListener } from '@angular/core';
+import {HostListener} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {ProductService} from "../../_services/product.service";
 import {UserService} from "../../_services/user.service";
 import {forkJoin, map} from 'rxjs';
+
 @Component({
   selector: 'app-manufacturer-navbar',
   templateUrl: './manufacturer-navbar.component.html',
@@ -19,7 +20,7 @@ export class ManufacturerNavbarComponent {
   @ViewChild('detailRequestDialog') detailRequestDialog: ElementRef | undefined;
   isOpenDetailRequestDialog: boolean = false
   reloadDetailProduct = false;
-  @Input() products : ProductObj[] = []
+  @Input() products: ProductObj[] = []
 
 
   constructor(
@@ -27,7 +28,8 @@ export class ManufacturerNavbarComponent {
     private orderService: OrderService,
     private productService: ProductService,
     private userService: UserService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.getAllOrder()
@@ -64,7 +66,7 @@ export class ManufacturerNavbarComponent {
     unitPrice: "",
     totalPrice: ""
   }
-  orders : Order[] = []
+  orders: Order[] = []
   retailerList: Actor[] = []
   order: Order = {
     orderId: "",
@@ -107,7 +109,7 @@ export class ManufacturerNavbarComponent {
   totalCost = 0
 
   dataSourceBill = new MatTableDataSource<any>;
-  displayedBilColumns: string[] = ['Index','ProductName' , 'QuantityAvailable', 'QuantityRequest', 'UnitPrice', 'TotalPrice']
+  displayedBilColumns: string[] = ['Index', 'ProductName', 'QuantityAvailable', 'QuantityRequest', 'UnitPrice', 'TotalPrice']
   @ViewChild('billPaginator', {static: true}) billPaginator!: MatPaginator
 
   getAllOrder() {
@@ -115,7 +117,7 @@ export class ManufacturerNavbarComponent {
       response => {
         let data: any = response
         this.orders = data.data
-        console.log("REQUESTLIST",this.orders)
+        console.log("REQUESTLIST", this.orders)
         for (let od of this.orders) {
           this.retailerList.push(od.retailer)
         }
@@ -166,46 +168,6 @@ export class ManufacturerNavbarComponent {
     });
   }
 
-
-  // openDetailRequestDialog(e: any) {
-  //   this.isOpenDetailRequestDialog = true;
-  //   console.log("DETAILORDER", e);
-  //
-  //   this.order = e;
-  //   let billList: Bill[] = [];
-  //   let total = 0;
-  //
-  //   const getProductObservables = this.order.productItemList.map((productItem) =>
-  //     this.productService.getProductById(productItem.product.productId)
-  //   );
-  //
-  //   forkJoin(getProductObservables)
-  //     .subscribe((responses) => {
-  //       for (let i = 0; i < responses.length; i++) {
-  //         let response:any = responses[i];
-  //         let product: any = response.data;
-  //         console.log("ISORDER", product);
-  //         product.amount;
-  //         let productItem = this.order.productItemList[i];
-  //         let billDetail: Bill = {
-  //           productName: product.productName,
-  //           quantityAvailable: product.amount,
-  //           quantityRequest: productItem.quantity,
-  //           unitPrice: product.price,
-  //           totalPrice: (parseFloat(product.price) * parseFloat(productItem.quantity)).toString(),
-  //         };
-  //         total += parseFloat(billDetail.totalPrice);
-  //         billList.push(billDetail);
-  //       }
-  //
-  //       this.totalCost = total;
-  //       this.bills = billList;
-  //       this.dataSourceBill = new MatTableDataSource(this.bills);
-  //       this.dataSourceBill.paginator = this.billPaginator;
-  //       console.log("BILLS", this.bills);
-  //     });
-  // }
-
   closeDetailRequestDialog(isReload = false) {
     this.isOpenDetailRequestDialog = false
     this.detailRequestDialog?.nativeElement.close();
@@ -214,6 +176,7 @@ export class ManufacturerNavbarComponent {
       location.reload()
     }
   }
+
   @HostListener('document:keydown.escape', ['$event'])
   handleEscKey(event: KeyboardEvent) {
     this.closeDetailRequestDialog();
@@ -222,20 +185,18 @@ export class ManufacturerNavbarComponent {
   approveOrder(orderId: string) {
     this.orderService.approveOrder(orderId).subscribe(
       response => {
-        console.log("APPROVE",response)
+        console.log("APPROVE", response)
         for (let productOrders of this.orders) {
           for (let productOrder of productOrders.productItemList) {
-            console.log("ISPRODUCT",productOrder.product.productId)
+            console.log("ISPRODUCT", productOrder.product.productId)
             this.productService.getProductById(productOrder.product.productId).subscribe(
               response => {
                 let product: any = response
                 console.log("ISORDER", product)
                 product.data.amount = (parseFloat(product.data.amount) - parseFloat(productOrder.quantity)).toString()
 
-                this.productService.updateProduct({
-                  userId: this.userService.getUser().userId,
-                  productObj: product.data
-                }).subscribe(
+                this.productService.updateProduct(this.productService.mapProductObjtoProductModel(product.data)
+                ).subscribe(
                   response => {
                     console.log("Is Available", response)
                   }

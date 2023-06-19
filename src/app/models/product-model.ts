@@ -18,7 +18,20 @@ export interface ProductObj {
   certificateUrl: string;
   supplier: Actor;
   qrCode: string;
-  image?: string[];
+  image: string[];
+}
+
+export interface ProductModel {
+  productObj: {
+    productId: string | undefined,
+    productName: string,
+    image: string[],
+    price: string,
+    amount: string,
+    unit: Unit,
+    description: string,
+    certificateUrl: string
+  }
 }
 
 export interface Dates {

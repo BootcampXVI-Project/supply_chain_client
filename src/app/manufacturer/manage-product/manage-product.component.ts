@@ -5,7 +5,7 @@ import {UserToken} from "../../models/user-model";
 import {Actor, Product, ProductImport, ProductManufacture, ProductObj} from "../../models/product-model";
 import {StatusColor, Time, Unit} from "../../../assets/ENUM";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
-import {ViewProductService} from "../../supplier/components/view-product/view-product.service";
+import {ViewProductService} from "../../supplier/table-supplier/view-product.service";
 import {UserService} from "../../_services/user.service";
 import {AuthService} from "../../_services/auth.service";
 import {ManufacturerService} from "../manufacturer.service";
@@ -39,6 +39,10 @@ export class ManageProductComponent {
   openCertification: boolean = false
   hasCertificate: boolean = false
   isLoading: boolean = false
+  isTableLoading: boolean = false
+  isSupplier = true
+  isManufacturer = false
+  isDistributor = false
 
   statusColor: StatusColor = StatusColor.CULTIVATED
   // dataSource = new MatTableDataSource<any>()
@@ -85,7 +89,8 @@ export class ManageProductComponent {
   product: ProductObj = this.item.productObj
   productModel: ProductObj [] = []
   dataSourceProduct = new MatTableDataSource<any>;
-  displayedColumns: string[] = ['Index', 'ProductName', 'Price', 'Status', 'Action']
+  displayedColumns: string[] = ['Index', 'ProductName', 'cultivatedDate', 'harvestedDate', 'Price', 'Status', 'Action']
+
   // displayedColumns: string[] = ['Index', 'ProductName', 'CultivatedDate', 'HarvestedDate', 'Price', 'Status', 'Action']
 
 
@@ -114,13 +119,18 @@ export class ManageProductComponent {
   }
 
   getAllProduct() {
-
+    this.isTableLoading = true
+    console.log(this.isTableLoading)
     this.manufacturerService.getAllProduct().subscribe(
       response => {
         let data: any = response
-        this.productModel = data.data
+        this.productModel = data.data.filter((i: any) => i.dates[0].time != '')
         this.dataSourceProduct = new MatTableDataSource(this.productModel)
         this.dataSourceProduct.paginator = this.manufacturerPaginator
+        this.isTableLoading = false
+      },
+      err => {
+        this.isTableLoading = false
       }
     )
   }
@@ -153,16 +163,17 @@ export class ManageProductComponent {
     //---------image-------//
     this.shareInfor.setImageSlideValue([]);
     this.imageList = product.image
+    this.currentAmount = parseFloat(this.product.amount)
 
   }
 
   @HostListener('document:keydown.escape', ['$event'])
   handleEscKey(event: KeyboardEvent) {
     this.close();
+    this.closeCertificate()
   }
 
   close(data: any = {isClose: true, isReload: false}) {
-    console.log("du lieu truyen ve", data)
     this.openDialog = !data.isClose
     this.manufacturerDetailDialog?.nativeElement.close();
     if (data.isReload) {
@@ -171,17 +182,50 @@ export class ManageProductComponent {
   }
 
   loadData() {
-    this.viewProductService.getAllProduct().subscribe({
-      next: (response) => {
-        this.data = response;
-        this.products = this.data.data
-        this.dataSource = new MatTableDataSource(this.products)
-        this.dataSource.paginator = this.manufacturerPaginator;
-      },
-      error: (err) => {
-        console.error(err)
-      }
-    })
+    let showProducts
+    switch (this.selectedStatus) {
+      case 'supplier':
+        this.displayedColumns = ['Index', 'ProductName', 'cultivatedDate', 'harvestedDate', 'Price', 'Status', 'Action']
+        this.isSupplier = true
+        this.isManufacturer = false
+        this.isDistributor = false
+        showProducts = this.productModel.filter((i: any) => i.status.toLowerCase() == 'cultivated' || i.status.toLowerCase() == 'harvested')
+        this.dataSourceProduct = new MatTableDataSource(showProducts)
+        this.dataSourceProduct.paginator = this.manufacturerPaginator
+        break;
+
+      case 'manufacturer':
+        this.displayedColumns = ['Index', 'ProductName', 'importedDate', 'manufacturedDate', 'Price', 'Status', 'Action']
+        this.isSupplier = false
+        this.isManufacturer = true
+        this.isDistributor = false
+        showProducts = this.productModel.filter((i: any) => i.status.toLowerCase() == 'imported' || i.status.toLowerCase() == 'manufactured')
+        this.dataSourceProduct = new MatTableDataSource(showProducts)
+        this.dataSourceProduct.paginator = this.manufacturerPaginator
+        break;
+
+      case 'distributor':
+        this.displayedColumns = ['Index', 'ProductName', 'exportedDate', 'distributingDate', 'Price', 'Status', 'Action']
+        this.isSupplier = false
+        this.isManufacturer = false
+        this.isDistributor = true
+        showProducts = this.productModel.filter((i: any) => i.status.toLowerCase() == 'exported' || i.status.toLowerCase() == 'distributing')
+        this.dataSourceProduct = new MatTableDataSource(showProducts)
+        this.dataSourceProduct.paginator = this.manufacturerPaginator
+        break;
+
+    }
+    // this.viewProductService.getAllProduct().subscribe({
+    //   next: (response) => {
+    //     let data: any = response
+    //     this.productModel = data.data.filter((i:any) => i.dates[0].time != '' )
+    //     this.dataSource = new MatTableDataSource(this.products)
+    //     this.dataSource.paginator = this.manufacturerPaginator;
+    //   },
+    //   error: (err) => {
+    //     console.error(err)
+    //   }
+    // })
   }
 
 
@@ -190,12 +234,13 @@ export class ManageProductComponent {
   loading: boolean = false
   units = Object.values(Unit);
   isCreateForm: boolean = false;
+  currentAmount = 0
 
   onSubmit() {
     this.loading = true
     if (this.product?.productId) {
+      this.product.amount = this.currentAmount.toString()
       this.item.productObj = JSON.parse(JSON.stringify(this.product))
-      this.closeCertificate(false)
       this.viewProductService.updateProduct(this.item).subscribe({
         next: (response) => {
           console.log(response);
@@ -207,22 +252,18 @@ export class ManageProductComponent {
     }
   }
 
-
-  closeCertificate(data: any) {
-    console.log("du lieu truyen ve", data)
-    this.openCertification = data
-    // this.openDialog = data
-    this.certDialog?.nativeElement.close();
-  }
-
-  addImage(data: any) {
-    console.log("add")
-    if (this.item.productObj?.image) {
-      this.item.productObj.image.push(data);
+  validateAmount(event: any) {
+    const enteredValue = event.target.value;
+    const currentValue = this.currentAmount;
+    if (enteredValue > currentValue) {
+      this.product.amount = currentValue.toString();
+      this.currentAmount = parseFloat(this.product.amount)
     } else {
-      this.item.productObj.image = [data];
+      this.currentAmount = enteredValue
+
     }
   }
+
 
   //--------------------------manufacturer--------------------//
 
@@ -337,24 +378,28 @@ export class ManageProductComponent {
       )
   }
 
-  addImage1(e: any) {
+  addImage(e: any) {
     console.log("POS-A", this.currentImagePos)
     this.isImageLoading = true;
     this.uploadFile.convertFileToUrl(e.target.files[0]).subscribe((url: string) => {
+      this.imageList = [...this.imageList];
       this.imageList?.push(url);
       this.isImageLoading = false
-      console.log(this.imageList)
+      console.log("afterAdd", this.product)
 
     });
   }
+
 
   changeImage(e: any) {
     this.isImageLoading = true;
     console.log("POS-C", this.currentImagePos)
     this.uploadFile.convertFileToUrl(e.target.files[0]).subscribe((url: string) => {
+      this.imageList = [...this.imageList];
       this.imageList![this.currentImagePos] = url;
       this.isImageLoading = false
-      console.log(this.imageList)
+      console.log("afterChange", this.product)
+
 
     });
   }
@@ -382,6 +427,7 @@ export class ManageProductComponent {
 
   deleteImage(i: number) {
     this.currentImagePos = 0;
+    this.imageList = [...this.imageList];
     this.imageList?.splice(i, 1);
     this.distanNumber = 0;
     this.distanceString = (this.distanNumber).toString() + 'px';
@@ -437,10 +483,30 @@ export class ManageProductComponent {
     this.currentImagePos = pos;
 
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSourceProduct.filter = filterValue.trim().toLowerCase();
-}
+  }
+
+//---------------------------------------------Certificate-----------------------------------//
+  @ViewChild('dialogCertManufacturer') dialogCertManufacturer: ElementRef | undefined;
+  imageUrl = ''
+
+  openCertificate() {
+    if (this.product.certificateUrl != '') {
+      this.imageUrl = this.product.certificateUrl
+    } else {
+      this.imageUrl = ''
+    }
+    this.openCertification = true
+  }
+
+  closeCertificate() {
+    this.openCertification = false
+    this.dialogCertManufacturer?.nativeElement.close()
+  }
+
   protected readonly StatusColor = StatusColor;
   protected readonly ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
 }
