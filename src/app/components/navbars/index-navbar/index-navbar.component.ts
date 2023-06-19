@@ -122,9 +122,11 @@ export class IndexNavbarComponent implements OnInit {
           this.route.navigate(['/supplier']);
         } else if (user.role.toLowerCase()=== "manufacturer") {
           this.route.navigate(['/manufacturer'])
+        } else if (user.role.toLowerCase()=== "consumer") {
+          this.route.navigate(['/consumer'])
         }
         else {
-          this.route.navigate([JSON.parse(response).data.userType]);
+          this.route.navigate([JSON.parse(response).role]);
 
         }
 

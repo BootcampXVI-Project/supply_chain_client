@@ -147,6 +147,9 @@
       <div [ngClass]="{ hidden: _openTab !== 2, block: _openTab === 2 }">
         <app-contact-us></app-contact-us>
       </div>
+      <div [ngClass]="{ hidden: _openTab !== 3, flex: _openTab === 3 }" style="justify-content: center;align-items: center;">
+        <app-qr-code [openTab]="_openTab"></app-qr-code>
+      </div>
     </section>
     <footer class="footer is-size-7 full-page is-screen-only">
       <div class="container level is-mobile py-4" bis_skin_checked="1">
