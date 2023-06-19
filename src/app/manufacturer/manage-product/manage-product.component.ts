@@ -128,6 +128,9 @@ export class ManageProductComponent {
         this.dataSourceProduct = new MatTableDataSource(this.productModel)
         this.dataSourceProduct.paginator = this.manufacturerPaginator
         this.isTableLoading = false
+      },
+      err => {
+        this.isTableLoading = false
       }
     )
   }

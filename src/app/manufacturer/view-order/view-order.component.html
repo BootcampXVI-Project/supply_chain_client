@@ -10,7 +10,7 @@
         <ng-container matColumnDef="qrCode">
           <th mat-header-cell *matHeaderCellDef> QR Code</th>
           <td mat-cell *matCellDef="let element">
-            <a href="{{element.qrCode}}" target="_blank">
+            <a (click)="openQRDialog(element);qrDialog.showModal();" class=" cursor-pointer">
               <img src="{{element.qrCode}} ">
             </a>
           </td>
@@ -72,27 +72,6 @@
     <div class="flex flex-wrap mt-4 justify-center">
       <div class="w-full mb-4 px-4">
         <div class="block w-full overflow-x-auto">
-          <div class="flex justify-between">
-            <div>
-              <img src="{{order.qrCode}}">
-            </div>
-            <div>
-              <div>
-                <p class="font-medium text-base leading-4 text-gray-600">Retailer:</p>
-                <span>{{order.retailer.fullName}}</span>
-              </div>
-              <div>
-                <p class="font-medium text-base leading-4 text-gray-600">Phone Number:</p>
-                <span>{{order.retailer.phoneNumber}}</span>
-              </div>
-              <div>
-                <p class="font-medium text-base leading-4 text-gray-600">Address:</p>
-                <span>{{order.retailer.address}}</span>
-              </div>
-
-
-            </div>
-          </div>
           <table mat-table [dataSource]="dataSourceBill" class="mat-elevation-z2">
             <ng-container matColumnDef="Index">
               <th mat-header-cell *matHeaderCellDef> No.</th>
@@ -130,6 +109,52 @@
 
           <div style="text-align: right; font-size: 1.2em;" class="mr-36 mt-3">
             Total (VND): {{totalCost | dotSeparator}}
+          </div>
+
+        </div>
+        <div class="flex justify-around mb-2 mt-5">
+          <button
+            *ngIf="isPending"
+            type="button" class="w-3/12 border bg-yellow-400 active:bg-yellow-600 font-bold text-white uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            (click)="rejectOrder(order.orderId)"
+          >
+            Reject
+          </button>
+          <button
+            *ngIf="isPending"
+            type="button" class="w-3/12 border text-white font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" (click)="approveOrder(order.orderId)"
+                  [disabled]="!canApprove"
+                  [ngClass]="!canApprove ? 'bg-slate-400' : 'bg-green-500 hover:bg-green-600'"
+          >
+            Approve
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+</dialog>
+
+
+<dialog [ngClass]="isOpenQRDialog ? 'flex':'hidden'" class=" relative flex-col bg-blueGray-100 rounded-lg w-1/6  items-center" #qrDialog>
+  <p class="text-xl font-medium">Detail Order</p>
+  <app-loading-detail [isDetailLoading]="isDetailLoading" ></app-loading-detail>
+  <button type="button" class="absolute top-2 right-6 focus:outline-none text-xl font-bold text-red-600" (click)="closeQRDialog(false)">X
+  </button>
+
+  <div class="block" *ngIf="!isDetailLoading">
+    <div class="flex flex-wrap mt-4 justify-center">
+      <div class="w-full mb-4 px-4">
+        <div class="block w-full overflow-x-auto">
+          <div class="flex justify-between">
+            <!-- <div> -->
+              <img style="width: 240px; height: 240px;" src="{{order.qrCode}}">
+            <!-- </div> -->
+            <div>
+            </div>
           </div>
 
         </div>
