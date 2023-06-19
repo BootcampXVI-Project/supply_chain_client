@@ -112,6 +112,62 @@ export class ViewOrderComponent implements OnInit{
     )
   }
 
+  @ViewChild('qrDialog') qrDialog: ElementRef | undefined;
+  isOpenQRDialog: boolean = false;
+
+  openQRDialog(e: any) {
+    this.isOpenQRDialog = true;
+    this.isDetailLoading = true
+
+    this.order = e;
+    console.log("ORDER",this.order)
+    this.isPending = (this.order.status.toLowerCase() == 'pending');
+    let billList: Bill[] = [];
+    let total = 0;
+
+    const getProductObservables = this.order.productItemList.map((productItem) =>
+      this.productService.getProductById(productItem.product.productId)
+    );
+
+    forkJoin(getProductObservables).pipe(
+      map((responses: any[]) =>
+        responses.map((response, index) => {
+          const product = response.data;
+          console.log("FORK", product)
+          const productItem = this.order.productItemList[index];
+          const billDetail: Bill = {
+            productName: product.productName,
+            quantityAvailable: product.amount,
+            quantityRequest: productItem.quantity,
+            unitPrice: product.price,
+            totalPrice: (parseFloat(product.price) * parseFloat(productItem.quantity)).toString(),
+          };
+          if (billDetail.quantityAvailable >= billDetail.quantityRequest) {
+            this.canApprove = true
+          }
+          this.isDetailLoading = false
+          total += parseFloat(billDetail.totalPrice);
+          return billDetail;
+        })
+      )
+    ).subscribe(response => {
+      let bills: any = response
+      this.totalCost = total;
+      this.bills = bills;
+      this.dataSourceBill = new MatTableDataSource(this.bills);
+      this.dataSourceBill.paginator = this.billPaginator;
+    });
+  }
+  closeQRDialog(isReload = false) {
+    this.isOpenQRDialog = false
+    this.qrDialog?.nativeElement.close();
+    // this.handleEscKey(new KeyboardEvent())
+    if (isReload) {
+      location.reload()
+    }
+  }
+
+
   openDetailRequestDialog(e: any) {
     this.isOpenDetailRequestDialog = true;
     this.isDetailLoading = true
