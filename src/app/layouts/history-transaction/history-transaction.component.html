@@ -1,0 +1,47 @@
+<div class="container1">
+  <div class="wrapper">
+    <h1>History Transaction</h1>
+    <ul class="sessions">
+      <li>
+        <div [style.background]= "productCommercial.dates[0] ? 'green': 'white'" class="status"> </div>
+        <div class="time">{{  productCommercial.dates[0]?.time | date: 'medium' }}</div>
+        <p>{{common.cultivated}}</p>
+      </li>
+      <li>
+        <div [style.background-color]= " productCommercial.dates[1] ?'green': 'white'"  class="status"> </div>
+        <div class="time">{{productCommercial.dates[1]?.time | date:'medium'}}</div>
+        <p>{{common.harvested}}</p>
+      </li>
+      <li >
+        <div  [style.background-color]= "productCommercial.dates[2] ? 'green': 'white'" class="status"> </div>
+        <div class="time">{{productCommercial.dates[2]?.time | date:'medium'}}</div>
+        <p>{{common.sold}}</p>
+      </li>
+      <li>
+        <div [style.background]= "productCommercial.dates[3] ? 'green': 'white'"  class="status"> </div>
+        <div class="time">{{productCommercial.dates[3]?.time | date:'medium'}}</div>
+        <p>{{common.distributed}}</p>
+      </li>
+      <li>
+        <div [style.background-color]= "productCommercial.dates[4] ?'green': 'white'"  class="status"> </div>
+        <div class="time">{{productCommercial.dates[4]?.time | date:'medium'}}</div>
+        <p>{{common.exported}}</p>
+      </li>
+      <li>
+        <div [style.background-color]= "productCommercial.dates[5] ? 'green': 'white'"  class="status"> </div>
+        <div class="time">{{productCommercial.dates[5]?.time | date:'medium'}}</div>
+        <p>{{common.manufacturered}}</p>
+      </li>
+      <li>
+        <div [style.background-color]= "productCommercial.dates[6] ?'green': 'white'"  class="status"> </div>
+        <div class="time">{{productCommercial.dates[6]?.time | date:'medium'}}</div>
+        <p>{{common.selling}}</p>
+      </li>
+      <li >
+        <div  [style.background-color]= "productCommercial.dates[7] ? 'green': 'white'" class="status"> </div>
+        <div class="time">{{productCommercial.dates[7]?.time }}</div>
+        <p>{{common.sold}}</p>
+      </li>
+    </ul>
+  </div>
+</div>

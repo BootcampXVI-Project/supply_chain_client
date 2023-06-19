@@ -20,6 +20,7 @@ export const API_PRODUCT = {
   MANUFACTUREPRODUCT: () => `${DOMAIN}/product/manufacture`,
   EXPORTPRODUCT: () => `${DOMAIN}/product/export`,
 
+  GET_COMMERCIAL_PRODUCT_BY_PRODUCT_ID: (productId: string) => `${DOMAIN}/product-commercial/${productId}`
 }
 
 export const API_ORDER = {

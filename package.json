@@ -33,6 +33,7 @@
     "material": "^0.5.3",
     "ngx-date-fns": "^10.0.1",
     "ngx-loading": "^15.0.0",
+    "ngx-scanner-qrcode": "^1.5.2",
     "ngx-toastr": "^15.0.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

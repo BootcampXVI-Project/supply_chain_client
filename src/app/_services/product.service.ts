@@ -7,6 +7,9 @@ import {API_PRODUCT} from "../../assets/API_URL";
 import {catchError, throwError} from "rxjs";
 import {Product, ProductModel, ProductObj} from "../models/product-model";
 import {Unit} from "../../assets/ENUM";
+import { Observable } from 'rxjs';
+import { ProductCommercialModel } from '../models/product-commercial-model';
+import { ResponeModel } from '../models/respone-model';
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +81,9 @@ export class ProductService {
       )
   }
 
+  getCommercialProductByProductId(productId: string): Observable<ResponeModel<ProductCommercialModel>>{
+    return this.http.get<ResponeModel<ProductCommercialModel>>(API_PRODUCT.GET_COMMERCIAL_PRODUCT_BY_PRODUCT_ID(productId))
+  }
   mapProductObjtoProductModel(productObj: ProductObj): ProductModel {
     return {
       productObj: {
@@ -95,3 +101,4 @@ export class ProductService {
 
 
 }
+

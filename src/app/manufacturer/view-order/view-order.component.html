@@ -72,7 +72,7 @@
     <div class="flex flex-wrap mt-4 justify-center">
       <div class="w-full mb-4 px-4">
         <div class="block w-full overflow-x-auto">
-          <table mat-table [dataSource]="dataSourceBill" class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSourceBill" class="mat-elevation-z2">
             <ng-container matColumnDef="Index">
               <th mat-header-cell *matHeaderCellDef> No.</th>
               <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
@@ -85,45 +85,44 @@
 
             <ng-container matColumnDef="QuantityAvailable">
               <th mat-header-cell *matHeaderCellDef> Quantity Available</th>
-              <td mat-cell *matCellDef="let element"> {{element.quantityAvailable}} </td>
+              <td mat-cell *matCellDef="let element"> {{ Math.abs(element.quantityAvailable) }} </td>
             </ng-container>
 
             <ng-container matColumnDef="QuantityRequest">
               <th mat-header-cell *matHeaderCellDef> Quantity Request</th>
-              <td mat-cell *matCellDef="let element"> {{element.quantityRequest}} </td>
+              <td mat-cell *matCellDef="let element"> {{Math.abs(element.quantityRequest)}} </td>
             </ng-container>
 
             <ng-container matColumnDef="UnitPrice">
-              <th mat-header-cell *matHeaderCellDef> Unit Price</th>
-              <td mat-cell *matCellDef="let element"> {{element.unitPrice | currency: 'VND'}} </td>
+              <th mat-header-cell *matHeaderCellDef> Unit Price (VND)</th>
+              <td mat-cell *matCellDef="let element"> {{element.unitPrice | dotSeparator}} </td>
             </ng-container>
 
             <ng-container matColumnDef="TotalPrice">
-              <th mat-header-cell *matHeaderCellDef> Total Price</th>
-              <td mat-cell *matCellDef="let element"> {{element.totalPrice | currency: 'VND'}} </td>
+              <th mat-header-cell *matHeaderCellDef> Total Price (VND)</th>
+              <td mat-cell *matCellDef="let element"> {{element.totalPrice | dotSeparator}} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedBilColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedBilColumns;"></tr>
           </table>
 
-          <mat-paginator #billPaginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
-          <div style="text-align: right; font-size: 1.2em;">
-            Total: {{totalCost | currency: 'VND'}}
+          <div style="text-align: right; font-size: 1.2em;" class="mr-36 mt-3">
+            Total (VND): {{totalCost | dotSeparator}}
           </div>
 
         </div>
         <div class="flex justify-around mb-2 mt-5">
-          <button type="button" class="w-3/12 border bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" (click)="closeDetailRequestDialog(false)">
-            Cancel
-          </button>
           <button
+            *ngIf="isPending"
             type="button" class="w-3/12 border bg-yellow-400 active:bg-yellow-600 font-bold text-white uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             (click)="rejectOrder(order.orderId)"
           >
             Reject
           </button>
-          <button type="button" class="w-3/12 border text-white font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" (click)="approveOrder(order.orderId)"
+          <button
+            *ngIf="isPending"
+            type="button" class="w-3/12 border text-white font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" (click)="approveOrder(order.orderId)"
                   [disabled]="!canApprove"
                   [ngClass]="!canApprove ? 'bg-slate-400' : 'bg-green-500 hover:bg-green-600'"
           >

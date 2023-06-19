@@ -28,6 +28,7 @@ import { ChartComponent } from './supplier/chart/chart.component';
 import { ManufacturerChartComponent } from './manufacturer/manufacturer-chart/manufacturer-chart.component';
 import { ManageProductComponent } from './manufacturer/manage-product/manage-product.component';
 import {ViewOrderComponent} from "./manufacturer/view-order/view-order.component";
+import { HistoryTransactionComponent } from './layouts/history-transaction/history-transaction.component';
 
 const routes: Routes = [
   // admin views
@@ -68,6 +69,11 @@ const routes: Routes = [
       { path: 'request-manufacturer', component: ViewOrderComponent },
       { path: '**', redirectTo: 'chart-manufacturer', pathMatch: 'full' },
     ],
+  },
+
+  {
+    path: "product-commercial/:productId",
+    component: HistoryTransactionComponent,
   },
   // auth views
   {

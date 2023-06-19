@@ -198,7 +198,7 @@
               <img src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/icon%2Fdistributing24px.png?alt=media&token=4ee3a6f0-ea3a-45cc-b336-8598c986a639" *ngIf="element.status?.toLowerCase() == 'distributing'">
               <img src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/icon%2Fretailer24px.png?alt=media&token=2c00fc6e-41c4-4a2a-bc0f-7142b496fd46" *ngIf="element.status?.toLowerCase() == 'retailing'">
               <img src="https://firebasestorage.googleapis.com/v0/b/supply-chain-9ea64.appspot.com/o/icon%2Fsold24px.png?alt=media&token=8ec66b83-8b8c-4a7e-ac5f-9e32882623b2" *ngIf="element.status?.toLowerCase() == 'sold'">
-              <span class="py-10">{{element.status}}</span>
+              <span class="py-10 ml-1.5">{{element.status}}</span>
             </td>
           </ng-container>
 
@@ -438,12 +438,12 @@ w-" type="text"
                 <!--                    (click)="close({isClose: true, isReload: false})">Cancel-->
                 <!--            </button>-->
                 <button type="button"
-                        class="justify-center border bg-yellow-400 active:bg-yellow-600 font-bold uppercase text-xs text-white px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        class="justify-center border bg-cyan-400 active:bg-cyan-600 font-bold uppercase text-xs text-white px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" style="background-color: #2196F3;"
                         (click)="importProduct()" *ngIf="product.status.toLowerCase() == 'harvested'">
                   Import this product!
                 </button>
                 <button type="button"
-                        class="justify-center border bg-yellow-400 active:bg-yellow-600 font-bold uppercase text-xs text-white px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        class="justify-center border bg-yellow-400 active:bg-yellow-600 font-bold uppercase text-xs text-white px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" style="background-color: #3F51B5"
                         (click)="manufactureProduct()" *ngIf="product.status.toLowerCase() == 'imported'">
                   Manufacture this product!
                 </button>

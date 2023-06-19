@@ -72,11 +72,12 @@ export class ViewOrderComponent implements OnInit{
   };
 
   canApprove: boolean = false
+  isPending: boolean = false
 
   totalCost = 0
 
   dataSourceBill = new MatTableDataSource<any>;
-  displayedBilColumns: string[] = ['Index','ProductName' , 'QuantityRequest', 'QuantityRequest', 'UnitPrice', 'TotalPrice']
+  displayedBilColumns: string[] = ['Index','ProductName' , 'QuantityAvailable', 'QuantityRequest', 'UnitPrice', 'TotalPrice']
   @ViewChild('billPaginator', {static: true}) billPaginator!: MatPaginator
   dataSourceOreder = new MatTableDataSource<any>;
   displayedOrderColumns: string[] = ['Index','qrCode' , 'retailer', 'phoneNumber', 'address', 'status', 'createDate', 'action']
@@ -116,6 +117,8 @@ export class ViewOrderComponent implements OnInit{
     this.isDetailLoading = true
 
     this.order = e;
+    console.log("ORDER",this.order)
+    this.isPending = (this.order.status.toLowerCase() == 'pending');
     let billList: Bill[] = [];
     let total = 0;
 
@@ -208,4 +211,5 @@ export class ViewOrderComponent implements OnInit{
     )
   }
 
+  protected readonly Math = Math;
 }

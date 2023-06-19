@@ -97,6 +97,10 @@ import { LoadingTableComponent } from './loading/loading-table/loading-table.com
 import { LoadingImageComponent } from './loading/loading-image/loading-image.component';
 import { LoadingDetailComponent } from './loading/loading-detail/loading-detail.component';
 import { DotSeparatorPipe } from './dot-separator.pipe';
+import { QrCodeComponent } from './components/qr-code/qr-code.component';
+import { HistoryTransactionComponent } from './layouts/history-transaction/history-transaction.component';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+
 
 @NgModule({
   declarations: [
@@ -162,8 +166,13 @@ import { DotSeparatorPipe } from './dot-separator.pipe';
     LoadingImageComponent,
     LoadingDetailComponent,
     DotSeparatorPipe,
+    QrCodeComponent,
+    HistoryTransactionComponent,
   ],
   imports: [
+    NgxScannerQrcodeModule,
+    MatPaginatorModule,
+    MatTableModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -178,7 +187,6 @@ import { DotSeparatorPipe } from './dot-separator.pipe';
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireStorageModule,
     HighchartsChartModule,
     BrowserAnimationsModule,
     NgxLoadingModule.forRoot({}),
