@@ -38,7 +38,7 @@ export class TableSupplierComponent implements OnInit {
   isImageLoading = false;
 
   currentDate: Date = new Date();
-
+  showImageDiff : Boolean = false;
   user: any = this.userService.getUser();
   item: Product = {
     userId: '',
@@ -570,7 +570,20 @@ export class TableSupplierComponent implements OnInit {
           differenceObject.new[key] = obj2[key];
         }
       }
+      if (obj1.hasOwnProperty('image') && obj2.hasOwnProperty('image')) {
+        if (obj1['image'].length !== obj2['image'].length) {
+          this.showImageDiff = true;
+        }
+        else {
+          for(var i=0; i<=obj1['image'].length; i++ ){
+            if(obj1['image'][i]!=obj2['image'][i]){
+          this.showImageDiff = true;
+            }
+          }
+        }
+      }
     }
+
 
     return differenceObject;
   }
