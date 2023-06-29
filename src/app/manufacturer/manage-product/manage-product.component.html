@@ -70,12 +70,7 @@
                 </p>
               </ng-container>
               <ng-container *ngIf='!element.dates[1]'>
-                <p>
-                  dd - MMM - yyyy
-                </p>
-                <p>
-                  hh:mm
-                </p>
+                On Going...
               </ng-container>
             </td>
           </ng-container>
@@ -95,12 +90,7 @@
                 </p>
               </ng-container>
               <ng-container *ngIf='!element.dates[2]'>
-                <p>
-                  dd - MMM - yyyy
-                </p>
-                <p>
-                  hh:mm
-                </p>
+                On Going...
               </ng-container>
             </td>
           </ng-container>
@@ -120,12 +110,7 @@
                 </p>
               </ng-container>
               <ng-container *ngIf='!element.dates[3]'>
-                <p>
-                  dd - MMM - yyyy
-                </p>
-                <p>
-                  hh:mm
-                </p>
+                On Going...
               </ng-container>
             </td>
           </ng-container>
@@ -145,12 +130,7 @@
                 </p>
               </ng-container>
               <ng-container *ngIf='!element.dates[4]'>
-                <p>
-                  dd - MMM - yyyy
-                </p>
-                <p>
-                  hh:mm
-                </p>
+                On Going...
               </ng-container>
             </td>
           </ng-container>
@@ -170,12 +150,7 @@
                 </p>
               </ng-container>
               <ng-container *ngIf='!element.dates[5]'>
-                <p>
-                  dd - MMM - yyyy
-                </p>
-                <p>
-                  hh:mm
-                </p>
+                On Going...
               </ng-container>
             </td>
           </ng-container>
@@ -328,29 +303,30 @@
             <div class='flex justify-between'>
               <div class='flex'>
 
-              <p style='padding-top:3px;' class='font-medium text-base leading-4 text-gray-600'>Certificate:
+                <p style='padding-top:3px;' class='font-medium text-base leading-4 text-gray-600'>Certificate:
 
 
-              </p>
-              <button style='margin:0 0 12px; ' type='button' class='w-1/12 h-1/12 focus:outline-none'
-                      (click)='openCertificate();dialogCertManufacturer.showModal()'
-              >
-                <mat-icon *ngIf="product.certificateUrl==''">add_a_photo</mat-icon>
-                <!--                <mat-icon>library_add</mat-icon>-->
-                <mat-icon *ngIf="product.certificateUrl!=''"> remove_red_eye</mat-icon>
-              </button>
-              </div>
-<!--              <div class='text-center'>-->
-                <p *ngIf="product.qrCode!=''" class='font-medium text-base leading-4 text-gray-600 pr-4' style='margin-bottom: 0; padding-top:3px'>
-                  QR code:
-                  <button type='button' class='w-1/12 h-1/12 focus:outline-none'
-                          (click)='openQrCode();dialogQrCode.showModal()'
-                  >
-                    <i class='fas fa-qrcode'></i>
-                  </button>
                 </p>
+                <button style='margin:0 0 12px; ' type='button' class='w-1/12 h-1/12 focus:outline-none'
+                        (click)='openCertificate();dialogCertManufacturer.showModal()'
+                >
+                  <mat-icon *ngIf="product.certificateUrl==''">add_a_photo</mat-icon>
+                  <!--                <mat-icon>library_add</mat-icon>-->
+                  <mat-icon *ngIf="product.certificateUrl!=''"> remove_red_eye</mat-icon>
+                </button>
               </div>
-<!--            </div>-->
+              <!--              <div class='text-center'>-->
+              <p *ngIf="product.qrCode!=''" class='font-medium text-base leading-4 text-gray-600 pr-4'
+                 style='margin-bottom: 0; padding-top:3px'>
+                QR code:
+                <button type='button' class='w-1/12 h-1/12 focus:outline-none'
+                        (click)='openQrCode();dialogQrCode.showModal()'
+                >
+                  <i class='fas fa-qrcode'></i>
+                </button>
+              </p>
+            </div>
+            <!--            </div>-->
             <p class=' mt-7'><textarea rows='10'
                                        class='border-none w-full justify-center font-normal text-base leading-6 text-gray-600'
                                        id='description' name='description'
@@ -524,7 +500,7 @@
       </div>
     </a>
   </dialog>
-  <dialog  [ngClass]="openQrCodeDialog ? 'flex':'hidden'" class='relative flex-col bg-blueGray-100 rounded-lg w-1/3'
+  <dialog [ngClass]="openQrCodeDialog ? 'flex':'hidden'" class='relative flex-col bg-blueGray-100 rounded-lg w-1/3'
           #dialogQrCode>
     <p class='text-xl font-medium' *ngIf="product.certificateUrl!=''">QR Code</p>
     <button type='button' class='absolute top-2 right-6 focus:outline-none text-xl font-bold text-red-600'
@@ -541,7 +517,7 @@
       </div>
     </a>
 
-<!--    <button type='button' (click)='exportQrCode()'>Export Qr Code</button>-->
+    <!--    <button type='button' (click)='exportQrCode()'>Export Qr Code</button>-->
 
   </dialog>
   <ngx-loading

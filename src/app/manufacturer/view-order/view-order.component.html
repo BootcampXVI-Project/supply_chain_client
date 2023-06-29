@@ -158,23 +158,23 @@
           </div>
 
         </div>
-        <div class="flex justify-around mb-2 mt-5">
-          <button
-            *ngIf="isPending"
-            type="button" class="w-3/12 border bg-yellow-400 active:bg-yellow-600 font-bold text-white uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-            (click)="rejectOrder(order.orderId)"
-          >
-            Reject
-          </button>
-          <button
-            *ngIf="isPending"
-            type="button" class="w-3/12 border text-white font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" (click)="approveOrder(order.orderId)"
-                  [disabled]="!canApprove"
-                  [ngClass]="!canApprove ? 'bg-slate-400' : 'bg-green-500 hover:bg-green-600'"
-          >
-            Approve
-          </button>
-        </div>
+<!--        <div class="flex justify-around mb-2 mt-5">-->
+<!--          <button-->
+<!--            *ngIf="isPending"-->
+<!--            type="button" class="w-3/12 border bg-yellow-400 active:bg-yellow-600 font-bold text-white uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"-->
+<!--            (click)="rejectOrder(order.orderId)"-->
+<!--          >-->
+<!--            Reject-->
+<!--          </button>-->
+<!--          <button-->
+<!--            *ngIf="isPending"-->
+<!--            type="button" class="w-3/12 border text-white font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" (click)="approveOrder(order.orderId)"-->
+<!--                  [disabled]="!canApprove"-->
+<!--                  [ngClass]="!canApprove ? 'bg-slate-400' : 'bg-green-500 hover:bg-green-600'"-->
+<!--          >-->
+<!--            Approve-->
+<!--          </button>-->
+<!--        </div>-->
 
       </div>
 

@@ -1,47 +1,100 @@
-<div class="container1">
-  <div class="wrapper">
-    <h1>History Transaction</h1>
-    <ul class="sessions">
-      <li>
-        <div [style.background]= "productCommercial.dates[0] ? 'green': 'white'" class="status"> </div>
-        <div class="time">{{  productCommercial.dates[0]?.time | date: 'medium' }}</div>
-        <p>{{common.cultivated}}</p>
-      </li>
-      <li>
-        <div [style.background-color]= " productCommercial.dates[1] ?'green': 'white'"  class="status"> </div>
-        <div class="time">{{productCommercial.dates[1]?.time | date:'medium'}}</div>
-        <p>{{common.harvested}}</p>
-      </li>
-      <li >
-        <div  [style.background-color]= "productCommercial.dates[2] ? 'green': 'white'" class="status"> </div>
-        <div class="time">{{productCommercial.dates[2]?.time | date:'medium'}}</div>
-        <p>{{common.sold}}</p>
-      </li>
-      <li>
-        <div [style.background]= "productCommercial.dates[3] ? 'green': 'white'"  class="status"> </div>
-        <div class="time">{{productCommercial.dates[3]?.time | date:'medium'}}</div>
-        <p>{{common.distributed}}</p>
-      </li>
-      <li>
-        <div [style.background-color]= "productCommercial.dates[4] ?'green': 'white'"  class="status"> </div>
-        <div class="time">{{productCommercial.dates[4]?.time | date:'medium'}}</div>
-        <p>{{common.exported}}</p>
-      </li>
-      <li>
-        <div [style.background-color]= "productCommercial.dates[5] ? 'green': 'white'"  class="status"> </div>
-        <div class="time">{{productCommercial.dates[5]?.time | date:'medium'}}</div>
-        <p>{{common.manufacturered}}</p>
-      </li>
-      <li>
-        <div [style.background-color]= "productCommercial.dates[6] ?'green': 'white'"  class="status"> </div>
-        <div class="time">{{productCommercial.dates[6]?.time | date:'medium'}}</div>
-        <p>{{common.selling}}</p>
-      </li>
-      <li >
-        <div  [style.background-color]= "productCommercial.dates[7] ? 'green': 'white'" class="status"> </div>
-        <div class="time">{{productCommercial.dates[7]?.time }}</div>
-        <p>{{common.sold}}</p>
-      </li>
-    </ul>
+<div class="bg-gray-200 h-screen">
+  <div class="pt-6 h-screen">
+    <h1>Product Infomation</h1>
+    <div class="bg-white p-2">
+      <!-- Image gallery -->
+      <div class="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
+        <div class="w-full">
+          <carousel [imageList]="productCommercial.image"></carousel>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3 bg-white p-2">
+      <!-- Product info -->
+      <div
+        class="mx-auto max-w-2xl px-4 pb-2 pt-2 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16"
+      >
+        <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+          <p class="text-xl font-medium tracking-tight text-gray-900 sm:text-3xl">
+            {{ productCommercial.productName }}
+          </p>
+          <p class="text-sm font-bold tracking-tight text-red-500">
+            {{ productCommercial.price | currency : 'VND' : 'VND ' }}/{{ productCommercial.unit }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-3 mb-3 bg-white p-2">
+      <div class="px-4 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
+        <h2 class="text-sm font-medium text-gray-900">Description</h2>
+        <div class="mt-4 space-y-6">
+          <p class="text-sm text-gray-600">
+            {{ productCommercial.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3 bg-white p-2">
+      <div class="px-4 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
+        <h1><b>Product History Transaction</b></h1>
+        <ul class="sessions">
+          <li >
+
+            <img class="w-5" src="https://scontent.fdad2-1.fna.fbcdn.net/v/t1.15752-9/250414519_235269481925531_6896992055041011496_n.png?_nc_cat=107&cb=99be929b-59f725be&ccb=1-7&_nc_sid=ae9488&_nc_ohc=So-Dkty3rLMAX__7iqH&_nc_ht=scontent.fdad2-1.fna&oh=03_AdTUh81uUFDpTBA3pteIKa9NGdg3Mrwj22n85cwLI-RLQw&oe=64B732B9" alt="" srcset="">
+            <div class="time">{{ productCommercial.dates[0]?.time | date : 'medium' }}</div>
+            <p>{{ common.cultivated }}</p>
+          </li>
+          <li>
+            <!-- <div [style.background-image]="productCommercial.dates[1] ? 'url(https://scontent.fdad2-1.fna.fbcdn.net/v/t1.15752-9/250414519_235269481925531_6896992055041011496_n.png?_nc_cat=107&cb=99be929b-59f725be&ccb=1-7&_nc_sid=ae9488&_nc_ohc=So-Dkty3rLMAX__7iqH&_nc_ht=scontent.fdad2-1.fna&oh=03_AdTUh81uUFDpTBA3pteIKa9NGdg3Mrwj22n85cwLI-RLQw&oe=64B732B9)' : 'white'" class="status"></div> -->
+            <img class="w-5" src="https://scontent.fdad1-1.fna.fbcdn.net/v/t1.15752-9/354748018_810303483620118_7918895066930099019_n.png?_nc_cat=109&cb=99be929b-59f725be&ccb=1-7&_nc_sid=ae9488&_nc_ohc=VzwhMzbuaYYAX_ikLBR&_nc_ht=scontent.fdad1-1.fna&oh=03_AdSHVz4iEbJHpSCk9hxC5ESxxrbwK9Ymr4-WOTDMJNB1Nw&oe=64B73A01" alt="" srcset="">
+
+            <div class="time">{{ productCommercial.dates[1]?.time | date : 'medium' }}</div>
+            <p>{{ common.harvested }}</p>
+          </li>
+          <li>
+            <!-- <div [style.background-color]="productCommercial.dates[2] ? 'green' : 'white'" class="status"></div> -->
+            <img class="w-5" src="https://scontent.fdad2-1.fna.fbcdn.net/v/t1.15752-9/355221804_1423221538491768_4532163133406705124_n.png?_nc_cat=101&cb=99be929b-59f725be&ccb=1-7&_nc_sid=ae9488&_nc_ohc=v8Izw9defPwAX9jnSsL&_nc_ht=scontent.fdad2-1.fna&oh=03_AdQO7fnToZdNQlewh0C4wqiSPiniRrsGv7FmxJEy1fHgZQ&oe=64B75276" alt="" srcset="">
+
+            <div class="time">{{ productCommercial.dates[2]?.time | date : 'medium' }}</div>
+            <p>{{ common.imported }}</p>
+          </li>
+          <li>
+            <!-- <div [style.background]="productCommercial.dates[3] ? 'green' : 'white'" class="status"></div> -->
+            <img class="w-5" src="https://scontent.fdad1-4.fna.fbcdn.net/v/t1.15752-9/355372912_759686832298401_4428672820778269423_n.png?_nc_cat=105&cb=99be929b-59f725be&ccb=1-7&_nc_sid=ae9488&_nc_ohc=35fG8rRHL_0AX_RY_YB&_nc_ht=scontent.fdad1-4.fna&oh=03_AdQ3FPWcVjyyKQOb_i1zhhWGZSflHvzjTTcUHuKHLm9jbg&oe=64B72A93" alt="" srcset="">
+
+            <div class="time">{{ productCommercial.dates[3]?.time | date : 'medium' }}</div>
+            <p>{{ common.manufactured }}</p>
+          </li>
+          <li>
+            <!-- <div [style.background-color]="productCommercial.dates[4] ? 'green' : 'white'" class="status"></div> -->
+            <img class="w-5" src="https://scontent.fdad2-1.fna.fbcdn.net/v/t1.15752-9/277571915_1048744406072094_7301719915670012675_n.png?_nc_cat=101&cb=99be929b-59f725be&ccb=1-7&_nc_sid=ae9488&_nc_ohc=eCLhcXwQO0YAX9pkALi&_nc_ht=scontent.fdad2-1.fna&oh=03_AdRsMW1mDnmFnIkkfAyHABMRTcucFHu6MqtBAanyrET4TQ&oe=64B7363D" alt="" srcset="">
+
+            <div class="time">{{ productCommercial.dates[4]?.time | date : 'medium' }}</div>
+            <p>{{ common.exported }}</p>
+          </li>
+          <li>
+            <!-- <div [style.background-color]="productCommercial.dates[5] ? 'green' : 'white'" class="status"></div> -->
+            <img class="w-5" src="https://scontent.fdad1-2.fna.fbcdn.net/v/t1.15752-9/355198101_250006751001560_4140161697684404454_n.png?_nc_cat=102&cb=99be929b-59f725be&ccb=1-7&_nc_sid=ae9488&_nc_ohc=IkM9mKfPM4EAX-089DE&_nc_ht=scontent.fdad1-2.fna&oh=03_AdQlLvDnzc2-Rk8uT85lxmpE5rHVKOTyDoDHacJhhJmWZw&oe=64B73E1E" alt="" srcset="">
+
+            <div class="time">{{ productCommercial.dates[5]?.time | date : 'medium' }}</div>
+            <p>{{ common.distributing }}</p>
+          </li>
+          <li>
+            <!-- <div [style.background-color]="productCommercial.dates[6] ? 'green' : 'white'" class="status"></div> -->
+            <img class="w-5" src="https://scontent.fdad2-1.fna.fbcdn.net/v/t1.15752-9/344291336_558818319743473_579237794742773186_n.png?_nc_cat=107&cb=99be929b-59f725be&ccb=1-7&_nc_sid=ae9488&_nc_ohc=oRCSdYkmTnAAX-YkxgM&_nc_ht=scontent.fdad2-1.fna&oh=03_AdTP0tFYngMkVuC-pMN2q8yERFRLlvnzeIf6KsszULdsEg&oe=64B74EF0" alt="" srcset="">
+
+            <div class="time">{{ productCommercial.dates[6]?.time | date : 'medium' }}</div>
+            <p>{{ common.retailing }}</p>
+          </li>
+          <!-- <li>
+            <div [style.background-color]="productCommercial.dates[7] ? 'green' : 'white'" class="status"></div>
+            <img class="w-5" src="https://scontent.fdad2-1.fna.fbcdn.net/v/t1.15752-9/250414519_235269481925531_6896992055041011496_n.png?_nc_cat=107&cb=99be929b-59f725be&ccb=1-7&_nc_sid=ae9488&_nc_ohc=So-Dkty3rLMAX__7iqH&_nc_ht=scontent.fdad2-1.fna&oh=03_AdTUh81uUFDpTBA3pteIKa9NGdg3Mrwj22n85cwLI-RLQw&oe=64B732B9" alt="" srcset="">
+
+            <div class="time">{{ productCommercial.dates[7]?.time }}</div>
+            <p>{{ common.sold }}</p>
+          </li> -->
+        </ul>
+      </div></div>
   </div>
 </div>

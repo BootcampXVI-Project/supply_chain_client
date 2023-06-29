@@ -241,6 +241,7 @@ export class ViewOrderComponent implements OnInit{
   @HostListener('document:keydown.escape', ['$event'])
   handleEscKey(event: KeyboardEvent) {
     this.closeDetailRequestDialog();
+    this.closeQRDialog()
   }
 
   approveOrder(orderId: string) {

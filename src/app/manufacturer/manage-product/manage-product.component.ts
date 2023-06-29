@@ -258,13 +258,16 @@ export class ManageProductComponent {
   validateAmount(event: any) {
     const enteredValue = event.target.value;
     const currentValue = this.currentAmount;
-    if (enteredValue > currentValue) {
-      this.product.amount = currentValue.toString();
-      this.currentAmount = parseFloat(this.product.amount)
-    } else {
-      this.currentAmount = enteredValue
-
-    }
+    // if (enteredValue > currentValue) {
+    //   this.product.amount = currentValue.toString();
+    //   this.currentAmount = parseFloat(this.product.amount)
+    // } else {
+    //   this.currentAmount = enteredValue
+    //
+    // }
+    this.product.amount = currentValue.toString()
+    this.currentAmount = enteredValue
+    // this.currentAmount = parseFloat(this.product.amount)
   }
 
 
@@ -294,6 +297,7 @@ export class ManageProductComponent {
 
 
   importProduct() {
+    this.loading = true
     this.productImport.productId = this.product.productId
     this.productImport.price = this.product.price
     console.log("IMPORT", this.productImport)
@@ -302,12 +306,14 @@ export class ManageProductComponent {
       .subscribe({
         next: (response) => {
           console.log("successful", response)
+          this.loading = false
           this.close({isClose: true, isReload: true});
         }
       })
   }
 
   manufactureProduct() {
+    this.loading = true
     this.productManufacture.productId = this.product.productId
     this.productManufacture.imageUrl = this.imageList
 
@@ -343,6 +349,7 @@ export class ManageProductComponent {
       .subscribe({
         next: (response) => {
           console.log("successful", response)
+          this.loading = false
           this.close({isClose: true, isReload: true});
         }
       })
@@ -539,5 +546,19 @@ export class ManageProductComponent {
 
   protected readonly StatusColor = StatusColor;
   protected readonly ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+
+
+  //---------------------------------History-------------------------------------//
+  isOpenHistoryDialog: boolean = false
+  @ViewChild('historyDialog') historyDialog : ElementRef | undefined;
+
+  openHistoryDialog() {
+    this.isOpenHistoryDialog = true
+  }
+
+  closeHistoryDialog() {
+    this.isOpenHistoryDialog = false
+    this.historyDialog?.nativeElement.close()
+  }
 
 }

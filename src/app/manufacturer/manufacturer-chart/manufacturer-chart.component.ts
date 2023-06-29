@@ -6,6 +6,7 @@ import HighchartsAccessibility from 'highcharts/modules/accessibility';
 
 import { Chart } from 'highcharts';
 import { ViewProductService } from 'src/app/supplier/table-supplier/view-product.service';
+import { ProductService } from '../../_services/product.service';
 
 HighchartsMore(Highcharts);
 HighchartsExporting(Highcharts);
@@ -26,7 +27,7 @@ export class ManufacturerChartComponent {
   areaChart!: Highcharts.Options;
 
   constructor(
-    private productApi: ViewProductService
+    private productApi: ProductService
   ) {
 
   }

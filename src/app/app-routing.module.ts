@@ -29,6 +29,7 @@ import { ManufacturerChartComponent } from './manufacturer/manufacturer-chart/ma
 import { ManageProductComponent } from './manufacturer/manage-product/manage-product.component';
 import {ViewOrderComponent} from "./manufacturer/view-order/view-order.component";
 import { HistoryTransactionComponent } from './layouts/history-transaction/history-transaction.component';
+import { ManageAccountComponent } from './manufacturer/manage-account/manage-account.component';
 
 const routes: Routes = [
   // admin views
@@ -68,7 +69,7 @@ const routes: Routes = [
       { path: 'table-manufacturer', component: ManageProductComponent },
       { path: 'request-manufacturer', component: ViewOrderComponent },
       { path: 'history-manager', component: ManageProductComponent },
-      { path: 'account-manager', component: ManageProductComponent },
+      { path: 'account-manager', component: ManageAccountComponent },
       { path: '**', redirectTo: 'chart-manufacturer', pathMatch: 'full' },
     ],
   },

@@ -44,11 +44,11 @@
               Request
 
             </a>
-            <a [routerLink]="['history-manager']" routerLinkActive #historyTable="routerLinkActive"
-               [ngClass]="historyTable.isActive ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white' : 'text-gray-500 hover:bg-gradient-to-r from-red-300 to-orange-300'"
-               class=" rounded-md px-3 py-2 text-sm font-medium">
-              History
-            </a>
+<!--            <a [routerLink]="['history-manager']" routerLinkActive #historyTable="routerLinkActive"-->
+<!--               [ngClass]="historyTable.isActive ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white' : 'text-gray-500 hover:bg-gradient-to-r from-red-300 to-orange-300'"-->
+<!--               class=" rounded-md px-3 py-2 text-sm font-medium">-->
+<!--              History-->
+<!--            </a>-->
             <a [routerLink]="['account-manager']" routerLinkActive #accountTable="routerLinkActive"
                [ngClass]="accountTable.isActive ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white' : 'text-gray-500 hover:bg-gradient-to-r from-red-300 to-orange-300'"
                class=" rounded-md px-3 py-2 text-sm font-medium">
@@ -59,9 +59,14 @@
       </div>
       <div style="max-width: 1000px !important;"
            class=" flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-        <button mat-button class="focus:outline-none" >
-          <mat-icon class="text-white">notifications</mat-icon>
-        </button>
+<!--        <button mat-button class="focus:outline-none" >-->
+<!--          <mat-icon class="text-white">notifications</mat-icon>-->
+<!--        </button>-->
+        <div class="flex space-x-4 text-center border-2 border-red-500 rounded-md px-3 py-2">
+          <h1 class="font-bold" style="margin-bottom: 0">
+            Management Dashboard
+          </h1>
+        </div>
         <div class="relative ml-3">
           <div>
 

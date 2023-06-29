@@ -66,12 +66,7 @@
         </p>
       </ng-container>
       <ng-container *ngIf='!element.dates[1]'>
-        <p>
-          dd - MMM - yyyy
-        </p>
-        <p>
-          hh:mm
-        </p>
+        Updating ...
       </ng-container>
     </td>
   </ng-container>
@@ -113,6 +108,11 @@
   <ng-container matColumnDef='action'>
     <th mat-header-cell *matHeaderCellDef> Action</th>
     <td mat-cell *matCellDef='let element'>
+      <button type='button'
+              class='mr-3 fa-solid focus:outline-none text-base text-blue-500 hover:text-blue-600 transition-colors duration-300 ease-in-out transform'
+              (click)='openHistoryDialog(element);historyDialog.showModal();'>
+        <mat-icon class='align-bottom text-yellow-300'>library_books</mat-icon>
+      </button>
       <button type='button'
               class='mr-3 fa-solid focus:outline-none fa-pen-to-square text-base text-blue-500 hover:text-blue-600 transition-colors duration-300 ease-in-out transform'
               (click)='open(element);dialog.showModal();'></button>
@@ -380,4 +380,108 @@
       animationType: ngxLoadingAnimationTypes.chasingDots
     }'
   ></ngx-loading>
+</dialog>
+
+<dialog [ngClass]="isOpenHistoryDialog ? 'flex':'hidden'" class='relative flex-col bg-blueGray-100 rounded-lg w-10/12' #historyDialog>
+
+  <p class='text-xl font-medium' *ngIf="product.certificateUrl==''">History Product</p>
+  <button type='button' class='absolute top-2 right-6 focus:outline-none text-xl font-bold text-red-600'
+          (click)='closeHistoryDialog()'>X
+  </button>
+  <div class='block'>
+    <div class='flex flex-wrap justify-center'>
+      <div class='block w-full overflow-x-auto'>
+        <table mat-table [dataSource]='dataSourceHistory'
+               class='mat-elevation-z8' *ngIf='!isDetailLoading'>
+          <ng-container matColumnDef='Index'>
+            <th mat-header-cell *matHeaderCellDef class='w-16'> No.</th>
+            <td mat-cell *matCellDef='let i = index' class='w-16'> {{i + 1}} </td>
+          </ng-container>
+          <ng-container matColumnDef='newTransactionId'>
+            <th mat-header-cell *matHeaderCellDef class='w-16'> New Transaction</th>
+            <td mat-cell *matCellDef='let element' class='w-16'> {{element.new.transactionId}} </td>
+          </ng-container>
+          <ng-container matColumnDef='newTimestamp' class='w-40'>
+            <th mat-header-cell *matHeaderCellDef class='w-40'> Timestamp </th>
+            <td mat-cell *matCellDef='let element' class='w-40'>
+              <ng-container>
+                <p>
+                  <ng-container class='font-bold'>
+                    {{element.new.timestamp| date: 'dd - MMM - yyyy'}}
+                  </ng-container>
+                </p>
+                <p>
+                  <ng-container>
+                    {{element.new.timestamp | date: 'HH:mm'}}
+                  </ng-container>
+                </p>
+              </ng-container>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef='oldTransactionId'>
+            <th mat-header-cell *matHeaderCellDef class='w-16'> Old Transaction</th>
+            <td mat-cell *matCellDef='let element' class='w-16'> {{element.old.transactionId}} </td>
+          </ng-container>
+          <ng-container matColumnDef='oldTimestamp' class='w-40'>
+            <th mat-header-cell *matHeaderCellDef class='w-40'> Timestamp</th>
+            <td mat-cell *matCellDef='let element' class='w-40'>
+              <ng-container>
+                <p>
+                  <ng-container class='font-bold'>
+                    {{element.old.timestamp| date: 'dd - MMM - yyyy'}}
+                  </ng-container>
+                </p>
+                <p>
+                  <ng-container>
+                    {{element.old.timestamp | date: 'HH:mm'}}
+                  </ng-container>
+                </p>
+              </ng-container>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef='action'>
+            <th mat-header-cell *matHeaderCellDef > Action</th>
+            <td mat-cell *matCellDef='let element'
+                class='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-center'
+            >
+              <button
+                type='button'
+                class='w-1/12 h-1/12 focus:outline-none'
+                (click)='openCompareDialog(element);compareDialog.showModal()'
+              >
+                <mat-icon class='text-lime-500'>remove_red_eye</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef='displayHistoryColumns'></tr>
+          <tr mat-row *matRowDef='let row; columns: displayHistoryColumns;'></tr>
+        </table>
+
+      </div>
+
+    </div>
+  </div>
+  <app-loading-detail [isDetailLoading]='isDetailLoading' *ngIf='isOpenHistoryDialog'></app-loading-detail>
+  <dialog
+    [ngClass]="isOpenCompareDialog ? 'flex':'hidden'" class='relative flex-col bg-blueGray-100 rounded-lg w-10/12'
+    #compareDialog>
+    <p class='text-xl font-medium' *ngIf="product.certificateUrl==''">Transaction</p>
+    <button type='button' class='absolute top-2 right-6 focus:outline-none text-xl font-bold text-red-600'
+            (click)='closeCompareDialog()'>X
+    </button>
+
+    <div class='flex justify-between'>
+      <div>
+        <p>Created On:</p>
+        <p>{{compareObj.new.timestamp | date: 'dd-MM-yyyy hh:mm'}}</p>
+
+      </div>
+      <div>
+        <p>Created On:</p>
+        <p>{{compareObj.old.timestamp | date: 'dd-MM-yyyy hh:mm'}}</p>
+      </div>
+    </div>
+
+  </dialog>
+
 </dialog>

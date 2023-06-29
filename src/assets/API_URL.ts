@@ -1,4 +1,4 @@
-export const DOMAIN = 'https://66244487b421.ngrok.app';
+export const DOMAIN = 'https://a429c9e9a688.ngrok.app';
 
 export const API_URL = {
   LOGIN: () => `${DOMAIN}/auth/login`,
@@ -32,7 +32,8 @@ export const API_ORDER = {
 }
 
 export const API_HISTORY = {
-  GETALLHISTORIES: () => `${DOMAIN}/product/transaction-history`
+  GETALLHISTORIES: () => `${DOMAIN}/product/transaction-history`,
+  GETHISTORYPRODUCT:(productId: string) => `${DOMAIN}/product/transaction-history/`+productId
 }
 
 export const API_USER = {

@@ -3,7 +3,7 @@ import {AuthService} from "./auth.service";
 import {HttpClient} from "@angular/common/http";
 import {NotificationService} from "./notification.service";
 import {UserService} from "./user.service";
-import {API_PRODUCT} from "../../assets/API_URL";
+import { API_HISTORY, API_PRODUCT } from '../../assets/API_URL';
 import {catchError, throwError} from "rxjs";
 import {Product, ProductModel, ProductObj} from "../models/product-model";
 import {Unit} from "../../assets/ENUM";
@@ -49,6 +49,16 @@ export class ProductService {
 
   getPaginationProduct(pageNumber: string) {
     return this.http.get(API_PRODUCT.GETPAGINATIONPRODUCTS(pageNumber), {headers: this.headers})
+      .pipe(
+        catchError((error) => {
+          this.notification.showError("An error has occurred on the server, please try again later.", "Error");
+          return throwError(error.message);
+        })
+      )
+  }
+
+  getHistoryProduct(productId: string) {
+    return this.http.get(API_HISTORY.GETHISTORYPRODUCT(productId), {headers: this.headers})
       .pipe(
         catchError((error) => {
           this.notification.showError("An error has occurred on the server, please try again later.", "Error");

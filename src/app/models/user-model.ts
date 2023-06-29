@@ -24,3 +24,15 @@ export class User {
   signature: string = "";
   userId: string = ""
 }
+
+export class UserInfo {
+  address: string = '';
+  avatar: string = '';
+  email: string = '';
+  fullName: string = '';
+  phoneNumber: string = '';
+  role: string = '';
+  signature: string = '';
+  userId: string = '';
+  userName: string = '';
+}
